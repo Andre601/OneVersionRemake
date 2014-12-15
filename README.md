@@ -1,4 +1,4 @@
-Only-1.8
+OneVersion
 ========
 
-Forces players to use 1.8 when connecting through bungeecord.
+A bungeecord plugin that forces players to use a minimum protocol level.
