@@ -27,7 +27,7 @@ public class OneVersion extends Plugin implements Listener {
             Configuration yml = ConfigurationProvider.getProvider(YamlConfiguration.class).load(this.getConfig());
 
             this.connect_message = yml.getString("kick-message",
-                    "This server has been updated to 1.8!.newline.Please use minecraft 1.8")
+                    "This server has been updated!.newline.Please use the latest minecraft version")
                     .replaceAll(".newline.", "\n");
 
             this.protocol_id = yml.getInt("protocol-version", 0);
