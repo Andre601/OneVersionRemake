@@ -2,7 +2,9 @@ package me.johnnywoof;
 
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.event.PreLoginEvent;
+import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -10,13 +12,14 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
+import net.md_5.bungee.protocol.Protocol;
 
 import java.io.*;
 
 public class OneVersion extends Plugin implements Listener {
 
-    private String connect_message = null;
-    private int protocol_id;
+	private String connect_message = null, protocol_name = null;
+	private int protocol_id = -1;
 
     public void onEnable() {
 
@@ -29,10 +32,23 @@ public class OneVersion extends Plugin implements Listener {
             Configuration yml = ConfigurationProvider.getProvider(YamlConfiguration.class).load(this.getConfig());
 
             this.connect_message = ChatColor.translateAlternateColorCodes('&', yml.getString("kick-message",
-                    "This server has been updated!.newline.Please use the latest minecraft version")
-                    .replaceAll(".newline.", "\n"));
+					"This server has been updated to 1.9!.newline.Please use the latest minecraft version")
+					.replaceAll(".newline.", "\n"));
 
-            this.protocol_id = yml.getInt("protocol-version", 0);
+			this.protocol_name = ChatColor.stripColor(yml.getString("protocol-name", "null"));
+
+			if ("null".equals(this.protocol_name))
+				this.protocol_name = null;
+
+			this.protocol_id = yml.getInt("protocol-version", -1);
+
+			if (this.protocol_id < 0) {//-1 value for example
+
+				for (int version : Protocol.supportedVersions)
+					if (version > this.protocol_id)
+						this.protocol_id = version;
+
+			}
 
         } catch (IOException e) {
 
@@ -41,6 +57,21 @@ public class OneVersion extends Plugin implements Listener {
         }
 
     }
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onPing(ProxyPingEvent event) {
+		ServerPing ping = event.getResponse();
+
+		ServerPing.Protocol protocol = ping.getVersion();
+
+		if (this.protocol_name != null)
+			protocol.setName(this.protocol_name);
+
+		protocol.setProtocol(this.protocol_id);
+
+		ping.setVersion(protocol);
+		event.setResponse(ping);
+	}
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLoginEvent(PreLoginEvent event) {
@@ -61,7 +92,7 @@ public class OneVersion extends Plugin implements Listener {
      */
     private File getConfig() {
 
-        return new File(this.getDataFolder() + File.separator + "config.yml");
+		return new File(this.getDataFolder(), "config.yml");
 
     }
 
@@ -70,16 +101,18 @@ public class OneVersion extends Plugin implements Listener {
      */
     private void saveDefaultConfig() {
 
-        if (!this.getDataFolder().exists()) {
-            if (!this.getDataFolder().mkdir()) {
+		File configFile = this.getConfig();
 
-                this.getLogger().warning("Failed to create directory " + this.getDataFolder().getAbsolutePath() + "!");
-
-            }
-        }
-
-        File configFile = new File(this.getDataFolder(), "config.yml");
         if (!configFile.exists()) {
+
+			if (!this.getDataFolder().exists()) {
+				if (!this.getDataFolder().mkdir()) {
+
+					this.getLogger().warning("Failed to create directory " + this.getDataFolder().getAbsolutePath());
+
+				}
+			}
+
             try {
                 if (configFile.createNewFile()) {
 
