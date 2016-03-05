@@ -4,4 +4,4 @@ kick-message: 'This server has been updated!.newline.Please use the latest minec
 #The minimum protocol version players must have to connect
 #See this page for all protocol versions
 #http://wiki.vg/Protocol_version_numbers
-protocol-version: 47
+protocol-version: 107
