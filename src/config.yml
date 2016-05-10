@@ -1,5 +1,5 @@
 #The message to show to players when they do not use the right protocol to connect
-kick-message: 'This server has been updated to 1.9!.newline.Please use the latest minecraft version'
+kick-message: 'This server has been updated!.newline.Please use the latest minecraft version'
 
 #The minimum protocol version players must have to connect
 #See this page for all protocol versions
