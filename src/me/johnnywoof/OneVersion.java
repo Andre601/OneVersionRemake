@@ -67,7 +67,8 @@ public class OneVersion extends Plugin implements Listener {
 		if (this.protocol_name != null)
 			protocol.setName(this.protocol_name);
 
-		protocol.setProtocol(this.protocol_id);
+        if (!(protocol.getProtocol() > this.protocol_id))
+		    protocol.setProtocol(this.protocol_id);
 
 		ping.setVersion(protocol);
 		event.setResponse(ping);
