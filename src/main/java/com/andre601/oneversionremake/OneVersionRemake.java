@@ -16,7 +16,7 @@ public class OneVersionRemake extends Plugin{
     
     @Override
     public void onEnable(){
-        getLogger().info("Enabling NewOneVersion v" + this.getDescription().getVersion());
+        getLogger().info("Enabling OneVersionRemake v" + this.getDescription().getVersion());
         getLogger().info("Attempting to load Config.yml...");
         saveDefaultConfig();
         
@@ -37,7 +37,7 @@ public class OneVersionRemake extends Plugin{
             getLogger().warning("================================================================================");
             getLogger().warning("WARNING!");
             getLogger().warning("The config option \"Protocol\" is set to -1!");
-            getLogger().warning("Because of that will NewOneVersion not work properly.");
+            getLogger().warning("Because of that will OneVersionRemake not work properly.");
             getLogger().warning("Listeners WON'T be loaded because of this!");
             getLogger().warning("");
             getLogger().warning("Please change the Protocol version to a supported one:");
@@ -52,7 +52,7 @@ public class OneVersionRemake extends Plugin{
         this.getProxy().getPluginManager().registerListener(this, new PingListener(this));
         this.getProxy().getPluginManager().registerListener(this, new LoginListener(this));
         getLogger().info("Loaded listeners!");
-        getLogger().info("Plugin NewOneVersion is ready to use!");
+        getLogger().info("Plugin OneVersionRemake is ready to use!");
     }
     
     public Configuration getConfig(){
