@@ -2,4 +2,4 @@ name: NewOneVersion
 author: Andre_601
 version: ${project.version}
 
-main: com.andre601.newoneversion.NewOneVersion
+main: com.andre601.oneversionremake.OneVersionRemake
