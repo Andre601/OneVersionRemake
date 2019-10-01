@@ -1,0 +1,35 @@
+########################################################
+#    ____ _    ______                                  #
+#   / __ \ |  / / __ \      OneVersionRemake           #
+#  / / / / | / / /_/ /          by Andre_601           #
+# / /_/ /| |/ / _, _/                                  #
+# \____/ |___/_/ |_|                                   #
+#                                                      #
+# GitHub: https://github.com/Andre601/OneVersionRemake #
+########################################################
+#
+# The protocol (version) number to decide what Minecraft version is running on the Network.
+# Go to https://wiki.vg/Protocol_version_numbers#Versions_after_the_Netty_rewrite for all available versions.
+#
+Protocol: -1
+
+#
+# This changes the message that is usually shown when you ping the network with an unsupported (outdated) client.
+# The default text is "[Proxy type] [versions]" e.g. "BungeeCord 1.8.x 1.9.x ..."
+#
+# Set this to an empty String ('') to not change the text.
+#
+# Placeholder:
+#   {version}  ->  The version used from the above set protocol (e.g. 1.14.4)
+#
+ProtocolName: '&cUnsupported client! Please use {version}!'
+
+#
+# Set the kick message here that is used when the player joins with an unsupported version.
+#
+# Placeholder:
+#   {version}  ->  The version used from the above set protocol (e.g. 1.14.4)
+#
+KickMessage:
+- '&cYou are using an unsupported version of Minecraft!'
+- '&cPlease change your version to {version} and try again.'
