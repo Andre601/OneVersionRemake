@@ -1,4 +1,6 @@
 [OneVersion]: https://github.com/johnnywoof/OneVersion
+[Spigot]: https://spigotmc.org/resources/71727/
+[Wiki]: https://github.com/Andre601/OneVersionRemake/wiki
 
 # OneVersionRemake
 Improved BungeeCord plugin of the original [OneVersion] that improves in terms of configuration and coding standards.
@@ -14,3 +16,7 @@ This placeholder can be used in the ProtocolName and KickMessage to display the 
 - Block/Deny connections to your BungeeCord from players with versions older than your configured protocol version.
 - Show the "Outdated Client" message (Next to the ping icon) when the player uses an older version.
 - Show a custom Disconnect message.
+
+# Links
+- [Spigot]
+- [Wiki]

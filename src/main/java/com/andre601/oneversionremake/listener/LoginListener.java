@@ -1,13 +1,13 @@
 package com.andre601.oneversionremake.listener;
 
 import com.andre601.oneversionremake.OneVersionRemake;
-import com.andre601.oneversionremake.Versions;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
+
+import java.util.Collections;
+import java.util.List;
 
 public class LoginListener implements Listener{
     private OneVersionRemake plugin;
@@ -19,13 +19,13 @@ public class LoginListener implements Listener{
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(PreLoginEvent event){
         int protocol = plugin.getConfig().getInt("Protocol", -1);
-        String kickReason = ChatColor.translateAlternateColorCodes('&', String.join("\n", 
-                plugin.getConfig().getStringList("KickMessage")));
+        List<String> message = plugin.getConfig().getStringList("KickMessage");
         
         if(event.getConnection().getVersion() < protocol){
-            TextComponent message = new TextComponent(kickReason.replace("{version}", Versions.getFriendlyName(protocol)));
+            if(message.isEmpty())
+                message = Collections.singletonList("&cOutdated Client version! The Server is on {version}.");
             
-            event.setCancelReason(message);
+            event.setCancelReason(plugin.getText(message, protocol));
             event.setCancelled(true);
         }
     }

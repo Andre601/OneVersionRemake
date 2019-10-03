@@ -2,6 +2,8 @@ package com.andre601.oneversionremake;
 
 import com.andre601.oneversionremake.listener.LoginListener;
 import com.andre601.oneversionremake.listener.PingListener;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -9,6 +11,7 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.List;
 
 public class OneVersionRemake extends Plugin{
     private File file = null;
@@ -73,5 +76,12 @@ public class OneVersionRemake extends Plugin{
                 getLogger().warning("Couldn't create config.yml! Reason: " + ex.getMessage());
             }
         }
+    }
+    
+    public TextComponent getText(List<String> list, int protocol){
+        String text = ChatColor.translateAlternateColorCodes('&', String.join("\n", list)
+                .replace("{version}", Versions.getFriendlyName(protocol)));
+        
+        return new TextComponent(text);
     }
 }
