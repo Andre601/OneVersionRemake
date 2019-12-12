@@ -62,7 +62,7 @@ public class OneVersionRemake extends Plugin{
             getLogger().warning("Listeners WON'T be loaded because of this!");
             getLogger().warning("");
             getLogger().warning("Please change the Protocol version to a supported one:");
-            getLogger().warning("https://wiki.vg/Protocol_version_numbers#Versions_after_the_Netty_rewrite");
+            getLogger().warning("https://github.com/andre601/OneVersionRemake/wiki/Supported-Protocols");
             getLogger().warning("================================================================================");
             return;
         }

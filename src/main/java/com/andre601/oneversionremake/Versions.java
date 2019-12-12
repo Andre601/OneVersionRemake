@@ -19,6 +19,7 @@
 package com.andre601.oneversionremake;
 
 public enum Versions{
+    MC_1_15  (573, "1.15"),
     MC_1_14_4(498, "1.14.4"),
     MC_1_14_3(490, "1.14.3"),
     MC_1_14_2(485, "1.14.2"),
@@ -37,7 +38,7 @@ public enum Versions{
     MC_1_9_2 (109, "1.9.2"),
     MC_1_9_1 (108, "1.9.1"),
     MC_1_9   (107, "1.9"),
-    MC_1_8_9 (47,  "1.8"),
+    MC_1_8_9 (47,  "1.8.9"),
     UNKNOWN  (0,   "?");
     
     private int protocol;
