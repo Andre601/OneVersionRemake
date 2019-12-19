@@ -20,7 +20,9 @@ package com.andre601.oneversionremake;
 
 import com.andre601.oneversionremake.listener.LoginListener;
 import com.andre601.oneversionremake.listener.PingListener;
+import com.andre601.oneversionremake.util.Versions;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -34,46 +36,57 @@ import java.util.List;
 public class OneVersionRemake extends Plugin{
     private File file = null;
     private Configuration config;
+    private CommandSender sender;
     
     @Override
     public void onEnable(){
-        getLogger().info("Enabling OneVersionRemake v" + this.getDescription().getVersion());
-        getLogger().info("Attempting to load Config.yml...");
+        sender = getProxy().getConsole();
+        sendMessage(String.format(
+                "&fEnabling OneVersionRemake v%s...",
+                getDescription().getVersion()
+        ));
+        
+        sendMessage("&fAttempting to load config.yml...");
         saveDefaultConfig();
         
         try{
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
         }catch(IOException ex){
-            getLogger().severe("Unable to load config! Listeners won't be loaded.");
+            sendMessage("&cUnable to load config! Plugin won't be enabled.");
             return;
         }
-        getLogger().info("Config.yml loaded!");
+        sendMessage("&fConfig.yml loaded!");
         
-        getLogger().info("Loading Protocol version...");
+        sendMessage("&fLoading Protocol version from the config...");
+        
+        int protocol = config.getInt("Protocol.Version", -1);
         /*
          * We check if the config option "Protocol" is -1
          * In such a case will we print this warning and return to not load the listeners, preventing possible issues.
          */
-        if(config.getInt("Protocol", -1) == -1){
-            getLogger().warning("================================================================================");
-            getLogger().warning("WARNING!");
-            getLogger().warning("The config option \"Protocol\" is set to -1!");
-            getLogger().warning("Because of that will OneVersionRemake not work properly.");
-            getLogger().warning("Listeners WON'T be loaded because of this!");
-            getLogger().warning("");
-            getLogger().warning("Please change the Protocol version to a supported one:");
-            getLogger().warning("https://github.com/andre601/OneVersionRemake/wiki/Supported-Protocols");
-            getLogger().warning("================================================================================");
+        if(protocol == -1){
+            sendMessage("&c================================================================================");
+            sendMessage("&cWARNING!");
+            sendMessage("&cThe config option \"Version\" is set to -1!");
+            sendMessage("&cThe plugin won't be fully loaded to prevent any issues.");
+            sendMessage("&c");
+            sendMessage("&cPlease change the Version to a supported one listed here:");
+            sendMessage("&chttps://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
+            sendMessage("&c================================================================================");
             return;
         }
-        getLogger().info("Loaded protocol " + config.getInt("Protocol") + " (MC " + 
-                Versions.getFriendlyName(config.getInt("Protocol")) + ")!");
-        
-        getLogger().info("Loading listeners...");
+        sendMessage(String.format(
+                "&fLoaded protocol %d (MC %s)!",
+                protocol,
+                Versions.getFriendlyName(protocol)
+        ));
+    
+        sendMessage("&fLoading listeners...");
         this.getProxy().getPluginManager().registerListener(this, new PingListener(this));
         this.getProxy().getPluginManager().registerListener(this, new LoginListener(this));
-        getLogger().info("Loaded listeners!");
-        getLogger().info("Plugin OneVersionRemake is ready to use!");
+        sendMessage("&fLoaded listeners!");
+    
+        sendMessage("&aStartup complete! OneVersionRemake is ready to use!");
     }
     
     public Configuration getConfig(){
@@ -91,9 +104,16 @@ public class OneVersionRemake extends Plugin{
             try(InputStream is = getResourceAsStream("config.yml")){
                 Files.copy(is, file.toPath());
             }catch(IOException ex){
-                getLogger().warning("Couldn't create config.yml! Reason: " + ex.getMessage());
+                sendMessage(String.format(
+                        "&cCould not create config.yml! Reason: %s",
+                        ex.getMessage()
+                ));
             }
         }
+    }
+    
+    private void sendMessage(String text){
+        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', text)));
     }
     
     public TextComponent getText(List<String> list, int protocol){

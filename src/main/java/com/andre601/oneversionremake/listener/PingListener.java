@@ -19,7 +19,7 @@
 package com.andre601.oneversionremake.listener;
 
 import com.andre601.oneversionremake.OneVersionRemake;
-import com.andre601.oneversionremake.Versions;
+import com.andre601.oneversionremake.util.Versions;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.event.ProxyPingEvent;
@@ -42,26 +42,45 @@ public class PingListener implements Listener{
     public void onPing(ProxyPingEvent event){
         ServerPing ping = event.getResponse();
         ServerPing.Protocol protocol = ping.getVersion();
+        String protocolName = ChatColor.translateAlternateColorCodes(
+                '&', plugin.getConfig().getString("Messages.PlayerCount")
+        );
+        int protocolId = plugin.getConfig().getInt("Protocol.Version");
+        List<String> hoverList = plugin.getConfig().getStringList("Messages.Hover");
+        boolean isExact = plugin.getConfig().getBoolean("Protocol.Exact", false);
         
-        String protocolName = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ProtocolName"));
-        int protocolId = plugin.getConfig().getInt("Protocol");
-        List<String> hoverList = plugin.getConfig().getStringList("HoverMessage");
-        
-        
-        if(protocol.getProtocol() < protocolId){
-            protocol.setProtocol(protocolId);
-            
-            if(!hoverList.isEmpty()){
-                ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
-                        new ServerPing.PlayerInfo(
-                                ChatColor.translateAlternateColorCodes('&', String.join("\n", hoverList))
-                                .replace("{version}", Versions.getFriendlyName(protocolId)),
-                                UUID.fromString("0-0-0-0-0")
-                        )
-                });
+        if(isExact){
+            if(protocol.getProtocol() != protocolId){
+                protocol.setProtocol(protocolId);
+                
+                if(!hoverList.isEmpty())
+                    ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
+                            new ServerPing.PlayerInfo(
+                                    ChatColor.translateAlternateColorCodes('&', String.join("\n", hoverList))
+                                            .replace("{version}", Versions.getFriendlyName(protocolId)),
+                                    UUID.fromString("0-0-0-0-0")
+                            )
+                    });
+                
+                if(!protocolName.isEmpty())
+                    protocol.setName(protocolName.replace("{version}", Versions.getFriendlyName(protocolId)));
             }
-            if(!protocolName.isEmpty())
-                protocol.setName(protocolName.replace("{version}", Versions.getFriendlyName(protocolId)));
+        }else{
+            if(protocol.getProtocol() < protocolId){
+                protocol.setProtocol(protocolId);
+        
+                if(!hoverList.isEmpty())
+                    ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
+                            new ServerPing.PlayerInfo(
+                                    ChatColor.translateAlternateColorCodes('&', String.join("\n", hoverList))
+                                            .replace("{version}", Versions.getFriendlyName(protocolId)),
+                                    UUID.fromString("0-0-0-0-0")
+                            )
+                    });
+        
+                if(!protocolName.isEmpty())
+                    protocol.setName(protocolName.replace("{version}", Versions.getFriendlyName(protocolId)));
+            }
         }
         
         ping.setVersion(protocol);

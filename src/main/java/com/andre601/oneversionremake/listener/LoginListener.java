@@ -36,15 +36,27 @@ public class LoginListener implements Listener{
     
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(PreLoginEvent event){
-        int protocol = plugin.getConfig().getInt("Protocol", -1);
-        List<String> message = plugin.getConfig().getStringList("KickMessage");
+        int protocol = plugin.getConfig().getInt("Protocol.Version", -1);
+        int clientProtocol = event.getConnection().getVersion();
+        List<String> message = plugin.getConfig().getStringList("Messages.Kick");
+        boolean isExact = plugin.getConfig().getBoolean("Protocol.Exact", false);
         
-        if(event.getConnection().getVersion() < protocol){
-            if(message.isEmpty())
-                message = Collections.singletonList("&cOutdated Client version! The Server is on {version}.");
-            
-            event.setCancelReason(plugin.getText(message, protocol));
-            event.setCancelled(true);
+        if(isExact){
+            if(clientProtocol != protocol){
+                if(message.isEmpty())
+                    message = Collections.singletonList("&cOutdated Client version! This network is on {version}.");
+                
+                event.setCancelReason(plugin.getText(message, protocol));
+                event.setCancelled(true);
+            }
+        }else{
+            if(clientProtocol < protocol){
+                if(message.isEmpty())
+                    message = Collections.singletonList("&cOutdated Client version! This network is on {version}.");
+    
+                event.setCancelReason(plugin.getText(message, protocol));
+                event.setCancelled(true);
+            }
         }
     }
 }

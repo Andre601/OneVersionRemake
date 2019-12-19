@@ -1,56 +1,75 @@
-#######################################################
-#    ____ _    ______                                 #
-#   / __ \ |  / / __ \            OneVersionRemake    #
-#  / / / / | / / /_/ /                by Andre_601    #
-# / /_/ /| |/ / _, _/                                 #
-# \____/ |___/_/ |_|                                  #
-#                                                     #
-# GitHub:                                             #
-#     https://github.com/Andre601/OneVersionRemake    #
-#                                                     #
-# Spigot:                                             #
-#     https://spigotmc.org/resources/71727/           #
-#######################################################
+##########################################################
+#       ____ _    ______                                 #
+#      / __ \ |  / / __ \            OneVersionRemake    #
+#     / / / / | / / /_/ /                by Andre_601    #
+#    / /_/ /| |/ / _, _/                                 #
+#    \____/ |___/_/ |_|                                  #
+#                                                        #
+#    GitHub:                                             #
+#        https://github.com/Andre601/OneVersionRemake    #
+#                                                        #
+#    Spigot:                                             #
+#        https://spigotmc.org/resources/71727/           #
+##########################################################
 #
-# The protocol (version) number to decide what Minecraft version is running on the Network.
-# Go to https://wiki.vg/Protocol_version_numbers#Versions_after_the_Netty_rewrite for all available versions.
+# Setting for what protocol version should be used and how OVR should handle joining players.
 #
-Protocol: -1
+Protocol:
+  #
+  # Set if players need to have this exact protocol version to join the network.
+  # Setting this to false (default) will allow players with newer versions to join your network.
+  # For example may players with 1.15 join your network, if the set protocol corresponds to 1.14
+  #
+  Exact: false
+  #
+  # The protocol version that should be used.
+  # Depending on the above options would players need to either have the same version when joining, or at least a
+  # newer one.
+  #
+  # A list of all supported protocols for the plugin can be found here:
+  #   https://github.com/andre601/OneVersionRemake/wiki/Supported-Protocols
+  #
+  Version: -1
 
 #
-# This changes the message that is usually shown when you ping the network with an unsupported (outdated) client.
-# The default text is "[Proxy type] [versions]" e.g. "BungeeCord 1.8.x 1.9.x ..."
+# The various messages you can change.
 #
-# Set this to an empty String ('') to not change the text.
-#
-# Placeholder:
-#   {version}  ->  The version used from the above set protocol (e.g. 1.14.4)
-#                  See https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols for a list of supported
-#                  protocols.
-#
-ProtocolName: '&cUnsupported client! Please use {version}!'
-
-#
-# Set the kick message here that is used when the player joins with an unsupported version.
-#
-# Placeholder:
-#   {version}  ->  The version used from the above set protocol (e.g. 1.14.4)
-#                  See https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols for a list of supported
-#                  protocols.
-#
-KickMessage:
-- '&cYou are using an unsupported version of Minecraft!'
-- '&cPlease change your version to {version} and try again.'
-
-#
-# Changes the players that are normally shown when hovering over the player count (x/x).
-# Set to an empty list (HoverMessage: []) to disable.
-#
-# Placeholder:
-#   {version}  ->  The version used from the above set protocol (e.g. 1.14.4)
-#                  See https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols for a list of supported
-#                  protocols.
-#
-HoverMessage:
-- '&cYou are using an unsupported version of Minecraft!'
-- '&cPlease change your version to {version} and try again.'
+Messages:
+  #
+  # This message would be shown where usually the current player count is displayed.
+  # Color and formatting codes are supported.
+  #
+  # Set this to an empty String ('') to disable.
+  #
+  # Placeholder:
+  #   {version} ->  Displays the version a player needs to join
+  #                 The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #
+  # PlayerCount: '' # Uncomment this and comment out the below option, to disable this.
+  PlayerCount: '&cUnsupported client! Use {version} instead!'
+  #
+  # Message shown when the player gets kicked while using an unsupported version.
+  # Color and formatting codes are supported.
+  #
+  # Placeholder:
+  #   {version} ->  Displays the version a player needs to join
+  #                 The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #
+  Kick:
+  - '&cYou are using an unsupported version of Minecraft!'
+  - '&cPlease change your version to {version} and try again.'
+  #
+  # This text is shown when the cursor of the player hovers over the player count, which normally displays the current
+  # online players.
+  # Color and formatting codes are supported.
+  #
+  # Change this to "Hover: []" to disable
+  #
+  # Placeholder:
+  #   {version} ->  Displays the version a player needs to join
+  #                 The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #
+  # Hover: [] # uncomment this and comment out the below lines to disable this option.
+  Hover:
+  - '&cYou are using an unsupported version of Minecraft!'
+  - '&cPlease change your version to {version}.'

@@ -16,9 +16,14 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake;
+package com.andre601.oneversionremake.util;
 
+/*
+ * This enum class contains all main (supported) versions to display.
+ * If, for example, ID 573 is used will {version} be changed to 1.15
+ */
 public enum Versions{
+    MC_1_15_1(575, "1.15.1"),
     MC_1_15  (573, "1.15"),
     MC_1_14_4(498, "1.14.4"),
     MC_1_14_3(490, "1.14.3"),
