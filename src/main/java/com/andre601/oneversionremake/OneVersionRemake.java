@@ -42,22 +42,22 @@ public class OneVersionRemake extends Plugin{
     public void onEnable(){
         sender = getProxy().getConsole();
         sendMessage(String.format(
-                "&fEnabling OneVersionRemake v%s...",
+                "§7[§fStartup§7] Enabling OneVersionRemake v%s...",
                 getDescription().getVersion()
         ));
         
-        sendMessage("&fAttempting to load config.yml...");
+        sendMessage("§7[§fStartup - Config§7] Attempting to load config.yml...");
         saveDefaultConfig();
         
         try{
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
         }catch(IOException ex){
-            sendMessage("&cUnable to load config! Plugin won't be enabled.");
+            sendMessage("§7[§fStartup - §cConfig§7] §cUnable to load config! Plugin won't be enabled.");
             return;
         }
-        sendMessage("&fConfig.yml loaded!");
+        sendMessage("§7[§fStartup - §aConfig§7] Config.yml loaded!");
         
-        sendMessage("&fLoading Protocol version from the config...");
+        sendMessage("§7[§fStartup - Protocol§7] Loading Protocol version from the config...");
         
         int protocol = config.getInt("Protocol.Version", -1);
         /*
@@ -65,28 +65,28 @@ public class OneVersionRemake extends Plugin{
          * In such a case will we print this warning and return to not load the listeners, preventing possible issues.
          */
         if(protocol == -1){
-            sendMessage("&c================================================================================");
-            sendMessage("&cWARNING!");
-            sendMessage("&cThe config option \"Version\" is set to -1!");
-            sendMessage("&cThe plugin won't be fully loaded to prevent any issues.");
-            sendMessage("&c");
-            sendMessage("&cPlease change the Version to a supported one listed here:");
-            sendMessage("&chttps://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
-            sendMessage("&c================================================================================");
+            sendMessage("§c================================================================================");
+            sendMessage("§cWARNING!");
+            sendMessage("§cThe config option \"Version\" is set to -1!");
+            sendMessage("§cThe plugin won't be fully loaded to prevent any issues.");
+            sendMessage("§c");
+            sendMessage("§cPlease change the Version to a supported one listed here:");
+            sendMessage("§chttps://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
+            sendMessage("§c================================================================================");
             return;
         }
         sendMessage(String.format(
-                "&fLoaded protocol %d (MC %s)!",
+                "§7[§fStartup - §aProtocol§7] Loaded protocol %d (MC %s)!",
                 protocol,
                 Versions.getFriendlyName(protocol)
         ));
     
-        sendMessage("&fLoading listeners...");
+        sendMessage("§7[§fStartup - Listener§7] Loading listeners...");
         this.getProxy().getPluginManager().registerListener(this, new PingListener(this));
         this.getProxy().getPluginManager().registerListener(this, new LoginListener(this));
-        sendMessage("&fLoaded listeners!");
+        sendMessage("§7[§fStartup - §aListener§7] Loaded listeners!");
     
-        sendMessage("&aStartup complete! OneVersionRemake is ready to use!");
+        sendMessage("§7[§aStartup§7] §aStartup complete! OneVersionRemake is ready to use!");
     }
     
     public Configuration getConfig(){
@@ -105,7 +105,7 @@ public class OneVersionRemake extends Plugin{
                 Files.copy(is, file.toPath());
             }catch(IOException ex){
                 sendMessage(String.format(
-                        "&cCould not create config.yml! Reason: %s",
+                        "§7[§fStartup - §cConfig§7] Could not create config.yml! Reason: %s",
                         ex.getMessage()
                 ));
             }
@@ -113,7 +113,7 @@ public class OneVersionRemake extends Plugin{
     }
     
     private void sendMessage(String text){
-        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', text)));
+        sender.sendMessage(new TextComponent("§7[OneVersionRemake] " + text));
     }
     
     public TextComponent getText(List<String> list, int protocol){
