@@ -1,0 +1,23 @@
+name: Update Wiki
+
+on:
+  push:
+    paths:
+      - 'wiki/**'
+    branches:
+      - '**'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Updating Wiki
+      uses: docker://decathlon/wiki-page-creator-action:latest
+      env:
+        ACTION_EMAIL: ${{ secrets.EMAIL }}
+        ACTION_NAME: Andre601
+        GH_PAT: ${{ secrets.PAT }}
+        MD_FOLDER: wiki
+        OWNER: Andre601
+        REPO_NAME: OneVersionRemake
