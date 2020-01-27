@@ -15,7 +15,7 @@ jobs:
     - name: Updating Wiki
       uses: docker://decathlon/wiki-page-creator-action:latest
       env:
-        ACTION_EMAIL: ${{ secrets.EMAIL }}
+        ACTION_MAIL: ${{ secrets.EMAIL }}
         ACTION_NAME: Andre601
         GH_PAT: ${{ secrets.PAT }}
         MD_FOLDER: wiki
