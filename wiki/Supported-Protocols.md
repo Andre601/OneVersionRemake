@@ -1,6 +1,6 @@
 OneVersionRemake supports pretty much any valid protocol that is used in Minecraft to determine the used version.
 
-There is however a small exception. And that is with the `{version}` placeholder, which only supports a selected list of protocol versions.  
+There is however a small exception. And that is with the `{version}` and `{userVersion}` placeholder, which only supports a selected list of protocol versions.  
 The following list contains all supported protocols and what version String is returned.
 
 | Protocol: | Displayed version: |
@@ -26,6 +26,6 @@ The following list contains all supported protocols and what version String is r
 | 109       | 1.9.2              |
 | 108       | 1.9.1              |
 | 107       | 1.9                |
-| 47        | 1.8                |
+| 47        | 1.8.9              |
 
 In the case that an unsupported version is used will the plugin display `?`.

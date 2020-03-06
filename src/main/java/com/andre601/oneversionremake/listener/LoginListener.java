@@ -46,7 +46,7 @@ public class LoginListener implements Listener{
                 if(message.isEmpty())
                     message = Collections.singletonList("&cOutdated Client version! This network is on {version}.");
                 
-                event.setCancelReason(plugin.getText(message, protocol));
+                event.setCancelReason(plugin.getTextComponent(message, protocol, clientProtocol));
                 event.setCancelled(true);
             }
         }else{
@@ -54,7 +54,7 @@ public class LoginListener implements Listener{
                 if(message.isEmpty())
                     message = Collections.singletonList("&cOutdated Client version! This network is on {version}.");
     
-                event.setCancelReason(plugin.getText(message, protocol));
+                event.setCancelReason(plugin.getTextComponent(message, protocol, clientProtocol));
                 event.setCancelled(true);
             }
         }

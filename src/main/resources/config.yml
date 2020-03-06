@@ -42,8 +42,9 @@ Messages:
   # Set this to an empty String ('') to disable.
   #
   # Placeholder:
-  #   {version} ->  Displays the version a player needs to join
-  #                 The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {version}     ->  Displays the version a player needs to join
+  #                     The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {userVersion} ->  Displays the version which the player is using.
   #
   # PlayerCount: '' # Uncomment this and comment out the below option, to disable this.
   PlayerCount: '&cUnsupported client! Use {version} instead!'
@@ -52,11 +53,12 @@ Messages:
   # Color and formatting codes are supported.
   #
   # Placeholder:
-  #   {version} ->  Displays the version a player needs to join
-  #                 The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {version}     ->  Displays the version a player needs to join
+  #                     The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {userVersion} ->  Displays the version which the player is using.
   #
   Kick:
-  - '&cYou are using an unsupported version of Minecraft!'
+  - '&cYou are using an unsupported version of Minecraft ({userVersion})!'
   - '&cPlease change your version to {version} and try again.'
   #
   # This text is shown when the cursor of the player hovers over the player count, which normally displays the current
@@ -66,10 +68,11 @@ Messages:
   # Change this to "Hover: []" to disable
   #
   # Placeholder:
-  #   {version} ->  Displays the version a player needs to join
-  #                 The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {version}     ->  Displays the version a player needs to join
+  #                     The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {userVersion} ->  Displays the version which the player is using.
   #
   # Hover: [] # uncomment this and comment out the below lines to disable this option.
   Hover:
-  - '&cYou are using an unsupported version of Minecraft!'
+  - '&cYou are using an unsupported version of Minecraft ({userVersion})!'
   - '&cPlease change your version to {version}.'

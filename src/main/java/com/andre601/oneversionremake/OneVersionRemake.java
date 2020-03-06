@@ -116,10 +116,20 @@ public class OneVersionRemake extends Plugin{
         sender.sendMessage(new TextComponent("§7[OneVersionRemake] " + text));
     }
     
-    public TextComponent getText(List<String> list, int protocol){
-        String text = ChatColor.translateAlternateColorCodes('&', String.join("\n", list)
-                .replace("{version}", Versions.getFriendlyName(protocol)));
+    public TextComponent getTextComponent(List<String> list, int serverProtocol, int userProtocol){
+        String text = getText(list, serverProtocol, userProtocol);
         
         return new TextComponent(text);
+    }
+    
+    public String getText(List<String> list, int serverProtocol, int userProtocol){
+        return getText(String.join("\n", list), serverProtocol, userProtocol);
+    }
+    
+    public String getText(String text, int serverProtocol, int userProtocol){
+        return ChatColor.translateAlternateColorCodes('&', text
+                .replace("{version}", Versions.getFriendlyName(serverProtocol))
+                .replace("{userVersion}", Versions.getFriendlyName(userProtocol))
+        );
     }
 }
