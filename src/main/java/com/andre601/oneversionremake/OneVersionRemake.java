@@ -41,52 +41,45 @@ public class OneVersionRemake extends Plugin{
     @Override
     public void onEnable(){
         sender = getProxy().getConsole();
-        sendMessage(String.format(
-                "§7[§fStartup§7] Enabling OneVersionRemake v%s...",
-                getDescription().getVersion()
-        ));
+        info("Enabling OneVersionRemake v%s...", getDescription().getVersion());
         
-        sendMessage("§7[§fStartup - Config§7] Attempting to load config.yml...");
+        info("Loading config.yml...");
         saveDefaultConfig();
         
         try{
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
         }catch(IOException ex){
-            sendMessage("§7[§fStartup - §cConfig§7] §cUnable to load config! Plugin won't be enabled.");
+            error("§cCouldn't load config.yml (%s)! Plugin won't be enabled.", ex.getMessage());
             return;
         }
-        sendMessage("§7[§fStartup - §aConfig§7] Config.yml loaded!");
+        info("Loaded config.yml successfully!");
         
-        sendMessage("§7[§fStartup - Protocol§7] Loading Protocol version from the config...");
+        info("Loading Protocol Version from config...");
         
         int protocol = config.getInt("Protocol.Version", -1);
         /*
          * We check if the config option "Protocol" is -1
          * In such a case will we print this warning and return to not load the listeners, preventing possible issues.
          */
-        if(protocol == -1){
-            sendMessage("§c================================================================================");
-            sendMessage("§cWARNING!");
-            sendMessage("§cThe config option \"Version\" is set to -1!");
-            sendMessage("§cThe plugin won't be fully loaded to prevent any issues.");
-            sendMessage("§c");
-            sendMessage("§cPlease change the Version to a supported one listed here:");
-            sendMessage("§chttps://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
-            sendMessage("§c================================================================================");
+        if(protocol < 47){
+            error("§c================================================================================");
+            error("§cWARNING!");
+            error("§cThe config option \"Version\" is set to less than 47 (MC 1.8.9)!");
+            error("§cThe plugin won't be fully loaded to prevent any issues.");
+            error("§c");
+            error("§cPlease change the Version to a supported one listed here:");
+            error("§chttps://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
+            error("§c================================================================================");
             return;
         }
-        sendMessage(String.format(
-                "§7[§fStartup - §aProtocol§7] Loaded protocol %d (MC %s)!",
-                protocol,
-                Versions.getFriendlyName(protocol)
-        ));
+        info("Loaded Protocol %d (MC %s)!", protocol, Versions.getFriendlyName(protocol));
     
-        sendMessage("§7[§fStartup - Listener§7] Loading listeners...");
-        this.getProxy().getPluginManager().registerListener(this, new PingListener(this));
-        this.getProxy().getPluginManager().registerListener(this, new LoginListener(this));
-        sendMessage("§7[§fStartup - §aListener§7] Loaded listeners!");
+        info("Loading listeners...");
+        new PingListener(this);
+        new LoginListener(this);
+        info("Loaded listeners!");
     
-        sendMessage("§7[§aStartup§7] §aStartup complete! OneVersionRemake is ready to use!");
+        info("§aStartup complete! OneVersionRemake is ready to use!");
     }
     
     public Configuration getConfig(){
@@ -104,16 +97,25 @@ public class OneVersionRemake extends Plugin{
             try(InputStream is = getResourceAsStream("config.yml")){
                 Files.copy(is, file.toPath());
             }catch(IOException ex){
-                sendMessage(String.format(
-                        "§7[§fStartup - §cConfig§7] Could not create config.yml! Reason: %s",
-                        ex.getMessage()
-                ));
+                error("§cCouldn't create config.yml! Reason: %s", ex.getMessage());
             }
         }
     }
     
-    private void sendMessage(String text){
-        sender.sendMessage(new TextComponent("§7[OneVersionRemake] " + text));
+    public void info(String text, Object... args){
+        sendMessage("§7[§fOneVersionRemake§7] " + text, args);
+    }
+    
+    private void error(String text, Object... args){
+        sendMessage("§7[§cOneVersionRemake§7] " + text, args);
+    }
+    
+    private void sendMessage(String text, Object... args){
+        
+        sender.sendMessage(new TextComponent(String.format(
+                text, 
+                args
+        )));
     }
     
     public TextComponent getTextComponent(List<String> list, int serverProtocol, int userProtocol){

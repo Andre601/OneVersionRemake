@@ -47,8 +47,8 @@ public enum Versions{
     MC_1_8_9 (47,  "1.8.9"),
     UNKNOWN  (0,   "?");
     
-    private int protocol;
-    private String name;
+    private final int protocol;
+    private final String name;
     
     Versions(int protocol, String name){
         this.protocol = protocol;

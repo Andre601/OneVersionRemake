@@ -30,10 +30,11 @@ import java.util.UUID;
 
 public class PingListener implements Listener{
     
-    private OneVersionRemake plugin;
+    private final OneVersionRemake plugin;
     
     public PingListener(OneVersionRemake plugin){
         this.plugin = plugin;
+        plugin.getProxy().getPluginManager().registerListener(plugin, this);
     }
     
     @EventHandler(priority = EventPriority.LOWEST)

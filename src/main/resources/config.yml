@@ -30,6 +30,11 @@ Protocol:
   #   https://github.com/andre601/OneVersionRemake/wiki/Supported-Protocols
   #
   Version: -1
+  #
+  # Should OneVersionRemake log any denied Login attempts in the console?
+  # The message will contain the version the player tried to join with.
+  #
+  LogDenial: true
 
 #
 # The various messages you can change.

@@ -19,6 +19,7 @@
 package com.andre601.oneversionremake.listener;
 
 import com.andre601.oneversionremake.OneVersionRemake;
+import com.andre601.oneversionremake.util.Versions;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -28,10 +29,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class LoginListener implements Listener{
-    private OneVersionRemake plugin;
+    private final OneVersionRemake plugin;
     
     public LoginListener(OneVersionRemake plugin){
         this.plugin = plugin;
+        plugin.getProxy().getPluginManager().registerListener(plugin, this);
     }
     
     @EventHandler(priority = EventPriority.LOWEST)
@@ -48,6 +50,14 @@ public class LoginListener implements Listener{
                 
                 event.setCancelReason(plugin.getTextComponent(message, protocol, clientProtocol));
                 event.setCancelled(true);
+                
+                if(plugin.getConfig().getBoolean("Protocol.LogDenial", true))
+                    plugin.info(
+                            "Denied login for Player %s with Protocol %d (MC %s)",
+                            event.getConnection().getName(),
+                            clientProtocol,
+                            Versions.getFriendlyName(clientProtocol)
+                    );
             }
         }else{
             if(clientProtocol < protocol){
@@ -56,6 +66,14 @@ public class LoginListener implements Listener{
     
                 event.setCancelReason(plugin.getTextComponent(message, protocol, clientProtocol));
                 event.setCancelled(true);
+    
+                if(plugin.getConfig().getBoolean("Protocol.LogDenial", true))
+                    plugin.info(
+                            "Denied login for Player %s with Protocol %d (MC %s)",
+                            event.getConnection().getName(),
+                            clientProtocol,
+                            Versions.getFriendlyName(clientProtocol)
+                    );
             }
         }
     }
