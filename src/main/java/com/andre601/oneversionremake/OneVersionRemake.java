@@ -62,14 +62,14 @@ public class OneVersionRemake extends Plugin{
          * In such a case will we print this warning and return to not load the listeners, preventing possible issues.
          */
         if(protocol < 47){
-            error("§c================================================================================");
-            error("§cWARNING!");
-            error("§cThe config option \"Version\" is set to less than 47 (MC 1.8.9)!");
-            error("§cThe plugin won't be fully loaded to prevent any issues.");
-            error("§c");
-            error("§cPlease change the Version to a supported one listed here:");
-            error("§chttps://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
-            error("§c================================================================================");
+            error("================================================================================");
+            error("WARNING!");
+            error("The config option \"Version\" is set to less than 47 (MC 1.8.9)!");
+            error("The plugin won't be fully loaded to prevent any issues.");
+            error("");
+            error("Please change the Version to a supported one listed here:");
+            error("https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
+            error("================================================================================");
             return;
         }
         info("Loaded Protocol %d (MC %s)!", protocol, Versions.getFriendlyName(protocol));
@@ -107,7 +107,7 @@ public class OneVersionRemake extends Plugin{
     }
     
     private void error(String text, Object... args){
-        sendMessage("§7[§cOneVersionRemake§7] " + text, args);
+        sendMessage("§7[§cOneVersionRemake§7] §c" + text, args);
     }
     
     private void sendMessage(String text, Object... args){
