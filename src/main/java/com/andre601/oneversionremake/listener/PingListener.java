@@ -41,6 +41,9 @@ public class PingListener implements Listener{
     public void onPing(ProxyPingEvent event){
         ServerPing ping = event.getResponse();
         ServerPing.Protocol protocol = ping.getVersion();
+        if(protocol == null)
+            return;
+        
         String protocolName = plugin.getConfig().getString("Messages.PlayerCount");
         int protocolId = plugin.getConfig().getInt("Protocol.Version");
         List<String> hoverList = plugin.getConfig().getStringList("Messages.Hover");
