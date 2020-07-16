@@ -52,12 +52,7 @@ public class PingListener implements Listener{
         if(isExact){
             if(protocol.getProtocol() != protocolId){
                 if(!hoverList.isEmpty())
-                    ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
-                            new ServerPing.PlayerInfo(
-                                    plugin.getText(hoverList, protocolId, protocol.getProtocol()),
-                                    UUID.fromString("0-0-0-0-0")
-                            )
-                    });
+                    ping.getPlayers().setSample(getSample(hoverList, protocolId, protocol.getProtocol()));
                 
                 if(!protocolName.isEmpty())
                     protocol.setName(plugin.getText(protocolName, protocolId, protocol.getProtocol()));
@@ -67,12 +62,8 @@ public class PingListener implements Listener{
         }else{
             if(protocol.getProtocol() < protocolId){
                 if(!hoverList.isEmpty())
-                    ping.getPlayers().setSample(new ServerPing.PlayerInfo[]{
-                            new ServerPing.PlayerInfo(
-                                    plugin.getText(hoverList, protocolId, protocol.getProtocol()),
-                                    UUID.fromString("0-0-0-0-0")
-                            )
-                    });
+                    ping.getPlayers().setSample(getSample(hoverList, protocolId, protocol.getProtocol()));
+                    
                 if(!protocolName.isEmpty())
                     protocol.setName(plugin.getText(protocolName, protocolId, protocol.getProtocol()));
     
@@ -82,5 +73,13 @@ public class PingListener implements Listener{
         
         ping.setVersion(protocol);
         event.setResponse(ping);
+    }
+    
+    private ServerPing.PlayerInfo[] getSample(List<String> list, int protocolId, int protocol){
+        ServerPing.PlayerInfo[] sample = new ServerPing.PlayerInfo[list.size()];
+        for(int i = 0; i < sample.length; i++)
+            sample[i] = new ServerPing.PlayerInfo(plugin.getText(list.get(i), protocolId, protocol), "0-0-0-0-0");
+        
+        return sample;
     }
 }

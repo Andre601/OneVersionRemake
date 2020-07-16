@@ -66,9 +66,9 @@ public enum Versions{
     }
     
     public static String getFriendlyName(int protocol){
-        for(Versions versions : values()){
-            if(versions.getProtocol() == protocol)
-                return versions.getName();
+        for(Versions version : values()){
+            if(version.getProtocol() == protocol)
+                return version.getName();
         }
         return UNKNOWN.getName();
     }

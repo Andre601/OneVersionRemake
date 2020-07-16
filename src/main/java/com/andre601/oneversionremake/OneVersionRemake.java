@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake;
 
+import com.andre601.oneversionremake.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.listener.LoginListener;
 import com.andre601.oneversionremake.listener.PingListener;
 import com.andre601.oneversionremake.util.Versions;
@@ -74,6 +75,10 @@ public class OneVersionRemake extends Plugin{
         }
         info("Loaded Protocol %d (MC %s)!", protocol, Versions.getFriendlyName(protocol));
     
+        info("Loading command...");
+        getProxy().getPluginManager().registerCommand(this, new CmdOneVersionRemake(this));
+        info("Command /oneversionremake loaded!");
+        
         info("Loading listeners...");
         new PingListener(this);
         new LoginListener(this);
@@ -99,6 +104,16 @@ public class OneVersionRemake extends Plugin{
             }catch(IOException ex){
                 error("§cCouldn't create config.yml! Reason: %s", ex.getMessage());
             }
+        }
+    }
+    
+    public boolean reloadConfig(){
+        try{
+            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+            return true;
+        }catch(IOException ex){
+            ex.printStackTrace();
+            return false;
         }
     }
     

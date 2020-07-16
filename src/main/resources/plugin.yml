@@ -3,3 +3,23 @@ author: Andre_601
 version: ${project.version}
 
 main: com.andre601.oneversionremake.OneVersionRemake
+
+permissions: 
+  oneversionremake.admin:
+    default: op
+    description: 'Gives access to all commands of OneVersionRemake'
+    children: 
+      oneversionremake.command.*: true
+  oneversionremake.command.*:
+    default: op
+    description: 'Gives access to all commands of OneVersionRemake'
+    children: 
+      oneversionremake.command.help: true
+      oneversionremake.command.reload: true
+  oneversionremake.command.help:
+    default: op
+    description: 'Gives access to /ovr help'
+  oneversionremake.command.reload:
+    default: op
+    description: 'Gives access to /ovr reload'
+    
