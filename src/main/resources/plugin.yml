@@ -4,6 +4,9 @@ version: ${project.version}
 
 main: com.andre601.oneversionremake.OneVersionRemake
 
+#
+# Permission stuff
+#
 permissions: 
   oneversionremake.admin:
     default: op
