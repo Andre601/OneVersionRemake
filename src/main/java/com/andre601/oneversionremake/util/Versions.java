@@ -23,6 +23,7 @@ package com.andre601.oneversionremake.util;
  * If, for example, ID 573 is used will {version} be changed to 1.15
  */
 public enum Versions{
+    MC_1_16_2(751, "1.16.2"),
     MC_1_16_1(736, "1.16.1"),
     MC_1_16  (735, "1.16"),
     MC_1_15_2(578, "1.15.2"),

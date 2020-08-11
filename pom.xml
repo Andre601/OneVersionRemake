@@ -6,7 +6,7 @@
 
     <groupId>com.andre601</groupId>
     <artifactId>OneVersionRemake</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,14 +23,14 @@
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.16-R0.3</version>
+            <version>1.16-R0.4-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.16-R0.3</version>
+            <version>1.16-R0.4-SNAPSHOT</version>
             <type>javadoc</type>
             <scope>provided</scope>
         </dependency>
