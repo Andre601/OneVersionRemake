@@ -27,7 +27,7 @@ Protocol:
   # newer one.
   #
   # A list of all supported protocols for the plugin can be found here:
-  #   https://github.com/andre601/OneVersionRemake/wiki/Supported-Protocols
+  #   https://minecraft.gamepedia.com/Protocol_version#Java_Edition_2
   #
   Version: -1
   #
