@@ -2,7 +2,7 @@ name: OneVersionRemake
 author: Andre_601
 version: ${project.version}
 
-main: com.andre601.oneversionremake.OneVersionRemake
+main: com.andre601.oneversionremake.bungee.BungeeCore
 
 #
 # Permission stuff

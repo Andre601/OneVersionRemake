@@ -5,6 +5,7 @@ The following list contains all supported protocols and what version String is r
 
 | Protocol: | Displayed version: |
 |:---------:|:------------------:|
+| 753       | 1.16.3             |
 | 751       | 1.16.2             |
 | 736       | 1.16.1             |
 | 735       | 1.16               |

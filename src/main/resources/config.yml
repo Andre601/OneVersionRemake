@@ -16,20 +16,13 @@
 #
 Protocol:
   #
-  # Set if players need to have this exact protocol version to join the network.
-  # Setting this to false (default) will allow players with newer versions to join your network.
-  # For example may players with 1.15 join your network, if the set protocol corresponds to 1.14
-  #
-  Exact: false
-  #
-  # The protocol version that should be used.
-  # Depending on the above options would players need to either have the same version when joining, or at least a
-  # newer one.
+  # The protocol versions that should be used.
+  # If the player doesn't have any of these versions will they be not allowed to join the network.
   #
   # A list of all supported protocols for the plugin can be found here:
   #   https://minecraft.gamepedia.com/Protocol_version#Java_Edition_2
   #
-  Version: -1
+  Versions: []
   #
   # Should OneVersionRemake log any denied Login attempts in the console?
   # The message will contain the version the player tried to join with.
@@ -52,19 +45,20 @@ Messages:
   #   {userVersion} ->  Displays the version which the player is using.
   #
   # PlayerCount: '' # Uncomment this and comment out the below option, to disable this.
-  PlayerCount: '&cUnsupported client! Use {version} instead!'
+  PlayerCount: '&cMinecraft {version}'
   #
   # Message shown when the player gets kicked while using an unsupported version.
   # Color and formatting codes are supported.
   #
   # Placeholder:
-  #   {version}     ->  Displays the version a player needs to join
-  #                     The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {version}     ->  Displays the versions a player needs to join
+  #                     The displayed versions are set through the above Protocol numbers (e.g. 573 becomes 1.15)
   #   {userVersion} ->  Displays the version which the player is using.
   #
   Kick:
   - '&cYou are using an unsupported version of Minecraft ({userVersion})!'
-  - '&cPlease change your version to {version} and try again.'
+  - '&cThis server supports the following Versions: {version}'
+  - '&cPlease change your Version and try again.'
   #
   # This text is shown when the cursor of the player hovers over the player count, which normally displays the current
   # online players.
