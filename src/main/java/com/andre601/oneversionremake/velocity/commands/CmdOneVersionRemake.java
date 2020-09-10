@@ -46,7 +46,7 @@ public class CmdOneVersionRemake implements Command{
                     return;
                 }
                 
-                send(player, "OneVersionRemake v%s");
+                send(player, "OneVersionRemake v%s", core.getVersion());
                 send(player, "");
                 send(player, TextColor.AQUA, "/ovr help");
                 send(player, TextColor.GRAY, "Shows this help.");

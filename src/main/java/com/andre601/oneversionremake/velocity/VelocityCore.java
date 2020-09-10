@@ -31,7 +31,6 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
 import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
 import org.slf4j.Logger;
 
@@ -41,7 +40,8 @@ import java.util.List;
 
 @Plugin(
         id = "oneversionremake",
-        name = "OneVersionRemake"
+        name = "OneVersionRemake",
+        authors = {"Andre_601"}
 )
 public class VelocityCore implements OneVersionRemake.Core{
     private final Logger logger;
