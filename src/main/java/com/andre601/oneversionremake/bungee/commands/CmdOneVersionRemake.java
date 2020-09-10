@@ -16,9 +16,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.commands;
+package com.andre601.oneversionremake.bungee.commands;
 
-import com.andre601.oneversionremake.OneVersionRemake;
+import com.andre601.oneversionremake.bungee.BungeeCore;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -27,11 +27,12 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class CmdOneVersionRemake extends Command{
     
-    private final OneVersionRemake plugin;
+    private final BungeeCore core;
     
-    public CmdOneVersionRemake(OneVersionRemake plugin){
+    public CmdOneVersionRemake(BungeeCore core){
         super("oneversionremake", "oneversionremake.admin", "ovr");
-        this.plugin = plugin;
+        this.core = core;
+        core.getProxy().getPluginManager().registerCommand(core, this);
     }
     
     @Override
@@ -45,7 +46,7 @@ public class CmdOneVersionRemake extends Command{
                     return;
                 }
                 
-                send(player, "OneVersionRemake v%s", plugin.getDescription().getVersion());
+                send(player, "OneVersionRemake v%s", core.getVersion());
                 send(player, "");
                 send(player, "&b/ovr help");
                 send(player, "&7Shows this help.");
@@ -58,14 +59,14 @@ public class CmdOneVersionRemake extends Command{
                     return;
                 }
                 
-                if(plugin.reloadConfig())
+                if(core.reloadConfig())
                     send(player, "&aSuccessfully reloaded config.yml!");
                 else
                     send(player, "&cError while reloading the config. Please check the console!");
             }
         }else{
             if(args.length == 0 || args[0].equalsIgnoreCase("help")){
-                send(commandSender, "OneVersionRemake v%s", plugin.getDescription().getVersion());
+                send(commandSender, "OneVersionRemake v%s", core.getVersion());
                 send(commandSender, "");
                 send(commandSender, "&bovr help");
                 send(commandSender, "&7Shows this help.");
@@ -73,7 +74,7 @@ public class CmdOneVersionRemake extends Command{
                 send(commandSender, "&7Reloads the configuration file.");
             }else
             if(args[0].equalsIgnoreCase("reload")){
-                if(plugin.reloadConfig())
+                if(core.reloadConfig())
                     send(commandSender, "&aSuccessfully reloaded config.yml");
                 else
                     send(commandSender, "&cError while reloading the config.");
