@@ -45,7 +45,7 @@ Messages:
   #   {userVersion} ->  Displays the version which the player is using.
   #
   # PlayerCount: '' # Uncomment this and comment out the below option, to disable this.
-  PlayerCount: '&cUnsupported client! Use {version} instead!'
+  PlayerCount: '&cMinecraft {version}'
   #
   # Message shown when the player gets kicked while using an unsupported version.
   # Color and formatting codes are supported.

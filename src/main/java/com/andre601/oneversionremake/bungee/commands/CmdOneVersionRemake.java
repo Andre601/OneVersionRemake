@@ -32,7 +32,6 @@ public class CmdOneVersionRemake extends Command{
     public CmdOneVersionRemake(BungeeCore core){
         super("oneversionremake", "oneversionremake.admin", "ovr");
         this.core = core;
-        core.getProxy().getPluginManager().registerCommand(core, this);
     }
     
     @Override

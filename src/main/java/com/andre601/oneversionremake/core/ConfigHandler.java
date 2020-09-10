@@ -19,7 +19,6 @@
 package com.andre601.oneversionremake.core;
 
 import com.google.common.reflect.TypeToken;
-import net.md_5.bungee.config.YamlConfiguration;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
@@ -47,7 +46,7 @@ public class ConfigHandler{
     }
     
     public boolean loadConfig(){
-        if(path.isDirectory() && !path.mkdirs()){
+        if(!path.isDirectory() && !path.mkdirs()){
             core.getLogger().warn("Unable to create folder!");
             return false;
         }

@@ -20,7 +20,6 @@ package com.andre601.oneversionremake.velocity;
 
 import com.andre601.oneversionremake.core.ConfigHandler;
 import com.andre601.oneversionremake.core.OneVersionRemake;
-import com.andre601.oneversionremake.core.SnakeYAML;
 import com.andre601.oneversionremake.velocity.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.velocity.listener.LoginListener;
 import com.andre601.oneversionremake.velocity.listener.PingListener;
@@ -33,8 +32,8 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -51,28 +50,21 @@ public class VelocityCore implements OneVersionRemake.Core{
     private OneVersionRemake core;
     
     @Inject
-    public VelocityCore(Logger logger, ProxyServer proxy, @DataDirectory Path pluginFolder){
-        this.logger = logger;
+    public VelocityCore(ProxyServer proxy, @DataDirectory Path pluginFolder){
+        this.logger = LoggerFactory.getLogger("OneVersionRemake");
         this.proxy = proxy;
         this.pluginFolder = pluginFolder;
     }
     
     @Subscribe
-    public void initialize(ProxyInitializeEvent event){
-        try{
-            this.proxy.getPluginManager().addToClasspath(this, SnakeYAML.load(this.pluginFolder));
-        }catch(IOException ex){
-            logger.error("Unable to load dependency SnakeYAML.", ex);
-            return;
-        }
-        
+    public void initialize(ProxyInitializeEvent event){ 
         this.core = new OneVersionRemake(this);
     }
     
     @Override
     public void enable(){
         logger.info("Loading command...");
-        new CmdOneVersionRemake(this);
+        getProxy().getCommandManager().register(new CmdOneVersionRemake(this), "oneversionremake", "ovr");
         logger.info("Command loaded!");
         
         logger.info("Loading listener...");
@@ -104,7 +96,7 @@ public class VelocityCore implements OneVersionRemake.Core{
     }
     
     public ConfigHandler getConfigHandler(){
-        return null;
+        return core.getConfigHandler();
     }
     
     public String getVersion(){
@@ -123,6 +115,6 @@ public class VelocityCore implements OneVersionRemake.Core{
         text = text.replace("{version}", OneVersionRemake.Versions.getFriendlyName(serverProtocols))
                 .replace("{userVersion}", OneVersionRemake.Versions.getFriendlyName(userProtocol));
         
-        return LegacyComponentSerializer.legacy().serialize(TextComponent.of(text));
+        return LegacyComponentSerializer.legacy().serialize(LegacyComponentSerializer.legacy().deserialize(text, '&'));
     }
 }

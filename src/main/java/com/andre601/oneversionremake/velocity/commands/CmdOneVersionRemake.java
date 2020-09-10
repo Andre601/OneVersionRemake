@@ -32,7 +32,6 @@ public class CmdOneVersionRemake implements Command{
     
     public CmdOneVersionRemake(VelocityCore core){
         this.core = core;
-        core.getProxy().getCommandManager().register(this, "oneversionremake", "ovr");
     }
     
     @Override
@@ -68,9 +67,9 @@ public class CmdOneVersionRemake implements Command{
             if(args.length == 0 || args[0].equalsIgnoreCase("help")){
                 send(commandSource, "OneVersionRemake v%s");
                 send(commandSource, "");
-                send(commandSource, TextColor.AQUA, "/ovr help");
+                send(commandSource, TextColor.AQUA, "ovr help");
                 send(commandSource, TextColor.GRAY, "Shows this help.");
-                send(commandSource, TextColor.AQUA, "/ovr reload");
+                send(commandSource, TextColor.AQUA, "ovr reload");
                 send(commandSource, TextColor.GRAY, "Reloads the configuration file");
             }else
             if(args[0].equalsIgnoreCase("reload")){

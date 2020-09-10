@@ -45,15 +45,17 @@ public class OneVersionRemake{
     private void start(){
         Logger logger = core.getProxyLogger();
         
-        logger.info("=========================");
+        logger.info("");
         logger.info("   ____ _    ______");
         logger.info("  / __ \\ |  / / __ \\");
         logger.info(" / / / / | / / /_/ /");
         logger.info("/ /_/ /| |/ / _, _/");
         logger.info("\\____/ |___/_/ |_|");
         logger.info("");
-        logger.info(core.getPlatform().getString());
-        logger.info("=========================");
+        logger.info("OneVersionRemake v" + getVersion());
+        logger.info("");
+        logger.info("Platform: " + core.getPlatform().getString());
+        logger.info("");
     
         if(configHandler.loadConfig()){
             logger.info("Config.yml loaded!");
@@ -61,7 +63,7 @@ public class OneVersionRemake{
             logger.warn("Disabling plugin!");
             return;
         }
-    
+        
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
         if(protocols.isEmpty()){
             logger.warn("================================================================================");
@@ -76,6 +78,8 @@ public class OneVersionRemake{
             logger.warn("================================================================================");
             return;
         }
+        
+        logger.info("Loaded Protocol Version(s) " + Versions.getFriendlyName(protocols));
         
         core.enable();
     }
@@ -106,9 +110,9 @@ public class OneVersionRemake{
     }
     
     public enum Platform{
-        BUNGEE("BungeeCord"),
+        BUNGEE   ("BungeeCord"),
         WATERFALL("BungeeCord - [Waterfall]"),
-        VELOCITY("Velocity");
+        VELOCITY ("Velocity");
         
         private final String platform;
         
@@ -122,6 +126,7 @@ public class OneVersionRemake{
     }
     
     public enum Versions{
+        MC_1_16_3(753, "1.16.3"),
         MC_1_16_2(751, "1.16.2"),
         MC_1_16_1(736, "1.16.1"),
         MC_1_16  (735, "1.16"),

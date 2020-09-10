@@ -61,6 +61,8 @@ public class PingListener{
             if(!protocolName.isEmpty())
                 builder.version(new ServerPing.Version(protocols.get(0), core.getText(protocolName, protocols, protocol.getProtocol())));
             
+            builder.description(ping.getDescription());
+            
             event.setPing(builder.build());
         }
     }

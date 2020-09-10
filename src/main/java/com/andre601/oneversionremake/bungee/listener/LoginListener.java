@@ -54,7 +54,7 @@ public class LoginListener implements Listener{
             event.setCancelled(true);
             
             if(core.getConfigHandler().getBoolean(true, "Protocol", "LogDenial"))
-                core.getLogger().info(String.format(
+                core.getProxyLogger().info(String.format(
                         "Denied login for Player %s with MC version %s (Protocol %d)",
                         event.getConnection().getName(),
                         OneVersionRemake.Versions.getFriendlyName(clientProtocol),

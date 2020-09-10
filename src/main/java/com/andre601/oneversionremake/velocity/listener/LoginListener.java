@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.velocity.listener;
 
+import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
@@ -52,6 +53,14 @@ public class LoginListener{
                     .denied(core.getComponent(message, protocols, clientProtocol));
             
             event.setResult(result);
+            
+            if(core.getConfigHandler().getBoolean(true, "Protocol", "LogDenial"))
+                core.getProxyLogger().info(String.format(
+                        "Denied login for Player %s with MC version %s (Protocol %d)",
+                        event.getUsername(),
+                        OneVersionRemake.Versions.getFriendlyName(clientProtocol),
+                        clientProtocol
+                ));
         }
     }
 }

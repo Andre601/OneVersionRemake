@@ -35,7 +35,7 @@ import java.util.List;
 public class BungeeCore extends Plugin implements OneVersionRemake.Core{
     
     private OneVersionRemake core;
-    private final Logger logger = LoggerFactory.getLogger(BungeeCore.class);
+    private final Logger logger = LoggerFactory.getLogger("OneVersionRemake");
     
     @Override
     public void onEnable(){
@@ -45,7 +45,7 @@ public class BungeeCore extends Plugin implements OneVersionRemake.Core{
     @Override
     public void enable(){
         logger.info("Loading command...");
-        new CmdOneVersionRemake(this);
+        getProxy().getPluginManager().registerCommand(this, new CmdOneVersionRemake(this));
         logger.info("Command loaded!");
         
         logger.info("Loading listener...");
