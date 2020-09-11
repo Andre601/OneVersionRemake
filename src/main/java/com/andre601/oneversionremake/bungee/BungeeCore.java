@@ -21,13 +21,13 @@ package com.andre601.oneversionremake.bungee;
 import com.andre601.oneversionremake.bungee.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.bungee.listener.LoginListener;
 import com.andre601.oneversionremake.bungee.listener.PingListener;
+import com.andre601.oneversionremake.bungee.logger.BungeeLogger;
 import com.andre601.oneversionremake.core.ConfigHandler;
+import com.andre601.oneversionremake.core.Logger;
 import com.andre601.oneversionremake.core.OneVersionRemake;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -35,7 +35,9 @@ import java.util.List;
 public class BungeeCore extends Plugin implements OneVersionRemake.Core{
     
     private OneVersionRemake core;
-    private final Logger logger = LoggerFactory.getLogger("OneVersionRemake");
+    private final Logger logger = new BungeeLogger(getLogger());
+    
+    private ConfigHandler configHandler = null;
     
     @Override
     public void onEnable(){
@@ -54,6 +56,11 @@ public class BungeeCore extends Plugin implements OneVersionRemake.Core{
         logger.info("Listener loaded!");
         
         logger.info("OneVersionRemake is ready!");
+    }
+    
+    @Override
+    public void setConfigHandler(ConfigHandler configHandler){
+        this.configHandler = configHandler;
     }
     
     @Override
@@ -81,8 +88,9 @@ public class BungeeCore extends Plugin implements OneVersionRemake.Core{
         return logger;
     }
     
+    @Override
     public ConfigHandler getConfigHandler(){
-        return core.getConfigHandler();
+        return configHandler;
     }
     
     public String getVersion(){

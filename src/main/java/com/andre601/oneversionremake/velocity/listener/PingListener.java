@@ -23,6 +23,7 @@ import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
+import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,8 +58,11 @@ public class PingListener{
             if(!message.isEmpty())
                 builder.samplePlayers(getSample(message, protocols, protocol.getProtocol()));
             
-            if(!protocolName.isEmpty())
-                builder.version(new ServerPing.Version(protocols.get(0), core.getText(protocolName, protocols, protocol.getProtocol())));
+            if(!protocolName.isEmpty()){
+                String text = LegacyComponentSerializer.legacy()
+                        .serialize(core.getComponent(protocolName, protocols, protocol.getProtocol()));
+                builder.version(new ServerPing.Version(protocols.get(0), text));
+            }
             
             builder.description(ping.getDescription());
             
@@ -68,8 +72,11 @@ public class PingListener{
     
     private ServerPing.SamplePlayer[] getSample(List<String> lines, List<Integer> serverProtocols, int userProtocol){
         ServerPing.SamplePlayer[] sample = new ServerPing.SamplePlayer[lines.size()];
-        for(int i = 0; i < sample.length; i++)
-            sample[i] = new ServerPing.SamplePlayer(core.getText(lines.get(i), serverProtocols, userProtocol), UUID.fromString("0-0-0-0-0"));
+        for(int i = 0; i < sample.length; i++){
+            String text = LegacyComponentSerializer.legacy()
+                    .serialize(core.getComponent(lines.get(0), serverProtocols, userProtocol));
+            sample[i] = new ServerPing.SamplePlayer(text, UUID.randomUUID());
+        }
         
         return sample;
     }

@@ -18,8 +18,6 @@
 
 package com.andre601.oneversionremake.core;
 
-import org.slf4j.Logger;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +62,8 @@ public class OneVersionRemake{
             return;
         }
         
+        core.setConfigHandler(configHandler);
+        
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
         if(protocols.isEmpty()){
             logger.warn("================================================================================");
@@ -84,10 +84,6 @@ public class OneVersionRemake{
         core.enable();
     }
     
-    public ConfigHandler getConfigHandler(){
-        return configHandler;
-    }
-    
     public boolean reloadConfig(){
         return configHandler.reload();
     }
@@ -100,6 +96,8 @@ public class OneVersionRemake{
         
         void enable();
         
+        void setConfigHandler(ConfigHandler configHandler);
+        
         boolean reloadConfig();
         
         Path getPath();
@@ -107,6 +105,8 @@ public class OneVersionRemake{
         Platform getPlatform();
         
         Logger getProxyLogger();
+        
+        ConfigHandler getConfigHandler();
     }
     
     public enum Platform{

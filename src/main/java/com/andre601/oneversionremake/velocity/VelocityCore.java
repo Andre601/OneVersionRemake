@@ -19,10 +19,12 @@
 package com.andre601.oneversionremake.velocity;
 
 import com.andre601.oneversionremake.core.ConfigHandler;
+import com.andre601.oneversionremake.core.Logger;
 import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.velocity.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.velocity.listener.LoginListener;
 import com.andre601.oneversionremake.velocity.listener.PingListener;
+import com.andre601.oneversionremake.velocity.logger.VelocityLogger;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -31,7 +33,6 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.text.TextComponent;
 import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
@@ -49,9 +50,11 @@ public class VelocityCore implements OneVersionRemake.Core{
     
     private OneVersionRemake core;
     
+    private ConfigHandler configHandler = null;
+    
     @Inject
     public VelocityCore(ProxyServer proxy, @DataDirectory Path pluginFolder){
-        this.logger = LoggerFactory.getLogger("OneVersionRemake");
+        this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
         this.proxy = proxy;
         this.pluginFolder = pluginFolder;
     }
@@ -76,6 +79,11 @@ public class VelocityCore implements OneVersionRemake.Core{
     }
     
     @Override
+    public void setConfigHandler(ConfigHandler configHandler){
+        this.configHandler = configHandler;
+    }
+    
+    @Override
     public boolean reloadConfig(){
         return core.reloadConfig();
     }
@@ -95,8 +103,9 @@ public class VelocityCore implements OneVersionRemake.Core{
         return logger;
     }
     
+    @Override
     public ConfigHandler getConfigHandler(){
-        return core.getConfigHandler();
+        return configHandler;
     }
     
     public String getVersion(){
@@ -108,13 +117,13 @@ public class VelocityCore implements OneVersionRemake.Core{
     }
     
     public TextComponent getComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol){
-        return TextComponent.of(getText(String.join("\n", lines), serverProtocols, userProtocol));
+        return getComponent(String.join("\n", lines), serverProtocols, userProtocol);
     }
     
-    public String getText(String text, List<Integer> serverProtocols, int userProtocol){
+    public TextComponent getComponent(String text, List<Integer> serverProtocols, int userProtocol){
         text = text.replace("{version}", OneVersionRemake.Versions.getFriendlyName(serverProtocols))
                 .replace("{userVersion}", OneVersionRemake.Versions.getFriendlyName(userProtocol));
         
-        return LegacyComponentSerializer.legacy().serialize(LegacyComponentSerializer.legacy().deserialize(text, '&'));
+        return LegacyComponentSerializer.legacy().deserialize(text, '&');
     }
 }
