@@ -18,15 +18,16 @@
 
 package com.andre601.oneversionremake.bungee.logger;
 
-import com.andre601.oneversionremake.core.Logger;
+import com.andre601.oneversionremake.core.ProxyLogger;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class BungeeLogger implements Logger{
+public class BungeeLogger implements ProxyLogger{
     
-    private final java.util.logging.Logger logger;
+    private final Logger logger;
     
-    public BungeeLogger(java.util.logging.Logger logger){
+    public BungeeLogger(Logger logger){
         this.logger = logger;
     }
     

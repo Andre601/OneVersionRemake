@@ -16,31 +16,21 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.velocity.logger;
+package com.andre601.oneversionremake.core;
 
-import com.andre601.oneversionremake.core.ProxyLogger;
-import org.slf4j.Logger;
-
-public class VelocityLogger implements ProxyLogger{
+public enum ProxyPlatform{
     
-    private final Logger logger;
+    BUNGEECORD("BungeeCord"),
+    WATERFALL ("Waterfall"),
+    VELOCITY  ("Velocity");
     
-    public VelocityLogger(Logger logger){
-        this.logger = logger;
+    private final String name;
+    
+    ProxyPlatform(String name){
+        this.name = name;
     }
     
-    @Override
-    public void info(String msg){
-        logger.info(msg);
-    }
-    
-    @Override
-    public void warn(String msg){
-        logger.warn(msg);
-    }
-    
-    @Override
-    public void warn(String msg, Throwable throwable){
-        logger.warn(msg, throwable);
+    public String getName(){
+        return name;
     }
 }

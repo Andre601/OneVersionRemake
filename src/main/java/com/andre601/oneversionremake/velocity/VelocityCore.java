@@ -18,9 +18,7 @@
 
 package com.andre601.oneversionremake.velocity;
 
-import com.andre601.oneversionremake.core.ConfigHandler;
-import com.andre601.oneversionremake.core.Logger;
-import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.*;
 import com.andre601.oneversionremake.velocity.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.velocity.listener.LoginListener;
 import com.andre601.oneversionremake.velocity.listener.PingListener;
@@ -43,8 +41,8 @@ import java.util.List;
         name = "OneVersionRemake",
         authors = {"Andre_601"}
 )
-public class VelocityCore implements OneVersionRemake.Core{
-    private final Logger logger;
+public class VelocityCore implements PluginCore{
+    private final ProxyLogger logger;
     private final ProxyServer proxy;
     private final Path pluginFolder;
     
@@ -94,12 +92,12 @@ public class VelocityCore implements OneVersionRemake.Core{
     }
     
     @Override
-    public OneVersionRemake.Platform getPlatform(){
-        return OneVersionRemake.Platform.VELOCITY;
+    public ProxyPlatform getProxyPlatform(){
+        return ProxyPlatform.VELOCITY;
     }
     
     @Override
-    public Logger getProxyLogger(){
+    public ProxyLogger getProxyLogger(){
         return logger;
     }
     

@@ -18,30 +18,29 @@
 
 package com.andre601.oneversionremake.core;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OneVersionRemake{
     
-    private final Core core;
+    private final PluginCore core;
     private final ConfigHandler configHandler;
     
     private final String version = getClass().getPackage().getImplementationVersion();
     
-    public OneVersionRemake(Core core){
+    public OneVersionRemake(PluginCore core){
         this.core = core;
         this.configHandler = new ConfigHandler(this, core.getPath());
         
         start();
     }
     
-    public Logger getLogger(){
+    public ProxyLogger getLogger(){
         return core.getProxyLogger();
     }
     
     private void start(){
-        Logger logger = core.getProxyLogger();
+        ProxyLogger logger = core.getProxyLogger();
         
         logger.info("");
         logger.info("   ____ _    ______");
@@ -52,7 +51,7 @@ public class OneVersionRemake{
         logger.info("");
         logger.info("OneVersionRemake v" + getVersion());
         logger.info("");
-        logger.info("Platform: " + core.getPlatform().getString());
+        logger.info("Platform: " + core.getProxyPlatform().getName());
         logger.info("");
     
         if(configHandler.loadConfig()){
@@ -92,40 +91,8 @@ public class OneVersionRemake{
         return version;
     }
     
-    public interface Core{
-        
-        void enable();
-        
-        void setConfigHandler(ConfigHandler configHandler);
-        
-        boolean reloadConfig();
-        
-        Path getPath();
-        
-        Platform getPlatform();
-        
-        Logger getProxyLogger();
-        
-        ConfigHandler getConfigHandler();
-    }
-    
-    public enum Platform{
-        BUNGEE   ("BungeeCord"),
-        WATERFALL("BungeeCord - [Waterfall]"),
-        VELOCITY ("Velocity");
-        
-        private final String platform;
-        
-        Platform(String platform){
-            this.platform = platform;
-        }
-        
-        public String getString(){
-            return platform;
-        }
-    }
-    
     public enum Versions{
+        MC_1_16_4(754, "1.16.4"),
         MC_1_16_3(753, "1.16.3"),
         MC_1_16_2(751, "1.16.2"),
         MC_1_16_1(736, "1.16.1"),
@@ -179,11 +146,10 @@ public class OneVersionRemake{
         }
         
         public static String getFriendlyName(List<Integer> protocols){
-            List<String> friendlyNames = new ArrayList<>();
-            for(int i : protocols)
-                friendlyNames.add(getFriendlyName(i));
-            
-            return String.join(", ", friendlyNames);
+            return protocols.stream()
+                    .sorted()
+                    .map(Versions::getFriendlyName)
+                    .collect(Collectors.joining(", "));
         }
     }
 }

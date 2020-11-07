@@ -18,11 +18,21 @@
 
 package com.andre601.oneversionremake.core;
 
-public interface Logger{
+import java.nio.file.Path;
+
+public interface PluginCore{
     
-    void info(String msg);
+    void enable();
     
-    void warn(String msg);
+    void setConfigHandler(ConfigHandler configHandler);
     
-    void warn(String msg, Throwable throwable);
+    boolean reloadConfig();
+    
+    Path getPath();
+    
+    ProxyPlatform getProxyPlatform();
+    
+    ProxyLogger getProxyLogger();
+    
+    ConfigHandler getConfigHandler();
 }

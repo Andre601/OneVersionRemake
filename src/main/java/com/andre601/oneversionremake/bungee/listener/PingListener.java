@@ -30,7 +30,7 @@ import java.util.List;
 
 public class PingListener implements Listener{
     
-    private BungeeCore core;
+    private final BungeeCore core;
     
     public PingListener(BungeeCore core){
         this.core = core;

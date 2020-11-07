@@ -22,9 +22,7 @@ import com.andre601.oneversionremake.bungee.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.bungee.listener.LoginListener;
 import com.andre601.oneversionremake.bungee.listener.PingListener;
 import com.andre601.oneversionremake.bungee.logger.BungeeLogger;
-import com.andre601.oneversionremake.core.ConfigHandler;
-import com.andre601.oneversionremake.core.Logger;
-import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.*;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -32,10 +30,10 @@ import net.md_5.bungee.api.plugin.Plugin;
 import java.nio.file.Path;
 import java.util.List;
 
-public class BungeeCore extends Plugin implements OneVersionRemake.Core{
+public class BungeeCore extends Plugin implements PluginCore{
     
     private OneVersionRemake core;
-    private final Logger logger = new BungeeLogger(getLogger());
+    private final ProxyLogger logger = new BungeeLogger(getLogger());
     
     private ConfigHandler configHandler = null;
     
@@ -74,17 +72,17 @@ public class BungeeCore extends Plugin implements OneVersionRemake.Core{
     }
     
     @Override
-    public OneVersionRemake.Platform getPlatform(){
+    public ProxyPlatform getProxyPlatform(){
         try{
             Class.forName("io.github.waterfallmc.waterfall.conf.WaterfallConfiguration");
-            return OneVersionRemake.Platform.WATERFALL;
+            return ProxyPlatform.WATERFALL;
         }catch(ClassNotFoundException ex){
-            return OneVersionRemake.Platform.BUNGEE;
+            return ProxyPlatform.BUNGEECORD;
         }
     }
     
     @Override
-    public Logger getProxyLogger(){
+    public ProxyLogger getProxyLogger(){
         return logger;
     }
     

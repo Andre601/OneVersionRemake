@@ -92,12 +92,6 @@ public class ConfigHandler{
         return node;
     }
     
-    public int getInt(Object... path){
-        ConfigurationNode node = fromPath(path);
-        
-        return node.getInt(-1);
-    }
-    
     public boolean getBoolean(boolean def, Object... path){
         ConfigurationNode node = fromPath(path);
         
