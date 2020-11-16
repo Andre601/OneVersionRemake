@@ -20,14 +20,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>OneVersionRemake</artifactId>
-        <groupId>com.andre601</groupId>
-        <version>2.1.0</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>velocity</artifactId>
-
+    <packaging>jar</packaging>
+    <version>${plugin.version}</version>
+    
+    <parent>
+        <artifactId>parent</artifactId>
+        <groupId>com.andre601.oneversionremake</groupId>
+        <version>parent</version>
+    </parent>
+    
+    <repositories>
+        <repository>
+            <id>velocity</id>
+            <url>https://repo.velocitypowered.com/snapshots/</url>
+        </repository>
+    </repositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.andre601.oneversionremake</groupId>
+            <artifactId>core</artifactId>
+            <version>${plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -31,4 +31,19 @@
         <artifactId>parent</artifactId>
         <version>parent</version>
     </parent>
+    
+    <repositories>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>configurate-yaml</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+    </dependencies>
 </project>

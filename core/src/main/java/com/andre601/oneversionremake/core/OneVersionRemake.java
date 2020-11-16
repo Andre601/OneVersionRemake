@@ -18,6 +18,15 @@
 
 package com.andre601.oneversionremake.core;
 
+import com.andre601.oneversionremake.core.enums.ProtocolVersion;
+import com.andre601.oneversionremake.core.files.ConfigHandler;
+import com.andre601.oneversionremake.core.interfaces.PluginCore;
+import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
+import java.util.List;
+
 public class OneVersionRemake{
     
     private final PluginCore pluginCore;
@@ -36,7 +45,75 @@ public class OneVersionRemake{
         return pluginCore.getProxyLogger();
     }
     
+    public String getVersion(){
+        return version;
+    }
+    
     private void start(){
+        ProxyLogger logger = pluginCore.getProxyLogger();
         
+        logger.info("");
+        logger.info("   ____ _    ______");
+        logger.info("  / __ \\ |  / / __ \\");
+        logger.info(" / / / / | / / /_/ /");
+        logger.info("/ /_/ /| |/ / _, _/");
+        logger.info("\\____/ |___/_/ |_|");
+        logger.info("");
+        logger.info("OneVersionRemake v" + getVersion());
+        logger.info("Platform: " + pluginCore.getProxyPlatform().getName());
+        logger.info("");
+        
+        if(configHandler.loadConfig()){
+            logger.info("Loaded config.yml!");
+        }else{
+            logger.warn("Couldn't load config.yml! Check above lines for errors and warnings.");
+            return;
+        }
+        
+        pluginCore.setConfigHandler(configHandler);
+    
+        List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
+        if(protocols.isEmpty()){
+            logger.warn("================================================================================");
+            logger.warn("WARNING!");
+            logger.warn("Rge config option 'Versions' doesn't contain any protocol numbers!");
+            logger.warn("Please edit the config to include valid protocol numbers or OneVersionRemake");
+            logger.warn("won't work as expected.");
+            logger.warn("");
+            logger.warn("You may find a list of supported protocol versions here:");
+            logger.warn("https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
+            logger.warn("");
+            logger.warn("OneVersionRemake won't enable completely to prevent any possible issues.");
+            logger.warn("================================================================================");
+            
+            return;
+        }
+        
+        logger.info("Loaded the following Protocol Version(s):");
+        logger.info(ProtocolVersion.getFriendlyNames(protocols));
+        
+        logger.info("Loading command /ovr...");
+        pluginCore.loadCommands();
+        logger.info("Command loaded!");
+        
+        logger.info("Loading Event Listeners...");
+        pluginCore.loadEventListeners();
+        logger.info("Event Listeners loaded!");
+        
+        logger.info("OneVersionRemake is ready!");
+    }
+    
+    public boolean reloadConfig(){
+        return configHandler.reload();
+    }
+    
+    public TextComponent getTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol){
+        return LegacyComponentSerializer.legacyAmpersand()
+                .deserialize(getText(String.join("\n", lines), serverProtocols, userProtocol));
+    }
+    
+    public String getText(String text, List<Integer> serverProtocols, int userProtocol){
+        return text.replace("{version}", ProtocolVersion.getFriendlyNames(serverProtocols))
+                .replace("{userVersion}", ProtocolVersion.getFriendlyName(userProtocol));
     }
 }
