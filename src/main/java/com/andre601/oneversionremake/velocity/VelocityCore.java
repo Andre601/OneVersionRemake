@@ -29,8 +29,8 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.kyori.text.TextComponent;
-import net.kyori.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
@@ -119,9 +119,9 @@ public class VelocityCore implements PluginCore{
     }
     
     public TextComponent getComponent(String text, List<Integer> serverProtocols, int userProtocol){
-        text = text.replace("{version}", OneVersionRemake.Versions.getFriendlyName(serverProtocols))
-                .replace("{userVersion}", OneVersionRemake.Versions.getFriendlyName(userProtocol));
+        text = text.replace("{version}", Version.getFriendlyNames(serverProtocols))
+                .replace("{userVersion}", Version.getFriendlyName(userProtocol));
         
-        return LegacyComponentSerializer.legacy().deserialize(text, '&');
+        return LegacyComponentSerializer.legacy('&').deserialize(text);
     }
 }

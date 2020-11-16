@@ -40,13 +40,13 @@ public class ConfigHandler{
     
     public ConfigHandler(OneVersionRemake core, Path path){
         this.core = core;
-        this.config = new File(path.toString(), "config.yml");
-        this.path = new File(path.toString());
+        this.config = new File(path.toFile(), "config.yml");
+        this.path = path.toFile();
     }
     
     public boolean loadConfig(){
         if(!path.isDirectory() && !path.mkdirs()){
-            core.getLogger().warn("Unable to create folder!");
+            core.getProxyLogger().warn("Could not create folder for plugin!");
             return false;
         }
         
@@ -54,7 +54,7 @@ public class ConfigHandler{
             try(InputStream is = core.getClass().getResourceAsStream("/config.yml")){
                 Files.copy(is, config.toPath());
             }catch(IOException ex){
-                core.getLogger().warn("Unable to create config file!");
+                core.getProxyLogger().warn("Unable to create config file!", ex);
                 return false;
             }
         }
@@ -66,7 +66,7 @@ public class ConfigHandler{
         try{
             node = loader.load();
         }catch(IOException ex){
-            core.getLogger().warn("Issue while loading the configuration file!", ex);
+            core.getProxyLogger().warn("There was an issue while attempting to load the config.", ex);
             return false;
         }
         
@@ -82,7 +82,7 @@ public class ConfigHandler{
             node = loader.load();
             return true;
         }catch(IOException ex){
-            core.getLogger().warn("Error while reloading the config!", ex);
+            core.getProxyLogger().warn("There was an issue while attempting to reload the config", ex);
             return false;
         }
     }
@@ -92,32 +92,24 @@ public class ConfigHandler{
     }
     
     public boolean getBoolean(boolean def, Object... path){
-        ConfigurationNode node = fromPath(path);
-        
-        return node.getBoolean(def);
+        return fromPath(path).getBoolean(def);
     }
     
     public String getString(String def, Object... path){
-        ConfigurationNode node = fromPath(path);
-        
-        return node.getString(def);
+        return fromPath(path).getString(def);
     }
     
     public List<Integer> getIntList(Object... path){
-        ConfigurationNode node = fromPath(path);
-        
         try{
-            return node.getList(Integer.class);
+            return fromPath(path).getList(Integer.class);
         }catch(SerializationException ex){
             return new ArrayList<>();
         }
     }
     
     public List<String> getStringList(Object... path){
-        ConfigurationNode node = fromPath(path);
-        
         try{
-            return node.getList(String.class);
+            return fromPath(path).getList(String.class);
         }catch(SerializationException ex){
             return new ArrayList<>();
         }

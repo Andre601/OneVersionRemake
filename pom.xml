@@ -4,13 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.andre601</groupId>
-    <artifactId>OneVersionRemake</artifactId>
-    <version>2.1.0</version>
+    <groupId>com.andre601.oneversionremake</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <version>parent</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <plugin.version>3.0.0</plugin.version>
     </properties>
+    
+    <modules>
+        <module>core</module>
+        <module>velocity</module>
+        <module>bungeecord</module>
+    </modules>
     
     <repositories>
         <repository>
@@ -47,6 +55,11 @@
             <groupId>org.spongepowered</groupId>
             <artifactId>configurate-yaml</artifactId>
             <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bungeecord</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

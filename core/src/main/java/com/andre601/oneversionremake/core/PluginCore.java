@@ -18,15 +18,13 @@
 
 package com.andre601.oneversionremake.core;
 
-import net.kyori.adventure.text.TextComponent;
-
 import java.nio.file.Path;
 
 public interface PluginCore{
     
     void enable();
     
-    void setConfigHandler(ConfigHandler configHandler);
+    void setConfigurationHandler();
     
     boolean reloadConfig();
     
@@ -35,6 +33,4 @@ public interface PluginCore{
     ProxyPlatform getProxyPlatform();
     
     ProxyLogger getProxyLogger();
-    
-    ConfigHandler getConfigHandler();
 }

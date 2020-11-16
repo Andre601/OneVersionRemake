@@ -18,23 +18,25 @@
 
 package com.andre601.oneversionremake.core;
 
-import net.kyori.adventure.text.TextComponent;
-
-import java.nio.file.Path;
-
-public interface PluginCore{
+public class OneVersionRemake{
     
-    void enable();
+    private final PluginCore pluginCore;
+    private final ConfigHandler configHandler;
     
-    void setConfigHandler(ConfigHandler configHandler);
+    private final String version = getClass().getPackage().getImplementationVersion();
     
-    boolean reloadConfig();
+    public OneVersionRemake(PluginCore pluginCore){
+        this.pluginCore = pluginCore;
+        this.configHandler = new ConfigHandler(this, pluginCore.getPath());
+        
+        start();
+    }
     
-    Path getPath();
+    public ProxyLogger getProxyLogger(){
+        return pluginCore.getProxyLogger();
+    }
     
-    ProxyPlatform getProxyPlatform();
-    
-    ProxyLogger getProxyLogger();
-    
-    ConfigHandler getConfigHandler();
+    private void start(){
+        
+    }
 }

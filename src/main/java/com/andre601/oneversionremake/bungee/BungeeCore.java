@@ -23,6 +23,7 @@ import com.andre601.oneversionremake.bungee.listener.LoginListener;
 import com.andre601.oneversionremake.bungee.listener.PingListener;
 import com.andre601.oneversionremake.bungee.logger.BungeeLogger;
 import com.andre601.oneversionremake.core.*;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -36,6 +37,7 @@ public class BungeeCore extends Plugin implements PluginCore{
     private final ProxyLogger logger = new BungeeLogger(getLogger());
     
     private ConfigHandler configHandler = null;
+    private BungeeAudiences bungeeAudiences = null;
     
     @Override
     public void onEnable(){
@@ -52,6 +54,8 @@ public class BungeeCore extends Plugin implements PluginCore{
         new LoginListener(this);
         new PingListener(this);
         logger.info("Listener loaded!");
+    
+        bungeeAudiences = BungeeAudiences.create(this);
         
         logger.info("OneVersionRemake is ready!");
     }
@@ -96,12 +100,10 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     public TextComponent getComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol){
-        return new TextComponent(getText(String.join("\n", lines), serverProtocols, userProtocol));
+        return 
     }
     
     public String getText(String text, List<Integer> serverProtocols, int userProtocol){
-        return ChatColor.translateAlternateColorCodes('&', text)
-                .replace("{version}", OneVersionRemake.Versions.getFriendlyName(serverProtocols))
-                .replace("{userVersion}", OneVersionRemake.Versions.getFriendlyName(userProtocol));
+        return "";
     }
 }

@@ -18,8 +18,10 @@
 
 package com.andre601.oneversionremake.core;
 
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OneVersionRemake{
     
@@ -78,7 +80,7 @@ public class OneVersionRemake{
             return;
         }
         
-        logger.info("Loaded Protocol Version(s) " + Versions.getFriendlyName(protocols));
+        logger.info("Loaded Protocol Version(s) " + Version.getFriendlyNames(protocols));
         
         core.enable();
     }
@@ -89,67 +91,5 @@ public class OneVersionRemake{
     
     public String getVersion(){
         return version;
-    }
-    
-    public enum Versions{
-        MC_1_16_4(754, "1.16.4"),
-        MC_1_16_3(753, "1.16.3"),
-        MC_1_16_2(751, "1.16.2"),
-        MC_1_16_1(736, "1.16.1"),
-        MC_1_16  (735, "1.16"),
-        MC_1_15_2(578, "1.15.2"),
-        MC_1_15_1(575, "1.15.1"),
-        MC_1_15  (573, "1.15"),
-        MC_1_14_4(498, "1.14.4"),
-        MC_1_14_3(490, "1.14.3"),
-        MC_1_14_2(485, "1.14.2"),
-        MC_1_14_1(480, "1.14.1"),
-        MC_1_14  (477, "1.14"),
-        MC_1_13_2(404, "1.13.2"),
-        MC_1_13_1(401, "1.13.1"),
-        MC_1_13  (393, "1.13"),
-        MC_1_12_2(340, "1.12.2"),
-        MC_1_12_1(338, "1.12.1"),
-        MC_1_12  (335, "1.12"),
-        MC_1_11_2(316, "1.11.2"),
-        MC_1_11  (315, "1.11"),
-        MC_1_10_2(210, "1.10.2"),
-        MC_1_9_4 (110, "1.9.4"),
-        MC_1_9_2 (109, "1.9.2"),
-        MC_1_9_1 (108, "1.9.1"),
-        MC_1_9   (107, "1.9"),
-        MC_1_8_9 (47,  "1.8.9"),
-        UNKNOWN  (0,   "?");
-    
-        private final int protocol;
-        private final String name;
-    
-        Versions(int protocol, String name){
-            this.protocol = protocol;
-            this.name = name;
-        }
-    
-        private String getName(){
-            return name;
-        }
-    
-        private int getProtocol(){
-            return protocol;
-        }
-    
-        public static String getFriendlyName(int protocol){
-            for(Versions version : values()){
-                if(version.getProtocol() == protocol)
-                    return version.getName();
-            }
-            return UNKNOWN.getName();
-        }
-        
-        public static String getFriendlyName(List<Integer> protocols){
-            return protocols.stream()
-                    .sorted()
-                    .map(Versions::getFriendlyName)
-                    .collect(Collectors.joining(", "));
-        }
     }
 }

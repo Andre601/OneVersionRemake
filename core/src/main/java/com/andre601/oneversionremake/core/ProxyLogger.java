@@ -18,23 +18,11 @@
 
 package com.andre601.oneversionremake.core;
 
-import net.kyori.adventure.text.TextComponent;
-
-import java.nio.file.Path;
-
-public interface PluginCore{
+public interface ProxyLogger{
     
-    void enable();
+    void info(String msg);
     
-    void setConfigHandler(ConfigHandler configHandler);
+    void warn(String msg);
     
-    boolean reloadConfig();
-    
-    Path getPath();
-    
-    ProxyPlatform getProxyPlatform();
-    
-    ProxyLogger getProxyLogger();
-    
-    ConfigHandler getConfigHandler();
+    void warn(String msg, Throwable throwable);
 }

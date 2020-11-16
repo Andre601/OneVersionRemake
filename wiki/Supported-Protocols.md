@@ -33,4 +33,4 @@ The following list contains all supported protocols and what version String is r
 | 107       | 1.9                |
 | 47        | 1.8.9              |
 
-In the case that an unsupported version is used will the plugin display `?`.
+`?` will be displayed in cases where unsupported versions will be used.

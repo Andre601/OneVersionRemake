@@ -18,23 +18,19 @@
 
 package com.andre601.oneversionremake.core;
 
-import net.kyori.adventure.text.TextComponent;
-
-import java.nio.file.Path;
-
-public interface PluginCore{
+public enum ProxyPlatform{
     
-    void enable();
+    BUNGEECORD("BungeeCord"),
+    WATERFALL ("Waterfall"),
+    VELOCITY  ("Velocity");
     
-    void setConfigHandler(ConfigHandler configHandler);
+    private final String name;
     
-    boolean reloadConfig();
+    ProxyPlatform(String name){
+        this.name = name;
+    }
     
-    Path getPath();
-    
-    ProxyPlatform getProxyPlatform();
-    
-    ProxyLogger getProxyLogger();
-    
-    ConfigHandler getConfigHandler();
+    public String getName(){
+        return name;
+    }
 }
