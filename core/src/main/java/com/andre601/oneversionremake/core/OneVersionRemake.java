@@ -32,8 +32,6 @@ public class OneVersionRemake{
     private final PluginCore pluginCore;
     private final ConfigHandler configHandler;
     
-    private final String version = getClass().getPackage().getImplementationVersion();
-    
     public OneVersionRemake(PluginCore pluginCore){
         this.pluginCore = pluginCore;
         this.configHandler = new ConfigHandler(this, pluginCore.getPath());
@@ -46,7 +44,7 @@ public class OneVersionRemake{
     }
     
     public String getVersion(){
-        return version;
+        return "3.0.0";
     }
     
     private void start(){
@@ -76,21 +74,19 @@ public class OneVersionRemake{
         if(protocols.isEmpty()){
             logger.warn("================================================================================");
             logger.warn("WARNING!");
-            logger.warn("Rge config option 'Versions' doesn't contain any protocol numbers!");
+            logger.warn("The config option 'Versions' doesn't contain any protocol numbers!");
             logger.warn("Please edit the config to include valid protocol numbers or OneVersionRemake");
             logger.warn("won't work as expected.");
             logger.warn("");
             logger.warn("You may find a list of supported protocol versions here:");
             logger.warn("https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
             logger.warn("");
-            logger.warn("OneVersionRemake won't enable completely to prevent any possible issues.");
+            logger.warn("OneVersionRemake won't handle joining Players to prevent any possible issues.");
             logger.warn("================================================================================");
-            
-            return;
+        }else{
+            logger.info("Loaded the following Protocol Version(s):");
+            logger.info(ProtocolVersion.getFriendlyNames(protocols));
         }
-        
-        logger.info("Loaded the following Protocol Version(s):");
-        logger.info(ProtocolVersion.getFriendlyNames(protocols));
         
         logger.info("Loading command /ovr...");
         pluginCore.loadCommands();
@@ -113,7 +109,10 @@ public class OneVersionRemake{
     }
     
     public String getText(String text, List<Integer> serverProtocols, int userProtocol){
-        return text.replace("{version}", ProtocolVersion.getFriendlyNames(serverProtocols))
+        text = text.replace("{version}", ProtocolVersion.getFriendlyNames(serverProtocols))
                 .replace("{userVersion}", ProtocolVersion.getFriendlyName(userProtocol));
+        
+        TextComponent component = LegacyComponentSerializer.legacyAmpersand().deserialize(text);
+        return LegacyComponentSerializer.legacySection().serialize(component);
     }
 }

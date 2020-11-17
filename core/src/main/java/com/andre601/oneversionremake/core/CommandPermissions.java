@@ -16,28 +16,15 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.core.interfaces;
+package com.andre601.oneversionremake.core;
 
-import com.andre601.oneversionremake.core.enums.ProxyPlatform;
-import com.andre601.oneversionremake.core.files.ConfigHandler;
-
-import java.nio.file.Path;
-
-public interface PluginCore{
+public class CommandPermissions{
     
-    void loadCommands();
+    private final static String BASE = "oneversionremake.";
+    private final static String COMMAND_BASE = BASE + "command.";
     
-    void loadEventListeners();
+    public final static String ADMIN = BASE + "admin";
     
-    void setConfigHandler(ConfigHandler configHandler);
-    
-    boolean reloadConfig();
-    
-    Path getPath();
-    
-    ProxyPlatform getProxyPlatform();
-    
-    ProxyLogger getProxyLogger();
-    
-    ConfigHandler getConfigHandler();
+    public static final String COMMAND_HELP = COMMAND_BASE + "help";
+    public static final String COMMAND_RELOAD = COMMAND_BASE + "reload";
 }

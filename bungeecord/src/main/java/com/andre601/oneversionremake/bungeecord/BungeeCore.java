@@ -22,13 +22,12 @@ import com.andre601.oneversionremake.bungeecord.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.bungeecord.listener.BungeeLoginListener;
 import com.andre601.oneversionremake.bungeecord.listener.BungeePingListener;
 import com.andre601.oneversionremake.bungeecord.logging.BungeeLogger;
-import com.andre601.oneversionremake.core.*;
+import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -105,7 +104,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     public String getText(String text, List<Integer> serverProtocols, int userProtocol){
-        
-        return core.getText(ChatColor.translateAlternateColorCodes('&', text), serverProtocols, userProtocol);
+        return core.getText(text, serverProtocols, userProtocol);
     }
 }

@@ -16,65 +16,68 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.bungeecord.listener;
+package com.andre601.oneversionremake.velocity.listener;
 
-import com.andre601.oneversionremake.bungeecord.BungeeCore;
-import net.md_5.bungee.api.ServerPing;
-import net.md_5.bungee.api.event.ProxyPingEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
-import net.md_5.bungee.event.EventPriority;
+import com.andre601.oneversionremake.velocity.VelocityCore;
+import com.velocitypowered.api.event.PostOrder;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.proxy.ProxyPingEvent;
+import com.velocitypowered.api.proxy.server.ServerPing;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-public class BungeePingListener implements Listener{
+public class VelocityPingListener{
     
-    private final BungeeCore plugin;
+    private final VelocityCore plugin;
     
-    public BungeePingListener(BungeeCore plugin){
+    public VelocityPingListener(VelocityCore plugin){
         this.plugin = plugin;
-        plugin.getProxy().getPluginManager().registerListener(plugin, this);
+        plugin.getProxy().getEventManager().register(plugin, this);
     }
     
-    @EventHandler(priority = EventPriority.LOWEST)
+    @Subscribe(order = PostOrder.FIRST)
     public void onProxyPing(ProxyPingEvent event){
-        ServerPing ping = event.getResponse();
-        ServerPing.Protocol protocol = ping.getVersion();
-        if(protocol == null)
+        ServerPing ping = event.getPing();
+        ServerPing.Version protocolVersion = ping.getVersion();
+        if(protocolVersion == null)
             return;
         
-        int userProtocol = protocol.getProtocol();
+        int userProtocol = protocolVersion.getProtocol();
     
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
         List<String> hoverMessage = plugin.getConfigHandler().getStringList("Messages", "Hover");
         
         if(serverProtocols.isEmpty())
             return;
-    
+        
         serverProtocols.sort(Comparator.reverseOrder());
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
         
         if(!serverProtocols.contains(userProtocol)){
-            if(!playerCount.isEmpty())
-                ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol));
+            ServerPing.Builder builder = ServerPing.builder();
             
-            if(!playerCount.isEmpty())
-                protocol.setName(plugin.getText(playerCount, serverProtocols, userProtocol));
+            if(!hoverMessage.isEmpty())
+                builder.samplePlayers(getSamplePlayers(hoverMessage, serverProtocols, userProtocol));
             
-            protocol.setProtocol(serverProtocols.get(0));
+            if(!playerCount.isEmpty()){
+                playerCount = plugin.getText(playerCount, serverProtocols, userProtocol);
+                
+                builder.version(new ServerPing.Version(serverProtocols.get(0), playerCount));
+            }
             
-            ping.setVersion(protocol);
-            event.setResponse(ping);
+            builder.description(ping.getDescriptionComponent());
+            
+            event.setPing(builder.build());
         }
     }
     
-    private ServerPing.PlayerInfo[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol){
-        ServerPing.PlayerInfo[] samplePlayers = new ServerPing.PlayerInfo[lines.size()];
+    private ServerPing.SamplePlayer[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol){
+        ServerPing.SamplePlayer[] samplePlayers = new ServerPing.SamplePlayer[lines.size()];
         for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.PlayerInfo(plugin.getText(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
+            samplePlayers[i] = new ServerPing.SamplePlayer(plugin.getText(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
         }
         
         return samplePlayers;

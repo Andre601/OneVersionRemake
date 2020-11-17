@@ -62,7 +62,7 @@ Messages:
   Kick:
   - '&cYou are using an unsupported version of Minecraft ({userVersion})!'
   - '&cThis server supports the following Versions:'
-  - '{version}'
+  - '&7{version}'
   - ''
   - '&cPlease change your Version and try again.'
   #

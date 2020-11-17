@@ -18,11 +18,14 @@
 
 package com.andre601.oneversionremake.velocity.commands;
 
+import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+
+import java.util.List;
 
 public class CmdOneVersionRemake implements SimpleCommand{
     
@@ -46,10 +49,10 @@ public class CmdOneVersionRemake implements SimpleCommand{
             sendMsg(commandSource, "OneVersionRemake v%s", plugin.getVersion());
             sendMsg(commandSource);
             sendMsg(commandSource, NamedTextColor.AQUA, "/ovr help");
-            sendMsg(commandSource, NamedTextColor.GRAY, "Displays this Command list.");
+            sendMsg(commandSource, NamedTextColor.GRAY, "Shows this command list");
             sendMsg(commandSource);
             sendMsg(commandSource, NamedTextColor.AQUA, "/ovr reload");
-            sendMsg(commandSource, NamedTextColor.GRAY, "Reloads the configuration file.");
+            sendMsg(commandSource, NamedTextColor.GRAY, "Reloads the Configuration.");
         }else
         if(args[0].equalsIgnoreCase("reload")){
             if(!commandSource.hasPermission("oneversionremake.command.reload")){
@@ -58,11 +61,24 @@ public class CmdOneVersionRemake implements SimpleCommand{
             }
             
             if(plugin.reloadConfig()){
-                sendMsg(commandSource, NamedTextColor.GREEN, "Config.yml successfully reloaded!");
+                List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
+                
+                sendMsg(commandSource, NamedTextColor.AQUA, "Loaded Minecraft Version(s):");
+                if(serverProtocols.isEmpty()){
+                    sendMsg(commandSource, NamedTextColor.RED, "None");
+                }else{
+                    sendMsg(commandSource, NamedTextColor.GRAY, ProtocolVersion.getFriendlyNames(serverProtocols));
+                }
+                
+                sendMsg(commandSource);
+                sendMsg(commandSource, NamedTextColor.GREEN, "Reload successful!");
             }else{
                 sendMsg(commandSource, NamedTextColor.RED, "There was an error while reloading the config.");
-                sendMsg(commandSource, NamedTextColor.RED, "Please check the consol for errors.");
+                sendMsg(commandSource, NamedTextColor.RED, "Please check the console for any errors and warnings.");
             }
+        }else{
+            sendMsg(commandSource, NamedTextColor.RED, "Unknown argument \"%s\".", args[0]);
+            sendMsg(commandSource, NamedTextColor.RED, "Run \"/ovr help\" for help.");
         }
     }
     

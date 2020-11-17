@@ -18,23 +18,26 @@
 
 package com.andre601.oneversionremake.velocity;
 
-import com.andre601.oneversionremake.core.*;
+import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import com.andre601.oneversionremake.velocity.commands.CmdOneVersionRemake;
+import com.andre601.oneversionremake.velocity.listener.VelocityLoginListener;
+import com.andre601.oneversionremake.velocity.listener.VelocityPingListener;
 import com.andre601.oneversionremake.velocity.logging.VelocityLogger;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
-import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import net.kyori.adventure.text.TextComponent;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class VelocityCore implements PluginCore{
     
@@ -71,7 +74,8 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadEventListeners(){
-        
+        new VelocityLoginListener(this);
+        new VelocityPingListener(this);
     }
     
     @Override
@@ -110,5 +114,13 @@ public class VelocityCore implements PluginCore{
     
     public ProxyServer getProxy(){
         return proxy;
+    }
+    
+    public TextComponent getTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocols){
+        return core.getTextComponent(lines, serverProtocols, userProtocols);
+    }
+    
+    public String getText(String text, List<Integer> serverProtocols, int userProtocols){
+        return core.getText(text, serverProtocols, userProtocols);
     }
 }

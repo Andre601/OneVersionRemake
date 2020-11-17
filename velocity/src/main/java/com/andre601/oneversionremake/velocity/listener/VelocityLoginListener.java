@@ -16,47 +16,48 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.bungeecord.listener;
+package com.andre601.oneversionremake.velocity.listener;
 
-import com.andre601.oneversionremake.bungeecord.BungeeCore;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
-import net.md_5.bungee.api.event.PreLoginEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
-import net.md_5.bungee.event.EventPriority;
+import com.andre601.oneversionremake.velocity.VelocityCore;
+import com.velocitypowered.api.event.PostOrder;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.connection.PreLoginEvent;
 
 import java.util.Collections;
 import java.util.List;
 
-public class BungeeLoginListener implements Listener{
+public class VelocityLoginListener{
     
-    private final BungeeCore plugin;
+    private final VelocityCore plugin;
     
-    public BungeeLoginListener(BungeeCore plugin){
+    public VelocityLoginListener(VelocityCore plugin){
         this.plugin = plugin;
-        plugin.getProxy().getPluginManager().registerListener(plugin, this);
+        plugin.getProxy().getEventManager().register(plugin, this);
     }
     
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onLogin(PreLoginEvent event){
+    @Subscribe(order = PostOrder.FIRST)
+    public void onPreLogin(PreLoginEvent event){
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
         List<String> kickMessage = plugin.getConfigHandler().getStringList("Messages", "Kick");
         
-        int userProtocol = event.getConnection().getVersion();
+        int userProtocol = event.getConnection().getProtocolVersion().getProtocol();
         if(serverProtocols.isEmpty())
             return;
         
         if(!serverProtocols.contains(userProtocol)){
             if(kickMessage.isEmpty())
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
+    
+            PreLoginEvent.PreLoginComponentResult result = PreLoginEvent.PreLoginComponentResult
+                    .denied(plugin.getTextComponent(kickMessage, serverProtocols, userProtocol));
             
-            event.setCancelReason(plugin.getTextComponent(kickMessage, serverProtocols, userProtocol));
-            event.setCancelled(true);
+            event.setResult(result);
             
             if(plugin.getConfigHandler().getBoolean(true, "Protocol", "LogDenial")){
                 plugin.getProxyLogger().info(String.format(
                         "Denied login for Player %s with MC version %s (Protocol Version %d)",
-                        event.getConnection().getName(),
+                        event.getUsername(),
                         ProtocolVersion.getFriendlyName(userProtocol),
                         userProtocol
                 ));
