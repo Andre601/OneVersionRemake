@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.velocity.commands;
 
+import com.andre601.oneversionremake.core.CommandPermissions;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.command.CommandSource;
@@ -41,7 +42,7 @@ public class CmdOneVersionRemake implements SimpleCommand{
         String[] args = invocation.arguments();
         
         if(args.length == 0 || args[0].equalsIgnoreCase("help")){
-            if(!commandSource.hasPermission("oneversionremake.command.help")){
+            if(!commandSource.hasPermission(CommandPermissions.COMMAND_HELP) && !commandSource.hasPermission(CommandPermissions.ADMIN)){
                 sendMsg(commandSource, NamedTextColor.RED, "Insufficient permissions!");
                 return;
             }
@@ -55,7 +56,7 @@ public class CmdOneVersionRemake implements SimpleCommand{
             sendMsg(commandSource, NamedTextColor.GRAY, "Reloads the Configuration.");
         }else
         if(args[0].equalsIgnoreCase("reload")){
-            if(!commandSource.hasPermission("oneversionremake.command.reload")){
+            if(!commandSource.hasPermission(CommandPermissions.COMMAND_RELOAD) && !commandSource.hasPermission(CommandPermissions.ADMIN)){
                 sendMsg(commandSource, NamedTextColor.RED, "Insufficient permissions!");
                 return;
             }
