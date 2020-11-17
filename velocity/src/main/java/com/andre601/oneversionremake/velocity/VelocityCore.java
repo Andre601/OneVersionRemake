@@ -36,12 +36,6 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 
-@Plugin(
-        id = "oneversionremake",
-        name = "OneVersionRemake",
-        authors = {"Andre_601"},
-        description = "Only allow access to your network for specific Minecraft versions!"
-)
 public class VelocityCore implements PluginCore{
     
     private final ProxyLogger logger;

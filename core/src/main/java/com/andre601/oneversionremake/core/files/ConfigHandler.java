@@ -19,9 +19,10 @@
 package com.andre601.oneversionremake.core.files;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import com.google.common.reflect.TypeToken;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.objectmapping.ObjectMappingException;
+import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,8 +61,8 @@ public class ConfigHandler{
             }
         }
     
-        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .file(config)
+        YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder()
+                .setFile(config)
                 .build();
         
         try{
@@ -75,8 +76,8 @@ public class ConfigHandler{
     }
     
     public boolean reload(){
-        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                .file(config)
+        YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder()
+                .setFile(config)
                 .build();
         
         try{
@@ -102,21 +103,21 @@ public class ConfigHandler{
     
     public List<Integer> getIntList(Object... path){
         try{
-            return fromPath(path).getList(Integer.class);
-        }catch(SerializationException ex){
+            return fromPath(path).getList(TypeToken.of(Integer.class));
+        }catch(ObjectMappingException ex){
             return new ArrayList<>();
         }
     }
     
     public List<String> getStringList(Object... path){
         try{
-            return fromPath(path).getList(String.class);
-        }catch(SerializationException ex){
+            return fromPath(path).getList(TypeToken.of(String.class));
+        }catch(ObjectMappingException ex){
             return new ArrayList<>();
         }
     }
     
     private ConfigurationNode fromPath(Object... path){
-        return getNode().node(path);
+        return getNode().getNode(path);
     }
 }

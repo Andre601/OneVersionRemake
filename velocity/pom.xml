@@ -35,7 +35,7 @@
     <repositories>
         <repository>
             <id>velocity</id>
-            <url>https://repo.velocitypowered.com/snapshots/</url>
+            <url>https://nexus.velocitypowered.com/repository/maven-public</url>
         </repository>
     </repositories>
     
@@ -43,13 +43,47 @@
         <dependency>
             <groupId>com.andre601.oneversionremake</groupId>
             <artifactId>core</artifactId>
-            <version>${plugin.version}</version>
+            <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
             <version>1.1.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>OneVersionRemake-Velocity-${project.version}</finalName>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

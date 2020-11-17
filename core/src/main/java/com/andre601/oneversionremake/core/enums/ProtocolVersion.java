@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.core.enums;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +73,7 @@ public enum ProtocolVersion{
     
     public static String getFriendlyNames(List<Integer> protocols){
         return protocols.stream()
-                .sorted()
+                .sorted(Comparator.reverseOrder())
                 .map(ProtocolVersion::getFriendlyName)
                 .collect(Collectors.joining(", "));
     }

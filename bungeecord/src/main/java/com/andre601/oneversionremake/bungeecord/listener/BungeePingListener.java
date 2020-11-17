@@ -25,7 +25,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,7 +53,7 @@ public class BungeePingListener implements Listener{
         if(serverProtocols.isEmpty())
             return;
     
-        Collections.sort(serverProtocols);
+        serverProtocols.sort(Comparator.reverseOrder());
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
         
