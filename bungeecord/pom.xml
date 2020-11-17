@@ -32,6 +32,13 @@
         <version>parent</version>
     </parent>
 
+    <repositories>
+        <repository>
+            <id>sonatype-oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+    
     <dependencies>
         <dependency>
             <groupId>com.andre601.oneversionremake</groupId>
