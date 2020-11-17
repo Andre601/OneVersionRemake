@@ -7,3 +7,10 @@ updates:
   open-pull-requests-limit: 10
   labels:
   - 'Type: Update (Dependency)'
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  labels:
+  - 'Type: Update (Dependency)'
