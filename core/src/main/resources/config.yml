@@ -81,8 +81,8 @@ Messages:
   #
   # Hover: [] # uncomment this and comment out the below lines to disable this option.
   Hover:
-  - '&cYou are using an unsupported version of Minecraft ({userVersion})!'
-  - '&cPlease change your version to {version}.'
+  - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
+  - '<red>Please change your version to {version}.'
   #
   # This text is shown in the MOTD (Message of the Day) in the server list.
   # Color and formatting codes are supported.
@@ -94,5 +94,5 @@ Messages:
   #
   # Hover: [] # uncomment this and comment out the below lines to disable this option.
   Motd:
-  - '&cYou are using an unsupported Version of Minecraft ({userVersion})!'
-  - '&cChange your version to &7{version}&c.'
+  - '<red>Unsupported Minecraft Version {userVersion}'
+  - '<red>Please use <gray>{version}</gray>.'

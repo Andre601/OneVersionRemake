@@ -62,7 +62,7 @@ public class BungeePingListener implements Listener{
         List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
-            if(!playerCount.isEmpty())
+            if(!hoverMessage.isEmpty())
                 ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol));
             
             if(!playerCount.isEmpty())
