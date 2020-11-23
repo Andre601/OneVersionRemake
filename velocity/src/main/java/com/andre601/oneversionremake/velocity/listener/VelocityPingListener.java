@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.velocity.listener;
 
+import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
@@ -55,6 +56,7 @@ public class VelocityPingListener{
         serverProtocols.sort(Comparator.reverseOrder());
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
+        List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
             ServerPing.Builder builder = ServerPing.builder();
@@ -63,12 +65,19 @@ public class VelocityPingListener{
                 builder.samplePlayers(getSamplePlayers(hoverMessage, serverProtocols, userProtocol));
             
             if(!playerCount.isEmpty()){
-                playerCount = plugin.getText(playerCount, serverProtocols, userProtocol);
+                playerCount = Parser.toString(playerCount, serverProtocols, userProtocol);
                 
                 builder.version(new ServerPing.Version(serverProtocols.get(0), playerCount));
             }
             
-            builder.description(ping.getDescriptionComponent());
+            if(!motd.isEmpty()){
+                if(motd.size() > 2)
+                    motd = motd.subList(0, 1);
+                
+                builder.description(Parser.toTextComponent(motd, serverProtocols, userProtocol));
+            }else{
+                builder.description(ping.getDescriptionComponent());
+            }
             
             event.setPing(builder.build());
         }
@@ -77,7 +86,7 @@ public class VelocityPingListener{
     private ServerPing.SamplePlayer[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol){
         ServerPing.SamplePlayer[] samplePlayers = new ServerPing.SamplePlayer[lines.size()];
         for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.SamplePlayer(plugin.getText(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
+            samplePlayers[i] = new ServerPing.SamplePlayer(Parser.toString(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
         }
         
         return samplePlayers;

@@ -27,12 +27,10 @@ import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.nio.file.Path;
-import java.util.List;
 
 public class BungeeCore extends Plugin implements PluginCore{
     
@@ -43,6 +41,7 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     @Override
     public void onEnable(){
+        BungeeAudiences.create(this);
         this.core = new OneVersionRemake(this);
     }
     
@@ -96,14 +95,5 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     public String getVersion(){
         return core.getVersion();
-    }
-    
-    public TextComponent getTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol){
-        return new TextComponent(BungeeComponentSerializer.get()
-                .serialize(core.getTextComponent(lines, serverProtocols, userProtocol)));
-    }
-    
-    public String getText(String text, List<Integer> serverProtocols, int userProtocol){
-        return core.getText(text, serverProtocols, userProtocol);
     }
 }

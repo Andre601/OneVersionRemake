@@ -33,11 +33,9 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.kyori.adventure.text.TextComponent;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.util.List;
 
 public class VelocityCore implements PluginCore{
     
@@ -114,13 +112,5 @@ public class VelocityCore implements PluginCore{
     
     public ProxyServer getProxy(){
         return proxy;
-    }
-    
-    public TextComponent getTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocols){
-        return core.getTextComponent(lines, serverProtocols, userProtocols);
-    }
-    
-    public String getText(String text, List<Integer> serverProtocols, int userProtocols){
-        return core.getText(text, serverProtocols, userProtocols);
     }
 }

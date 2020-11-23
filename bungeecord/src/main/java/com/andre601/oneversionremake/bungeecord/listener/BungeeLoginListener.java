@@ -19,7 +19,9 @@
 package com.andre601.oneversionremake.bungeecord.listener;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
+import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -50,7 +52,7 @@ public class BungeeLoginListener implements Listener{
             if(kickMessage.isEmpty())
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
             
-            event.setCancelReason(plugin.getTextComponent(kickMessage, serverProtocols, userProtocol));
+            event.setCancelReason(BungeeComponentSerializer.get().serialize(Parser.toTextComponent(kickMessage, serverProtocols, userProtocol)));
             event.setCancelled(true);
             
             if(plugin.getConfigHandler().getBoolean(true, "Protocol", "LogDenial")){

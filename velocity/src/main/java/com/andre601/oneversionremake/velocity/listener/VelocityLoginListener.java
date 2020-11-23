@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.velocity.listener;
 
+import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.event.PostOrder;
@@ -50,7 +51,7 @@ public class VelocityLoginListener{
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
     
             PreLoginEvent.PreLoginComponentResult result = PreLoginEvent.PreLoginComponentResult
-                    .denied(plugin.getTextComponent(kickMessage, serverProtocols, userProtocol));
+                    .denied(Parser.toTextComponent(kickMessage, serverProtocols, userProtocol));
             
             event.setResult(result);
             

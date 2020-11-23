@@ -12,6 +12,8 @@
 #        https://spigotmc.org/resources/71727/           #
 ##########################################################
 #
+# Config Version: ${project.version}
+#
 # Settings for what protocol versions should be used and if OVR should log denied attempts.
 #
 Protocol:
@@ -81,3 +83,16 @@ Messages:
   Hover:
   - '&cYou are using an unsupported version of Minecraft ({userVersion})!'
   - '&cPlease change your version to {version}.'
+  #
+  # This text is shown in the MOTD (Message of the Day) in the server list.
+  # Color and formatting codes are supported.
+  # 
+  # Placeholders:
+  #   {version}     ->  Displays the version a player needs to join
+  #                     The displayed version is set through the above Protocol number (e.g. 573 becomes 1.15)
+  #   {userVersion} ->  Displays the version which the player is using.
+  #
+  # Hover: [] # uncomment this and comment out the below lines to disable this option.
+  Motd:
+  - '&cYou are using an unsupported Version of Minecraft ({userVersion})!'
+  - '&cChange your version to &7{version}&c.'

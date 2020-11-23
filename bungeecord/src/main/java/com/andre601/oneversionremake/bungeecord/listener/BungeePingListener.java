@@ -19,7 +19,10 @@
 package com.andre601.oneversionremake.bungeecord.listener;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
+import com.andre601.oneversionremake.core.Parser;
+import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.ServerPing;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.ProxyPingEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -56,13 +59,25 @@ public class BungeePingListener implements Listener{
         serverProtocols.sort(Comparator.reverseOrder());
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
+        List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
             if(!playerCount.isEmpty())
                 ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol));
             
             if(!playerCount.isEmpty())
-                protocol.setName(plugin.getText(playerCount, serverProtocols, userProtocol));
+                protocol.setName(Parser.toString(playerCount, serverProtocols, userProtocol));
+            
+            if(!motd.isEmpty()){
+                if(motd.size() > 2)
+                    motd = motd.subList(0, 1);
+                
+                TextComponent component = new TextComponent(BungeeComponentSerializer.get().serialize(
+                        Parser.toTextComponent(motd, serverProtocols, userProtocol)
+                ));
+                
+                ping.setDescriptionComponent(component);
+            }
             
             protocol.setProtocol(serverProtocols.get(0));
             
@@ -74,7 +89,7 @@ public class BungeePingListener implements Listener{
     private ServerPing.PlayerInfo[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol){
         ServerPing.PlayerInfo[] samplePlayers = new ServerPing.PlayerInfo[lines.size()];
         for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.PlayerInfo(plugin.getText(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
+            samplePlayers[i] = new ServerPing.PlayerInfo(Parser.toString(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
         }
         
         return samplePlayers;

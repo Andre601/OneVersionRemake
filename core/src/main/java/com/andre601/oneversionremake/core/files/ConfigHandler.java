@@ -35,6 +35,7 @@ import java.util.List;
 public class ConfigHandler{
     
     private final OneVersionRemake core;
+    
     private final File config;
     private final File path;
     
@@ -42,6 +43,7 @@ public class ConfigHandler{
     
     public ConfigHandler(OneVersionRemake core, Path path){
         this.core = core;
+        
         this.config = new File(path.toFile(), "config.yml");
         this.path = path.toFile();
     }
