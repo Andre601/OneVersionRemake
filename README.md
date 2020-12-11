@@ -8,18 +8,14 @@ BungeeCord plugin based on the original [OneVersion] with improvements in terms 
 
 ## Changes compared to OneVersion
 - Improved code.  
-OneVersion used some questionable methods and ways to perform things and was just a "single class" plugin, which is never good.  
-This plugin improves that.
+OneVersionRemake completely rewrote the original plugin and improved it to also support Velocity!
 - Changed configuration.  
-OneVersion used a useless placeholder for new lines which made the config look weird.  
-OneVersionRemake changed this and has an easier way to set messages.
-- New options to display text to.  
-OneVersionRemake allows to display text in the MOTD, player count and the hover of said player count.
+The configuration has been rewritten to provide useful information alongside several options to display text.
 - Support for selected MC releases.  
-The plugin adds a new `{version}` placeholder which when using it with a supported protocol version displays the supported/used MC version.  
+The plugin adds a new `{version}` and `{clientVersion}` placeholder which when using it with a supported protocol version displays the supported/used MC version.  
 E.g. the protocol 575 would change `{version}` to `1.15.1`
-- Deny any version that isn't version X.  
-Do you only want to allow players with 1.12? Set the protocol and enable the "Exact" mode and you're done!
+- Only allow the versions YOU want!  
+You can list as many protocol versions as you want. Any player not having any of these will be denied access.
 
 # Links
 - [Spigot]
