@@ -41,7 +41,8 @@ public class VelocityLoginListener{
     public void onPreLogin(PreLoginEvent event){
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
         List<String> kickMessage = plugin.getConfigHandler().getStringList("Messages", "Kick");
-        
+    
+        boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
         int userProtocol = event.getConnection().getProtocolVersion().getProtocol();
         if(serverProtocols.isEmpty())
             return;
@@ -51,7 +52,7 @@ public class VelocityLoginListener{
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
     
             PreLoginEvent.PreLoginComponentResult result = PreLoginEvent.PreLoginComponentResult
-                    .denied(Parser.toTextComponent(kickMessage, serverProtocols, userProtocol));
+                    .denied(Parser.toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly));
             
             event.setResult(result);
             

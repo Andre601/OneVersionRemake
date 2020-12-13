@@ -63,16 +63,7 @@ public class OneVersionRemake{
         
         ProxyLogger logger = pluginCore.getProxyLogger();
         
-        logger.info("");
-        logger.info("   ____ _    ______");
-        logger.info("  / __ \\ |  / / __ \\");
-        logger.info(" / / / / | / / /_/ /");
-        logger.info("/ /_/ /| |/ / _, _/");
-        logger.info("\\____/ |___/_/ |_|");
-        logger.info("");
-        logger.info("OneVersionRemake v" + (getVersion() == null ? "UNKNOWN" : getVersion()));
-        logger.info("Platform: " + pluginCore.getProxyPlatform().getName());
-        logger.info("");
+        printBanner(logger);
         
         if(configHandler.loadConfig()){
             logger.info("Loaded config.yml!");
@@ -85,20 +76,10 @@ public class OneVersionRemake{
     
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
         if(protocols.isEmpty()){
-            logger.warn("================================================================================");
-            logger.warn("WARNING!");
-            logger.warn("The config option 'Versions' doesn't contain any protocol numbers!");
-            logger.warn("Please edit the config to include valid protocol numbers or OneVersionRemake");
-            logger.warn("won't work as expected.");
-            logger.warn("");
-            logger.warn("You may find a list of supported protocol versions here:");
-            logger.warn("https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
-            logger.warn("");
-            logger.warn("OneVersionRemake won't handle joining Players to prevent any possible issues.");
-            logger.warn("================================================================================");
+            printWarning(logger);
         }else{
             logger.info("Loaded the following Protocol Version(s):");
-            logger.info(ProtocolVersion.getFriendlyNames(protocols));
+            logger.info(ProtocolVersion.getFriendlyNames(protocols, false));
         }
         
         logger.info("Loading command /ovr...");
@@ -110,6 +91,33 @@ public class OneVersionRemake{
         logger.info("Event Listeners loaded!");
         
         logger.info("OneVersionRemake is ready!");
+    }
+    
+    private void printBanner(ProxyLogger logger){
+        logger.info("");
+        logger.info("   ____ _    ______");
+        logger.info("  / __ \\ |  / / __ \\");
+        logger.info(" / / / / | / / /_/ /");
+        logger.info("/ /_/ /| |/ / _, _/");
+        logger.info("\\____/ |___/_/ |_|");
+        logger.info("");
+        logger.info("OneVersionRemake v" + (getVersion() == null ? "UNKNOWN" : getVersion()));
+        logger.info("Platform: " + pluginCore.getProxyPlatform().getName());
+        logger.info("");
+    }
+    
+    private void printWarning(ProxyLogger logger){
+        logger.warn("================================================================================");
+        logger.warn("WARNING!");
+        logger.warn("The config option 'Versions' doesn't contain any protocol numbers!");
+        logger.warn("Please edit the config to include valid protocol numbers or OneVersionRemake");
+        logger.warn("won't work as expected.");
+        logger.warn("");
+        logger.warn("You may find a list of supported protocol versions here:");
+        logger.warn("https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols");
+        logger.warn("");
+        logger.warn("OneVersionRemake won't handle joining Players to prevent any possible issues.");
+        logger.warn("================================================================================");
     }
     
     private void loadVersion(){

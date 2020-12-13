@@ -27,17 +27,17 @@ import java.util.List;
 
 public class Parser{
     
-    public static Component toTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol){
-        return MiniMessage.get().parse(parse(String.join("\n", lines), serverProtocols, userProtocol));
+    public static Component toTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        return MiniMessage.get().parse(parse(String.join("\n", lines), serverProtocols, userProtocol, majorOnly));
     }
     
-    public static String toString(String text, List<Integer> serverProtocols, int userProtocol){
-        Component component = MiniMessage.get().parse(parse(text, serverProtocols, userProtocol));
+    public static String toString(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        Component component = MiniMessage.get().parse(parse(text, serverProtocols, userProtocol, majorOnly));
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
     
-    private static String parse(String text, List<Integer> serverProtocols, int userProtocol){
-        return text.replace("{version}", ProtocolVersion.getFriendlyNames(serverProtocols))
+    private static String parse(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        return text.replace("{version}", ProtocolVersion.getFriendlyNames(serverProtocols, majorOnly))
                 .replace("{userVersion}", ProtocolVersion.getFriendlyName(userProtocol));
     }
     

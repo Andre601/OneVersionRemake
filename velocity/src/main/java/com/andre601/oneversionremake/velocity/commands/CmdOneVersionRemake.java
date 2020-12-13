@@ -68,7 +68,7 @@ public class CmdOneVersionRemake implements SimpleCommand{
                 if(serverProtocols.isEmpty()){
                     sendMsg(commandSource, NamedTextColor.RED, "None");
                 }else{
-                    sendMsg(commandSource, NamedTextColor.GRAY, ProtocolVersion.getFriendlyNames(serverProtocols));
+                    sendMsg(commandSource, NamedTextColor.GRAY, ProtocolVersion.getFriendlyNames(serverProtocols, false));
                 }
                 
                 sendMsg(commandSource);

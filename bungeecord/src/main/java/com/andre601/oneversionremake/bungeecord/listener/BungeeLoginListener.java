@@ -44,6 +44,7 @@ public class BungeeLoginListener implements Listener{
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
         List<String> kickMessage = plugin.getConfigHandler().getStringList("Messages", "Kick");
         
+        boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
         int userProtocol = event.getConnection().getVersion();
         if(serverProtocols.isEmpty())
             return;
@@ -52,7 +53,9 @@ public class BungeeLoginListener implements Listener{
             if(kickMessage.isEmpty())
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
             
-            event.setCancelReason(BungeeComponentSerializer.get().serialize(Parser.toTextComponent(kickMessage, serverProtocols, userProtocol)));
+            event.setCancelReason(BungeeComponentSerializer.get().serialize(
+                    Parser.toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly)
+            ));
             event.setCancelled(true);
             
             if(plugin.getConfigHandler().getBoolean(true, "Protocol", "LogDenial")){

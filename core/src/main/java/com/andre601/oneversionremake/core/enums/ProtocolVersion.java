@@ -23,43 +23,45 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum ProtocolVersion{
-    MC_1_16_4(754, "1.16.4"),
-    MC_1_16_3(753, "1.16.3"),
-    MC_1_16_2(751, "1.16.2"),
-    MC_1_16_1(736, "1.16.1"),
-    MC_1_16  (735, "1.16"),
-    MC_1_15_2(578, "1.15.2"),
-    MC_1_15_1(575, "1.15.1"),
-    MC_1_15  (573, "1.15"),
-    MC_1_14_4(498, "1.14.4"),
-    MC_1_14_3(490, "1.14.3"),
-    MC_1_14_2(485, "1.14.2"),
-    MC_1_14_1(480, "1.14.1"),
-    MC_1_14  (477, "1.14"),
-    MC_1_13_2(404, "1.13.2"),
-    MC_1_13_1(401, "1.13.1"),
-    MC_1_13  (393, "1.13"),
-    MC_1_12_2(340, "1.12.2"),
-    MC_1_12_1(338, "1.12.1"),
-    MC_1_12  (335, "1.12"),
-    MC_1_11_2(316, "1.11.2"),
-    MC_1_11  (315, "1.11"),
-    MC_1_10_2(210, "1.10.2"),
-    MC_1_9_4 (110, "1.9.4"),
-    MC_1_9_2 (109, "1.9.2"),
-    MC_1_9_1 (108, "1.9.1"),
-    MC_1_9   (107, "1.9"),
-    MC_1_8_9 (47,  "1.8.9"),
+    MC_1_16_4(754, "1.16.4", "1.16.x"),
+    MC_1_16_3(753, "1.16.3", "1.16.x"),
+    MC_1_16_2(751, "1.16.2", "1.16.x"),
+    MC_1_16_1(736, "1.16.1", "1.16.x"),
+    MC_1_16  (735, "1.16",   "1.16.x"),
+    MC_1_15_2(578, "1.15.2", "1.15.x"),
+    MC_1_15_1(575, "1.15.1", "1.15.x"),
+    MC_1_15  (573, "1.15",   "1.15.x"),
+    MC_1_14_4(498, "1.14.4", "1.14.x"),
+    MC_1_14_3(490, "1.14.3", "1.14.x"),
+    MC_1_14_2(485, "1.14.2", "1.14.x"),
+    MC_1_14_1(480, "1.14.1", "1.14.x"),
+    MC_1_14  (477, "1.14",   "1.14.x"),
+    MC_1_13_2(404, "1.13.2", "1.13.x"),
+    MC_1_13_1(401, "1.13.1", "1.13.x"),
+    MC_1_13  (393, "1.13",   "1.13.x"),
+    MC_1_12_2(340, "1.12.2", "1.12.x"),
+    MC_1_12_1(338, "1.12.1", "1.12.x"),
+    MC_1_12  (335, "1.12",   "1.12.x"),
+    MC_1_11_2(316, "1.11.2", "1.11.x"),
+    MC_1_11  (315, "1.11",   "1.11.x"),
+    MC_1_10_2(210, "1.10.2", "1.10.2"),
+    MC_1_9_4 (110, "1.9.4",  "1.9.x"),
+    MC_1_9_2 (109, "1.9.2",  "1.9.x"),
+    MC_1_9_1 (108, "1.9.1",  "1.9.x"),
+    MC_1_9   (107, "1.9",    "1.9.x"),
+    MC_1_8_9 (47,  "1.8.9",  "1.8.9"),
     
     // In case none of the above versions match
-    UNKNOWN  (0,   "?");
+    UNKNOWN  (0,   "?", "?");
     
     private final int protocol;
     private final String friendlyName;
+    private final String major;
     
-    ProtocolVersion(int protocol, String friendlyName){
+    ProtocolVersion(int protocol, String friendlyName, String major){
         this.protocol = protocol;
         this.friendlyName = friendlyName;
+        this.major = major;
     }
     
     public static String getFriendlyName(int protocol){
@@ -71,11 +73,28 @@ public enum ProtocolVersion{
         return UNKNOWN.getFriendlyName();
     }
     
-    public static String getFriendlyNames(List<Integer> protocols){
+    public static String getFriendlyNames(List<Integer> protocols, boolean majorOnly){
+        if(majorOnly){
+            return protocols.stream()
+                    .sorted(Comparator.reverseOrder())
+                    .map(ProtocolVersion::getMajor)
+                    .distinct()
+                    .collect(Collectors.joining(", "));
+        }
+        
         return protocols.stream()
                 .sorted(Comparator.reverseOrder())
                 .map(ProtocolVersion::getFriendlyName)
                 .collect(Collectors.joining(", "));
+    }
+    
+    private static String getMajor(int protocol){
+        for(ProtocolVersion version : values()){
+            if(version.getProtocol() == protocol)
+                return version.getMajor();
+        }
+    
+        return UNKNOWN.getMajor();
     }
     
     private int getProtocol(){
@@ -84,5 +103,9 @@ public enum ProtocolVersion{
     
     private String getFriendlyName(){
         return friendlyName;
+    }
+    
+    private String getMajor(){
+        return major;
     }
 }

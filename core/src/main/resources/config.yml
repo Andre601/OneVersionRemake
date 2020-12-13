@@ -45,6 +45,13 @@ Protocol:
   # Should OneVersionRemake log any denied Login attempts in the console?
   #
   LogDenial: true
+  #
+  # Should OneVersionRemake only show major MC versions (1.16.x, 1.15.x, ...)
+  # for the {version} placeholder?
+  # This is useful for when you have a lot of Versions defined but don't want
+  # the placeholder from becoming too long.
+  #
+  MajorOnly: false
 
 #
 # +---------------------------------------------------------------------+ #

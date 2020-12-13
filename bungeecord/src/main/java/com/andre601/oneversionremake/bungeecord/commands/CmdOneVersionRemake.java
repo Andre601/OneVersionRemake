@@ -67,7 +67,7 @@ public class CmdOneVersionRemake extends Command{
                 if(serverProtocols.isEmpty()){
                     sendMsg(commandSender, NamedTextColor.RED, "None");
                 }else{
-                    sendMsg(commandSender, NamedTextColor.GRAY, ProtocolVersion.getFriendlyNames(serverProtocols));
+                    sendMsg(commandSender, NamedTextColor.GRAY, ProtocolVersion.getFriendlyNames(serverProtocols, false));
                 }
                 
                 sendMsg(commandSender);

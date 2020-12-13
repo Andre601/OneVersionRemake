@@ -57,23 +57,25 @@ public class BungeePingListener implements Listener{
             return;
     
         serverProtocols.sort(Comparator.reverseOrder());
+    
+        boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
         List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
             if(!hoverMessage.isEmpty())
-                ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol));
+                ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol, majorOnly));
             
             if(!playerCount.isEmpty())
-                protocol.setName(Parser.toString(playerCount, serverProtocols, userProtocol));
+                protocol.setName(Parser.toString(playerCount, serverProtocols, userProtocol, majorOnly));
             
             if(!motd.isEmpty()){
                 if(motd.size() > 2)
                     motd = motd.subList(0, 1);
                 
                 TextComponent component = new TextComponent(BungeeComponentSerializer.get().serialize(
-                        Parser.toTextComponent(motd, serverProtocols, userProtocol)
+                        Parser.toTextComponent(motd, serverProtocols, userProtocol, majorOnly)
                 ));
                 
                 ping.setDescriptionComponent(component);
@@ -86,10 +88,10 @@ public class BungeePingListener implements Listener{
         }
     }
     
-    private ServerPing.PlayerInfo[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol){
+    private ServerPing.PlayerInfo[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         ServerPing.PlayerInfo[] samplePlayers = new ServerPing.PlayerInfo[lines.size()];
         for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.PlayerInfo(Parser.toString(lines.get(i), serverProtocols, userProtocol), UUID.randomUUID());
+            samplePlayers[i] = new ServerPing.PlayerInfo(Parser.toString(lines.get(i), serverProtocols, userProtocol, majorOnly), UUID.randomUUID());
         }
         
         return samplePlayers;
