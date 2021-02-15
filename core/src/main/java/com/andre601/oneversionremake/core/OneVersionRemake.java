@@ -90,6 +90,10 @@ public class OneVersionRemake{
         pluginCore.loadEventListeners();
         logger.info("Event Listeners loaded!");
         
+        logger.info("Loading Metrics...");
+        pluginCore.loadMetrics();
+        logger.info("Metrics loaded!");
+        
         logger.info("OneVersionRemake is ready!");
     }
     

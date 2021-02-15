@@ -70,6 +70,12 @@
             <artifactId>configurate-yaml</artifactId>
             <version>3.7.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bungeecord</artifactId>
+            <version>2.2.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -95,7 +101,11 @@
                     <relocations>
                         <relocation>
                             <pattern>ninja.leaping.configurate</pattern>
-                            <shadedPattern>com.andre601.oneversionremake.dependencies.configurate</shadedPattern>
+                            <shadedPattern>com.andre601.oneversionremake.bungeecord.dependencies.configurate</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>com.andre601.oneversionremake.bungeecord.dependencies.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

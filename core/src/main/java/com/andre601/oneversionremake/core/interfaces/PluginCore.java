@@ -31,6 +31,8 @@ public interface PluginCore{
     
     void setConfigHandler(ConfigHandler configHandler);
     
+    void loadMetrics();
+    
     boolean reloadConfig();
     
     Path getPath();

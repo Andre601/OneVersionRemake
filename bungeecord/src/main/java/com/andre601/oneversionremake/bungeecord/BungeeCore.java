@@ -23,14 +23,20 @@ import com.andre601.oneversionremake.bungeecord.listener.BungeeLoginListener;
 import com.andre601.oneversionremake.bungeecord.listener.BungeePingListener;
 import com.andre601.oneversionremake.bungeecord.logging.BungeeLogger;
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.plugin.Plugin;
+import org.bstats.bungeecord.Metrics;
+import org.bstats.charts.DrilldownPie;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BungeeCore extends Plugin implements PluginCore{
     
@@ -61,6 +67,39 @@ public class BungeeCore extends Plugin implements PluginCore{
     @Override
     public void setConfigHandler(ConfigHandler configHandler){
         this.configHandler = configHandler;
+    }
+    
+    @Override
+    public void loadMetrics(){
+        Metrics metrics = new Metrics(this, 10340);
+        
+        metrics.addCustomChart(new DrilldownPie("allowed_versions", () -> {
+            Map<String, Map<String, Integer>> map = new HashMap<>();
+            Map<String, Integer> entry = new HashMap<>();
+    
+            List<Integer> protocolVersions = getConfigHandler().getIntList("Protocol", "Versions");
+            if(protocolVersions.isEmpty()){
+                String unknown = ProtocolVersion.getFriendlyName(0);
+                entry.put(unknown, 1);
+                map.put("other", entry);
+        
+                return map;
+            }
+    
+            for(int version : protocolVersions){
+                String major = ProtocolVersion.getMajor(version);
+                String name = ProtocolVersion.getFriendlyName(version);
+        
+                entry.put(name, 1);
+                if(major.equalsIgnoreCase("?")){
+                    map.put("other", entry);
+                }else{
+                    map.put(major, entry);
+                }
+            }
+    
+            return map;
+        }));
     }
     
     @Override
@@ -96,4 +135,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     public String getVersion(){
         return core.getVersion();
     }
+    
+    // 10340
 }

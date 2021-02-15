@@ -88,7 +88,7 @@ public enum ProtocolVersion{
                 .collect(Collectors.joining(", "));
     }
     
-    private static String getMajor(int protocol){
+    public static String getMajor(int protocol){
         for(ProtocolVersion version : values()){
             if(version.getProtocol() == protocol)
                 return version.getMajor();
