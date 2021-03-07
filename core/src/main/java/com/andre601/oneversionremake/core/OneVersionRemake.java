@@ -50,12 +50,12 @@ public class OneVersionRemake{
         return version;
     }
     
-    public boolean reloadConfig(){
-        return configHandler.reload();
+    public ConfigHandler getConfigHandler(){
+        return configHandler;
     }
     
-    private void setVersion(String version){
-        this.version = version;
+    public boolean reloadConfig(){
+        return configHandler.reload();
     }
     
     private void start(){
@@ -71,15 +71,18 @@ public class OneVersionRemake{
             logger.warn("Couldn't load config.yml! Check above lines for errors and warnings.");
             return;
         }
-        
-        pluginCore.setConfigHandler(configHandler);
     
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
+        boolean versionsSet;
         if(protocols.isEmpty()){
             printWarning(logger);
+            
+            versionsSet = false;
         }else{
             logger.info("Loaded the following Protocol Version(s):");
             logger.info(ProtocolVersion.getFriendlyNames(protocols, false));
+            
+            versionsSet = true;
         }
         
         logger.info("Loading command /ovr...");
@@ -91,8 +94,12 @@ public class OneVersionRemake{
         logger.info("Event Listeners loaded!");
         
         logger.info("Loading Metrics...");
-        pluginCore.loadMetrics();
-        logger.info("Metrics loaded!");
+        if(versionsSet){
+            pluginCore.loadMetrics();
+            logger.info("Metrics loaded!");
+        }else{
+            logger.info("No Protocol Versions set. Skipping Metrics initialization...");
+        }
         
         logger.info("OneVersionRemake is ready!");
     }
@@ -105,7 +112,7 @@ public class OneVersionRemake{
         logger.info("/ /_/ /| |/ / _, _/");
         logger.info("\\____/ |___/_/ |_|");
         logger.info("");
-        logger.info("OneVersionRemake v" + (getVersion() == null ? "UNKNOWN" : getVersion()));
+        logger.info("OneVersionRemake v" + getVersion());
         logger.info("Platform: " + pluginCore.getProxyPlatform().getName());
         logger.info("");
     }
@@ -130,9 +137,9 @@ public class OneVersionRemake{
             
             properties.load(is);
             
-            setVersion(properties.getProperty("version"));
+            version = properties.getProperty("version");
         }catch(IOException ex){
-            setVersion(null);
+            version = "UNKNOWN";
         }
     }
 }

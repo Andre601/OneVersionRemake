@@ -19,10 +19,9 @@
 package com.andre601.oneversionremake.core.files;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
-import com.google.common.reflect.TypeToken;
-import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.objectmapping.ObjectMappingException;
-import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,8 +62,8 @@ public class ConfigHandler{
             }
         }
     
-        YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder()
-                .setFile(config)
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .file(config)
                 .build();
         
         try{
@@ -78,8 +77,8 @@ public class ConfigHandler{
     }
     
     public boolean reload(){
-        YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder()
-                .setFile(config)
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .file(config)
                 .build();
         
         try{
@@ -89,10 +88,6 @@ public class ConfigHandler{
             core.getProxyLogger().warn("There was an issue while attempting to reload the config", ex);
             return false;
         }
-    }
-    
-    public ConfigurationNode getNode(){
-        return node;
     }
     
     public boolean getBoolean(boolean def, Object... path){
@@ -105,21 +100,21 @@ public class ConfigHandler{
     
     public List<Integer> getIntList(Object... path){
         try{
-            return fromPath(path).getList(TypeToken.of(Integer.class));
-        }catch(ObjectMappingException ex){
+            return fromPath(path).getList(Integer.class);
+        }catch(SerializationException ex){
             return new ArrayList<>();
         }
     }
     
     public List<String> getStringList(Object... path){
         try{
-            return fromPath(path).getList(TypeToken.of(String.class));
-        }catch(ObjectMappingException ex){
+            return fromPath(path).getList(String.class);
+        }catch(SerializationException ex){
             return new ArrayList<>();
         }
     }
     
     private ConfigurationNode fromPath(Object... path){
-        return getNode().getNode(path);
+        return node.node(path);
     }
 }

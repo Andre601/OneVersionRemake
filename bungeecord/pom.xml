@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.spongepowered</groupId>
             <artifactId>configurate-yaml</artifactId>
-            <version>3.7.2</version>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
@@ -100,7 +100,7 @@
                     <minimizeJar>true</minimizeJar>
                     <relocations>
                         <relocation>
-                            <pattern>ninja.leaping.configurate</pattern>
+                            <pattern>org.spongepowered.configurate</pattern>
                             <shadedPattern>com.andre601.oneversionremake.bungeecord.dependencies.configurate</shadedPattern>
                         </relocation>
                         <relocation>
@@ -108,6 +108,15 @@
                             <shadedPattern>com.andre601.oneversionremake.bungeecord.dependencies.bstats</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>

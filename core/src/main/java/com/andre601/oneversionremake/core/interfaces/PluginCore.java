@@ -29,8 +29,6 @@ public interface PluginCore{
     
     void loadEventListeners();
     
-    void setConfigHandler(ConfigHandler configHandler);
-    
     void loadMetrics();
     
     boolean reloadConfig();
@@ -42,4 +40,6 @@ public interface PluginCore{
     ProxyLogger getProxyLogger();
     
     ConfigHandler getConfigHandler();
+    
+    String getVersion();
 }

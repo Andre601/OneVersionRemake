@@ -53,8 +53,6 @@ public class VelocityCore implements PluginCore{
     
     private OneVersionRemake core;
     
-    private ConfigHandler configHandler = null;
-    
     @Inject
     public VelocityCore(ProxyServer proxy, @DataDirectory Path path, Metrics.Factory factory){
         this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
@@ -84,11 +82,6 @@ public class VelocityCore implements PluginCore{
     public void loadEventListeners(){
         new VelocityLoginListener(this);
         new VelocityPingListener(this);
-    }
-    
-    @Override
-    public void setConfigHandler(ConfigHandler configHandler){
-        this.configHandler = configHandler;
     }
     
     @Override
@@ -146,9 +139,10 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public ConfigHandler getConfigHandler(){
-        return configHandler;
+        return core.getConfigHandler();
     }
     
+    @Override
     public String getVersion(){
         return core.getVersion();
     }

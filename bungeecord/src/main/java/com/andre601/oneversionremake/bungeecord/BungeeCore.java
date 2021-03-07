@@ -43,8 +43,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     private OneVersionRemake core;
     private final ProxyLogger logger = new BungeeLogger(getLogger());
     
-    private ConfigHandler configHandler = null;
-    
     @Override
     public void onEnable(){
         BungeeAudiences.create(this);
@@ -62,11 +60,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     public void loadEventListeners(){
         new BungeeLoginListener(this);
         new BungeePingListener(this);
-    }
-    
-    @Override
-    public void setConfigHandler(ConfigHandler configHandler){
-        this.configHandler = configHandler;
     }
     
     @Override
@@ -129,12 +122,11 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     @Override
     public ConfigHandler getConfigHandler(){
-        return configHandler;
+        return core.getConfigHandler();
     }
     
+    @Override
     public String getVersion(){
         return core.getVersion();
     }
-    
-    // 10340
 }
