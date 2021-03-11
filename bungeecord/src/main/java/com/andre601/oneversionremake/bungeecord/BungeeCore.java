@@ -68,11 +68,13 @@ public class BungeeCore extends Plugin implements PluginCore{
         
         metrics.addCustomChart(new DrilldownPie("allowed_versions", () -> {
             Map<String, Map<String, Integer>> map = new HashMap<>();
-            Map<String, Integer> entry = new HashMap<>();
     
             List<Integer> protocolVersions = getConfigHandler().getIntList("Protocol", "Versions");
             if(protocolVersions.isEmpty()){
                 String unknown = ProtocolVersion.getFriendlyName(0);
+    
+                Map<String, Integer> entry = new HashMap<>();
+                
                 entry.put(unknown, 1);
                 map.put("other", entry);
         
@@ -82,6 +84,8 @@ public class BungeeCore extends Plugin implements PluginCore{
             for(int version : protocolVersions){
                 String major = ProtocolVersion.getMajor(version);
                 String name = ProtocolVersion.getFriendlyName(version);
+    
+                Map<String, Integer> entry = new HashMap<>();
         
                 entry.put(name, 1);
                 if(major.equalsIgnoreCase("?")){
