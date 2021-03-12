@@ -18,7 +18,6 @@
 
 package com.andre601.oneversionremake.bungeecord;
 
-import com.andre601.oneversionremake.bungeecord.commands.BungeeSender;
 import com.andre601.oneversionremake.bungeecord.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.bungeecord.listener.BungeeLoginListener;
 import com.andre601.oneversionremake.bungeecord.listener.BungeePingListener;
@@ -44,7 +43,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     private OneVersionRemake core;
     private final ProxyLogger logger = new BungeeLogger(getLogger());
-    private final BungeeSender sender = new BungeeSender(this.getProxy().getConsole());
     
     @Override
     public void onEnable(){
@@ -135,9 +133,5 @@ public class BungeeCore extends Plugin implements PluginCore{
     @Override
     public String getVersion(){
         return core.getVersion();
-    }
-    
-    public BungeeSender getSender(){
-        return sender;
     }
 }

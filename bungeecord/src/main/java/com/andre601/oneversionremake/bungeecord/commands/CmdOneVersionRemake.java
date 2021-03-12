@@ -34,6 +34,8 @@ public class CmdOneVersionRemake extends Command{
     
     @Override
     public void execute(CommandSender commandSender, String[] args){
-        plugin.getCommandHandler().handle(plugin.getSender(), args);
+        BungeeSender sender = new BungeeSender(commandSender);
+        
+        plugin.getCommandHandler().handle(sender, args);
     }
 }

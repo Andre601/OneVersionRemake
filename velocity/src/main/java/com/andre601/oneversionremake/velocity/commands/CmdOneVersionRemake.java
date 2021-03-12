@@ -31,12 +31,9 @@ public class CmdOneVersionRemake implements SimpleCommand{
     
     @Override
     public void execute(Invocation invocation){
+        VelocitySender sender = new VelocitySender(invocation.source());
         String[] args = invocation.arguments();
         
-        if(plugin.getSender() == null){
-            plugin.setSender(invocation.source());
-        }
-        
-        plugin.getCommandHandler().handle(plugin.getSender(), args);
+        plugin.getCommandHandler().handle(sender, args);
     }
 }
