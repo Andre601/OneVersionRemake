@@ -103,6 +103,10 @@
                             <pattern>org.spongepowered.configurate</pattern>
                             <shadedPattern>com.andre601.oneversionremake.core.dependencies.configurate</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>com.andre601.oneversionremake.core.dependencies.adventure</shadedPattern>
+                        </relocation>
                     </relocations>
                     <filters>
                         <filter>

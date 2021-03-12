@@ -23,6 +23,7 @@ import com.andre601.oneversionremake.bungeecord.listener.BungeeLoginListener;
 import com.andre601.oneversionremake.bungeecord.listener.BungeePingListener;
 import com.andre601.oneversionremake.bungeecord.logging.BungeeLogger;
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.commands.CommandHandler;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
@@ -100,11 +101,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     @Override
-    public boolean reloadConfig(){
-        return core.reloadConfig();
-    }
-    
-    @Override
     public Path getPath(){
         return getDataFolder().toPath();
     }
@@ -127,6 +123,11 @@ public class BungeeCore extends Plugin implements PluginCore{
     @Override
     public ConfigHandler getConfigHandler(){
         return core.getConfigHandler();
+    }
+    
+    @Override
+    public CommandHandler getCommandHandler(){
+        return core.getCommandHandler();
     }
     
     @Override

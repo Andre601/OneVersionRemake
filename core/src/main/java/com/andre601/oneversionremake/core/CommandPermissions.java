@@ -23,8 +23,11 @@ public class CommandPermissions{
     private final static String BASE = "oneversionremake.";
     private final static String COMMAND_BASE = BASE + "command.";
     
+    // oneversionremake.admin
     public final static String ADMIN = BASE + "admin";
     
+    // oneversionremake.command.help
     public static final String COMMAND_HELP = COMMAND_BASE + "help";
+    // oneversionremake.command.reload
     public static final String COMMAND_RELOAD = COMMAND_BASE + "reload";
 }

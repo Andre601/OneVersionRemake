@@ -16,26 +16,18 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.bungeecord.commands;
+package com.andre601.oneversionremake.core.interfaces;
 
-import com.andre601.oneversionremake.bungeecord.BungeeCore;
-import com.andre601.oneversionremake.core.CommandPermissions;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
+import net.kyori.adventure.text.format.NamedTextColor;
 
-public class CmdOneVersionRemake extends Command{
+public interface CmdSender{
     
-    private final BungeeCore plugin;
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    boolean hasPermission(String permission);
     
-    public CmdOneVersionRemake(BungeeCore plugin){
-        super("oneversionremake", CommandPermissions.ADMIN, "ovr");
-        this.plugin = plugin;
-    }
+    void sendMsg();
     
-    @Override
-    public void execute(CommandSender commandSender, String[] args){
-        BungeeSender sender = new BungeeSender(commandSender);
-        
-        plugin.getCommandHandler().handle(sender, args);
-    }
+    void sendMsg(String msg, Object... args);
+    
+    void sendMsg(NamedTextColor color, String msg, Object... args);
 }

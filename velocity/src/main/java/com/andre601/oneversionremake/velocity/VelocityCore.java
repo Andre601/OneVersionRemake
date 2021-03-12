@@ -19,6 +19,7 @@
 package com.andre601.oneversionremake.velocity;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.commands.CommandHandler;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
@@ -122,11 +123,6 @@ public class VelocityCore implements PluginCore{
     }
     
     @Override
-    public boolean reloadConfig(){
-        return core.reloadConfig();
-    }
-    
-    @Override
     public Path getPath(){
         return path;
     }
@@ -144,6 +140,11 @@ public class VelocityCore implements PluginCore{
     @Override
     public ConfigHandler getConfigHandler(){
         return core.getConfigHandler();
+    }
+    
+    @Override
+    public CommandHandler getCommandHandler(){
+        return core.getCommandHandler();
     }
     
     @Override

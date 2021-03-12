@@ -16,26 +16,39 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.bungeecord.commands;
+package com.andre601.oneversionremake.velocity.commands;
 
-import com.andre601.oneversionremake.bungeecord.BungeeCore;
 import com.andre601.oneversionremake.core.CommandPermissions;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.plugin.Command;
+import com.andre601.oneversionremake.core.interfaces.CmdSender;
+import com.velocitypowered.api.command.CommandSource;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
-public class CmdOneVersionRemake extends Command{
+public class VelocitySender implements CmdSender{
     
-    private final BungeeCore plugin;
+    private final CommandSource sender;
     
-    public CmdOneVersionRemake(BungeeCore plugin){
-        super("oneversionremake", CommandPermissions.ADMIN, "ovr");
-        this.plugin = plugin;
+    public VelocitySender(CommandSource sender){
+        this.sender = sender;
     }
     
     @Override
-    public void execute(CommandSender commandSender, String[] args){
-        BungeeSender sender = new BungeeSender(commandSender);
-        
-        plugin.getCommandHandler().handle(sender, args);
+    public boolean hasPermission(String permission){
+        return sender.hasPermission(permission) || sender.hasPermission(CommandPermissions.ADMIN);
+    }
+    
+    @Override
+    public void sendMsg(){
+        sendMsg("");
+    }
+    
+    @Override
+    public void sendMsg(String msg, Object... args){
+        sendMsg(NamedTextColor.WHITE, msg, args);
+    }
+    
+    @Override
+    public void sendMsg(NamedTextColor color, String msg, Object... args){
+        sender.sendMessage(Component.text(String.format(msg, args)).color(color));
     }
 }
