@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.velocity.commands;
 
+import com.andre601.oneversionremake.core.CommandPermissions;
 import com.andre601.oneversionremake.core.interfaces.CmdSender;
 import com.velocitypowered.api.command.CommandSource;
 import net.kyori.adventure.text.Component;
@@ -33,7 +34,7 @@ public class VelocitySender implements CmdSender{
     
     @Override
     public boolean hasPermission(String permission){
-        return sender.hasPermission(permission);
+        return sender.hasPermission(permission) || sender.hasPermission(CommandPermissions.ADMIN);
     }
     
     @Override

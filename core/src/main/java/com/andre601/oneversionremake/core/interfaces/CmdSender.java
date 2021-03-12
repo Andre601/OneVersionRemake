@@ -22,6 +22,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 
 public interface CmdSender{
     
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean hasPermission(String permission);
     
     void sendMsg();

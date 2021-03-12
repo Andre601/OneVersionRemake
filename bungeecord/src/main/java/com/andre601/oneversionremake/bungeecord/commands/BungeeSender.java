@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.bungeecord.commands;
 
+import com.andre601.oneversionremake.core.CommandPermissions;
 import com.andre601.oneversionremake.core.interfaces.CmdSender;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -34,7 +35,7 @@ public class BungeeSender implements CmdSender{
     
     @Override
     public boolean hasPermission(String permission){
-        return sender.hasPermission(permission);
+        return sender.hasPermission(permission) || sender.hasPermission(CommandPermissions.ADMIN);
     }
     
     @Override
