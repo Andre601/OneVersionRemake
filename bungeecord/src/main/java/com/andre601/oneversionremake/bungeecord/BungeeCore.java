@@ -18,11 +18,13 @@
 
 package com.andre601.oneversionremake.bungeecord;
 
+import com.andre601.oneversionremake.bungeecord.commands.BungeeSender;
 import com.andre601.oneversionremake.bungeecord.commands.CmdOneVersionRemake;
 import com.andre601.oneversionremake.bungeecord.listener.BungeeLoginListener;
 import com.andre601.oneversionremake.bungeecord.listener.BungeePingListener;
 import com.andre601.oneversionremake.bungeecord.logging.BungeeLogger;
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.commands.CommandHandler;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
@@ -42,6 +44,7 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     private OneVersionRemake core;
     private final ProxyLogger logger = new BungeeLogger(getLogger());
+    private final BungeeSender sender = new BungeeSender(this.getProxy().getConsole());
     
     @Override
     public void onEnable(){
@@ -100,11 +103,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     @Override
-    public boolean reloadConfig(){
-        return core.reloadConfig();
-    }
-    
-    @Override
     public Path getPath(){
         return getDataFolder().toPath();
     }
@@ -130,7 +128,16 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     @Override
+    public CommandHandler getCommandHandler(){
+        return core.getCommandHandler();
+    }
+    
+    @Override
     public String getVersion(){
         return core.getVersion();
+    }
+    
+    public BungeeSender getSender(){
+        return sender;
     }
 }

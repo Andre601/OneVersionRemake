@@ -19,17 +19,20 @@
 package com.andre601.oneversionremake.velocity;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.commands.CommandHandler;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import com.andre601.oneversionremake.velocity.commands.CmdOneVersionRemake;
+import com.andre601.oneversionremake.velocity.commands.VelocitySender;
 import com.andre601.oneversionremake.velocity.listener.VelocityLoginListener;
 import com.andre601.oneversionremake.velocity.listener.VelocityPingListener;
 import com.andre601.oneversionremake.velocity.logging.VelocityLogger;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandMeta;
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
@@ -52,6 +55,8 @@ public class VelocityCore implements PluginCore{
     private final Metrics.Factory factory;
     
     private OneVersionRemake core;
+    
+    private VelocitySender sender = null;
     
     @Inject
     public VelocityCore(ProxyServer proxy, @DataDirectory Path path, Metrics.Factory factory){
@@ -122,11 +127,6 @@ public class VelocityCore implements PluginCore{
     }
     
     @Override
-    public boolean reloadConfig(){
-        return core.reloadConfig();
-    }
-    
-    @Override
     public Path getPath(){
         return path;
     }
@@ -147,11 +147,24 @@ public class VelocityCore implements PluginCore{
     }
     
     @Override
+    public CommandHandler getCommandHandler(){
+        return core.getCommandHandler();
+    }
+    
+    @Override
     public String getVersion(){
         return core.getVersion();
     }
     
     public ProxyServer getProxy(){
         return proxy;
+    }
+    
+    public VelocitySender getSender(){
+        return sender;
+    }
+    
+    public void setSender(CommandSource sender){
+        this.sender = new VelocitySender(sender);
     }
 }

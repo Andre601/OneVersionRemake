@@ -18,6 +18,7 @@
 
 package com.andre601.oneversionremake.core.interfaces;
 
+import com.andre601.oneversionremake.core.commands.CommandHandler;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 
@@ -31,8 +32,6 @@ public interface PluginCore{
     
     void loadMetrics();
     
-    boolean reloadConfig();
-    
     Path getPath();
     
     ProxyPlatform getProxyPlatform();
@@ -40,6 +39,8 @@ public interface PluginCore{
     ProxyLogger getProxyLogger();
     
     ConfigHandler getConfigHandler();
+    
+    CommandHandler getCommandHandler();
     
     String getVersion();
 }

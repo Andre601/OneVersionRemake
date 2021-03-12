@@ -16,27 +16,17 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.velocity.commands;
+package com.andre601.oneversionremake.core.interfaces;
 
-import com.andre601.oneversionremake.velocity.VelocityCore;
-import com.velocitypowered.api.command.SimpleCommand;
+import net.kyori.adventure.text.format.NamedTextColor;
 
-public class CmdOneVersionRemake implements SimpleCommand{
+public interface CmdSender{
     
-    private final VelocityCore plugin;
+    boolean hasPermission(String permission);
     
-    public CmdOneVersionRemake(VelocityCore plugin){
-        this.plugin = plugin;
-    }
+    void sendMsg();
     
-    @Override
-    public void execute(Invocation invocation){
-        String[] args = invocation.arguments();
-        
-        if(plugin.getSender() == null){
-            plugin.setSender(invocation.source());
-        }
-        
-        plugin.getCommandHandler().handle(plugin.getSender(), args);
-    }
+    void sendMsg(String msg, Object... args);
+    
+    void sendMsg(NamedTextColor color, String msg, Object... args);
 }
