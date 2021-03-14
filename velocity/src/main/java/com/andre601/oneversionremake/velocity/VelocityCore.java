@@ -88,38 +88,8 @@ public class VelocityCore implements PluginCore{
     @Override
     public void loadMetrics(){
         Metrics metrics = factory.make(this, 10341);
-        
-        metrics.addCustomChart(new DrilldownPie("allowed_versions", () -> {
-            Map<String, Map<String, Integer>> map = new HashMap<>();
-            
-            List<Integer> protocolVersions = getConfigHandler().getIntList("Protocol", "Versions");
-            if(protocolVersions.isEmpty()){
-                String unknown = ProtocolVersion.getFriendlyName(0);
-                
-                Map<String, Integer> entry = new HashMap<>();
-                
-                entry.put(unknown, 1);
-                map.put("other", entry);
-                
-                return map;
-            }
-            
-            for(int version : protocolVersions){
-                String major = ProtocolVersion.getMajor(version);
-                String name = ProtocolVersion.getFriendlyName(version);
     
-                Map<String, Integer> entry = new HashMap<>();
-                
-                entry.put(name, 1);
-                if(major.equalsIgnoreCase("?")){
-                    map.put("other", entry);
-                }else{
-                    map.put(major, entry);
-                }
-            }
-            
-            return map;
-        }));
+        metrics.addCustomChart(core.getPie());
     }
     
     @Override
