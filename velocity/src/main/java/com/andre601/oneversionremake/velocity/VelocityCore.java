@@ -20,7 +20,6 @@ package com.andre601.oneversionremake.velocity;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.commands.CommandHandler;
-import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
@@ -35,14 +34,10 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import org.bstats.charts.DrilldownPie;
 import org.bstats.velocity.Metrics;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class VelocityCore implements PluginCore{
     
