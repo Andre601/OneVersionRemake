@@ -26,7 +26,9 @@ import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class OneVersionRemake{
@@ -63,6 +65,38 @@ public class OneVersionRemake{
     
     public CommandHandler getCommandHandler(){
         return commandHandler;
+    }
+    
+    public Map<String, Map<String, Integer>> getPieMap(){
+        Map<String, Map<String, Integer>> map = new HashMap<>();
+        
+        List<Integer> versions = getConfigHandler().getIntList("Protocol", "Versions");
+        if(versions.isEmpty()){
+            String unknown = ProtocolVersion.getFriendlyName(0);
+            
+            Map<String, Integer> entry = new HashMap<>();
+            
+            entry.put(unknown, 1);
+            map.put("other", entry);
+            
+            return map;
+        }
+        
+        for(int version : versions){
+            String major = ProtocolVersion.getMajor(version);
+            String name = ProtocolVersion.getFriendlyName(version);
+            
+            Map<String, Integer> entry = new HashMap<>();
+            entry.put(name, 1);
+            
+            if(major.equalsIgnoreCase("?")){
+                map.put("other", entry);
+            }else{
+                map.put(major, entry);
+            }
+        }
+        
+        return map;
     }
     
     private void start(){

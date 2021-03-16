@@ -20,7 +20,6 @@ package com.andre601.oneversionremake.velocity;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.commands.CommandHandler;
-import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
@@ -40,9 +39,6 @@ import org.bstats.velocity.Metrics;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class VelocityCore implements PluginCore{
     
@@ -88,38 +84,8 @@ public class VelocityCore implements PluginCore{
     @Override
     public void loadMetrics(){
         Metrics metrics = factory.make(this, 10341);
-        
-        metrics.addCustomChart(new DrilldownPie("allowed_versions", () -> {
-            Map<String, Map<String, Integer>> map = new HashMap<>();
-            
-            List<Integer> protocolVersions = getConfigHandler().getIntList("Protocol", "Versions");
-            if(protocolVersions.isEmpty()){
-                String unknown = ProtocolVersion.getFriendlyName(0);
-                
-                Map<String, Integer> entry = new HashMap<>();
-                
-                entry.put(unknown, 1);
-                map.put("other", entry);
-                
-                return map;
-            }
-            
-            for(int version : protocolVersions){
-                String major = ProtocolVersion.getMajor(version);
-                String name = ProtocolVersion.getFriendlyName(version);
     
-                Map<String, Integer> entry = new HashMap<>();
-                
-                entry.put(name, 1);
-                if(major.equalsIgnoreCase("?")){
-                    map.put("other", entry);
-                }else{
-                    map.put(major, entry);
-                }
-            }
-            
-            return map;
-        }));
+        metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
     }
     
     @Override
