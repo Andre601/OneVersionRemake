@@ -31,6 +31,7 @@ import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
+import org.bstats.charts.DrilldownPie;
 
 import java.nio.file.Path;
 
@@ -62,7 +63,7 @@ public class BungeeCore extends Plugin implements PluginCore{
     public void loadMetrics(){
         Metrics metrics = new Metrics(this, 10340);
         
-        metrics.addCustomChart(core.getPie());
+        metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
     }
     
     @Override

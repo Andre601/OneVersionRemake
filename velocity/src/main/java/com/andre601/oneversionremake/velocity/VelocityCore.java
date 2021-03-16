@@ -34,6 +34,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import org.bstats.charts.DrilldownPie;
 import org.bstats.velocity.Metrics;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +85,7 @@ public class VelocityCore implements PluginCore{
     public void loadMetrics(){
         Metrics metrics = factory.make(this, 10341);
     
-        metrics.addCustomChart(core.getPie());
+        metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
     }
     
     @Override
