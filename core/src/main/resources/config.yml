@@ -1,123 +1,93 @@
-###########################################################################
-# +---------------------------------------------------------------------+ #
-# |       ____ _    ______                                              | #
-# |      / __ \ |  / / __ \                         OneVersionRemake    | #
-# |     / / / / | / / /_/ /                             by Andre_601    | #
-# |    / /_/ /| |/ / _, _/                                              | #
-# |    \____/ |___/_/ |_|                                               | #
-# |                                                                     | #
-# |    GitHub: https://github.com/Andre601/OneVersionRemake             | #
-# |    Spigot: https://spigotmc.org/resources/71727/                    | #
-# |    Wiki:   https://github.com/Andre601/OneVersionRemake/wiki        | #
-# |                                                                     | #
-# +---------------------------------------------------------------------+ #
-###########################################################################
+#################################################################################
+# +---------------------------------------------------------------------------+ #
+# |       ____ _    ______                                                    | #
+# |      / __ \ |  / / __ \                               OneVersionRemake    | #
+# |     / / / / | / / /_/ /                                   by Andre_601    | #
+# |    / /_/ /| |/ / _, _/                                                    | #
+# |    \____/ |___/_/ |_|                                                     | #
+# |                                                                           | #
+# |    GitHub: https://github.com/Andre601/OneVersionRemake                   | #
+# |    Spigot: https://spigotmc.org/resources/71727/                          | #
+# |    Wiki:   https://github.com/Andre601/OneVersionRemake/wiki              | #
+# |                                                                           | #
+# +---------------------------------------------------------------------------+ #
+#################################################################################
 #
 # Created with Version ${project.version}
 #
-# +---------------------------------------------------------------------+ #
-# |                          Protocol Settings                          | #
-# |                                                                     | #
-# | Settings for what MC versions should be allowed on the Network and  | #
-# | if OneVersionRemake should log any denied Join-Attempts in the      | #
-# | console.                                                            | #
-# +---------------------------------------------------------------------+ #
-#
+# +---------------------------------------------------------------------------+
+# |                             Protocol Settings                             |
+# |                                                                           |
+# | Main Settings for the plugin.                                             |
+# |                                                                           |
+# | https://github.com/Andre601/OneVersionRemake/wiki/Config#protocol         |
+# +---------------------------------------------------------------------------+
 Protocol:
-  #
-  # The protocol versions that should be used.
-  #
-  # - If the player doesn't have any of these versions will they be not
-  #   allowed to join the network.
-  #
-  # - A list of all supported protocols for the plugin can be found here:
-  #   https://minecraft.gamepedia.com/Protocol_version#Java_Edition_2
-  #
-  # - Note that only a selected amount of protocol versions are turned into
-  #   readable MC versions when using either the {version} or {userVersion}
-  #   placeholder.
-  #
-  #   You may find a list of those here:
-  #   https://github.com/Andre601/OneVersionRemake/wiki/Supported-Protocols
-  #
+  # +-------------------------------------------------------------------------+
+  # | The Protocol Versions that should be allowed to join the network.       |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#versions       |
+  # +-------------------------------------------------------------------------+
   Versions: []
-  #
-  # Should OneVersionRemake log any denied Login attempts in the console?
-  #
+  
+  # +-------------------------------------------------------------------------+
+  # | Should OneVersionRemake log denied Logins in the console?               |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#logdenial      |
+  # +-------------------------------------------------------------------------+
   LogDenial: true
-  #
-  # Should OneVersionRemake only show major MC versions (1.16.x, 1.15.x, ...)
-  # for the {version} placeholder?
-  # This is useful for when you have a lot of Versions defined but don't want
-  # the placeholder from becoming too long.
-  #
+  
+  # +-------------------------------------------------------------------------+
+  # | Should the {version} placeholder only show major MC versions?           |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#majoronly      |
+  # +-------------------------------------------------------------------------+
   MajorOnly: false
 
-#
-# +---------------------------------------------------------------------+ #
-# |                              Messages                               | #
-# |                                                                     | #
-# | Formatting:                                                         | #
-# | OneVersionRemake uses MiniMessage for formatting of the messages.   | #
-# |                                                                     | #
-# | Please note that not all options are supported for all messages.    | #
-# |                                                                     | #
-# | Basic color and formatting options such as <red>, <green> or <aqua> | #
-# | can be used across all messages while more advanced options like    | #
-# | <gradient> or <rainbow> are only usable in "Kick" and "Motd".       | #
-# |                                                                     | #
-# | ANY option that is used for hover and/or click actions are NOT      | #
-# | supported in any of the messages!                                   | #
-# |                                                                     | #
-# | Legacy Color codes such as &a are NOT supported!                    | #
-# |                                                                     | #
-# |                                                                     | #
-# | Placeholders:                                                       | #
-# | The following Placeholders can be used in all messages.             | #
-# |                                                                     | #
-# | - {version}        ->  Displays the MC Versions defined in the      | #
-# |                        "Versions" Setting.                          | #
-# | - {serverVersion}  ->  Displays the MC Version the Client uses.     | #
-# |                                                                     | #
-# | The Version is displayed as actual MC and not as Protocol Version.  | #
-# | For example will 573 display as 1.15                                | #
-# | Any unsupported Version will be displayed as "?"                    | #
-# +---------------------------------------------------------------------+ #
-#
+# +---------------------------------------------------------------------------+
+# |                                 Messages                                  |
+# |                                                                           |
+# | This section contains all the messages that you can configure.            |
+# |                                                                           |
+# | https://github.com/Andre601/OneVersionRemake/wiki/Config#messages         |
+# +---------------------------------------------------------------------------+
 Messages:
-  #
-  # This message would be shown where usually the current player count is displayed.
-  # Color and formatting codes are supported.
-  #
-  # Set this to an empty String ('') to disable.
-  #
-  # PlayerCount: '' # Uncomment this and comment out the below option, to disable this.
+  # +-------------------------------------------------------------------------+
+  # | Message to display instead of the Player count (<online>/<max>) next to |
+  # | the ping icon.                                                          |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#playercount    |
+  # +-------------------------------------------------------------------------+
   PlayerCount: '<red>Minecraft {version}'
-  #
-  # Message shown when the player gets kicked while using an unsupported version.
-  # Color and formatting codes are supported.
-  #
+  
+  # +-------------------------------------------------------------------------+
+  # | Reason to display, when the player gets kicked for using a unsupported  |
+  # | Minecraft Version.                                                      |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#kick           |
+  # +-------------------------------------------------------------------------+
   Kick:
   - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
   - '<red>This server supports the following Versions:'
   - '<gray>{version}'
   - ''
   - '<red>Please change your Version and try again.'
-  #
-  # This text is shown when the cursor of the player hovers over the player count, which normally displays the current
-  # online players.
-  # Color and formatting codes are supported.
-  #
-  # Change this to "Hover: []" to disable
-  #
-  # Hover: [] # uncomment this and comment out the below lines to disable this option.
+
+  # +-------------------------------------------------------------------------+
+  # | Message to show when the player hovers over the player count with his   |
+  # | cursor.                                                                 |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#hover          |
+  # +-------------------------------------------------------------------------+
   Hover:
   - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
   - '<red>Please change your version to {version}.'
-  #
-  # This text is shown in the MOTD (Message of the Day) in the server list.
-  #
-  # Hover: [] # uncomment this and comment out the below lines to disable this option.
+
+  # +-------------------------------------------------------------------------+
+  # | Message to display in the MOTD of the server.                           |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#motd           |
+  # +-------------------------------------------------------------------------+
   Motd:
   - '<red>Unsupported Minecraft Version {userVersion}'
   - '<red>Please use <gray>{version}</gray>.'

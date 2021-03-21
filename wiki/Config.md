@@ -6,6 +6,7 @@
 [gradient]: https://docs.adventure.kyori.net/minimessage.html#gradient
 [keybind]: https://docs.adventure.kyori.net/minimessage.html#keybind
 [rainbow]: https://docs.adventure.kyori.net/minimessage.html#rainbow
+[translatable]: https://docs.adventure.kyori.net/minimessage.html#translatable
 
 # Config.yml
 The config.yml of OneVersionRemake has a lot of settings for you to use.
