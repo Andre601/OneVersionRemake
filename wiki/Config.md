@@ -1,3 +1,6 @@
+[minimessage]: https://docs.adventure.kyori.net/minimessage.html
+[adventure]: https://github.com/KyoriPowered/adventure
+
 [colors]: https://docs.adventure.kyori.net/minimessage.html#color
 [colorsVerbose]: https://docs.adventure.kyori.net/minimessage.html#color-verbose
 [formatting]: https://docs.adventure.kyori.net/minimessage.html#decoration
@@ -53,13 +56,13 @@ A list of supported Versions can be found in the [[Supported Protocols]] page of
 This setting allows you to choose, if OneVersionRemake should log denied logins or not.
 
 When this is set to true will any attempted join with a [not supported version](#versions) be denied and the following message printed into the console:  
-> `[OneVersionRemake] Denied login for Player <player> with MC version <mcversion> (Protocl version <protocol>)`
+> `[OneVersionRemake] Denied login for Player <player> with MC version <mcversion> (Protocol version <protocol>)`
 
 ### MajorOnly
 > **Type**: `Boolean`  
 > **Default**: `true`
 
-When this option is set to true, will the `{version}` placeholder onyl display the Major MC versions of the [defined Protocol versions](#versions).
+When this option is set to true, will the `{version}` placeholder only display the Major MC versions of the [defined Protocol versions](#versions).
 
 **Example**:  
 - Following setup:
@@ -92,8 +95,8 @@ When this option is set to true, will the `{version}` placeholder onyl display t
 The `Messages` section allows you to define the different messages displayed when a player either joins or views a server with an unsupported version.
 
 ### Formatting
-OneVersionRemake uses the [MiniMessage] from Kyori Adventure to provide basic but also advanced color and text formatting options.  
-Depending on the setting are either only [basic](#basic-formatting) or [advanced](#advanced-formatting) options supported.
+OneVersionRemake uses the [MiniMessage Add-on][minimessage] from [Kyori Adventure][adventure] to provide basic but also advanced color and text formatting options.  
+Depending on the config option are either only [basic](#basic-formatting) or [advanced](#advanced-formatting) options supported.
 
 #### Basic Formatting
 
@@ -161,7 +164,7 @@ These options are not supported in any of the messages.
 > ```
 > <red>Minecraft {version}
 > ```
-> **Supported Formattings**:
+> **Supported Formatting**:
 > 
 > - [Basic](#basic-formatting)
 
@@ -177,9 +180,8 @@ You can set this to an empty String (`PlayerCount: ''`) to not alter the text or
 > - ''
 > - '<red>Please change your Version and try again.' 
 > ```
-> **Supported Formattings**:
+> **Supported Formatting**:
 >
-> - [Basic](#basic-formatting)
 > - [Advanced](#advanced-formatting)
 
 The text to display when the Player gets kicked for using an unsupported MC version.
@@ -195,7 +197,7 @@ This setting can NOT be disabled and will default to the following text when set
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>Please change your version to {version}.' 
 > ```
-> **Supported Formattings**:
+> **Supported Formatting**:
 >
 > - [Basic](#basic-formatting)
 
@@ -210,9 +212,8 @@ You can set it to an empty list (`Hover: []`) to not change the Players shown.
 > - '<red>Unsupported Minecraft Version {userVersion}'
 > - '<red>Please use <gray>{version}</gray>.'
 > ```
-> **Supported Formattings**:
+> **Supported Formatting**:
 >
-> - [Basic](#basic-formatting)
 > - [Advanced](#advanced-formatting)
 
 This text is shown in the MOTD when the server is displayed in the Server list of the client.
