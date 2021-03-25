@@ -174,7 +174,7 @@ These options are not supported in any of the messages.
 > **Type**: `String`  
 > **Default**:
 > ```yaml
-> '<red>Minecraft {version}'
+> PlayerCount: '<red>Minecraft {version}'
 > ```
 > **Supported Formatting**:
 > 
@@ -187,6 +187,7 @@ You can set this to an empty String (`PlayerCount: ''`) to not alter the text or
 > **Type**: `List (String)`  
 > **Default**:
 > ```yaml
+> Kick:
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>This server supports the following Versions:'
 > - '<gray>{version}'
@@ -208,6 +209,7 @@ This setting can NOT be disabled and will default to the following text when set
 > **Type**: `List (String)`  
 > **Default**:
 > ```yaml
+> Hover:
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>Please change your version to {version}.' 
 > ```
@@ -224,6 +226,7 @@ You can set it to an empty list (`Hover: []`) to not change the Players shown.
 > **Type**: `List (String)`  
 > **Default**:
 > ```yaml
+> Motd:
 > - '<red>Unsupported Minecraft Version {userVersion}'
 > - '<red>Please use <gray>{version}</gray>.'
 > ```
