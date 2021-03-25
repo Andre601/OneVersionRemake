@@ -81,6 +81,8 @@ public class BungeePingListener implements Listener{
                 ping.setDescriptionComponent(component);
             }
             
+            ping.setFavicon(ping.getFaviconObject());
+            
             protocol.setProtocol(serverProtocols.get(0));
             
             ping.setVersion(protocol);

@@ -81,6 +81,9 @@ public class VelocityPingListener{
                 builder.description(ping.getDescriptionComponent());
             }
             
+            // Prevents breaking favicons
+            ping.getFavicon().ifPresent(builder::favicon);
+            
             event.setPing(builder.build());
         }
     }
