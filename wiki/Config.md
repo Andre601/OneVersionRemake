@@ -36,7 +36,10 @@ This section of the config contains the main settings used for things like deter
 
 ### Versions
 > **Type**: `List (Integer)`  
-> **Default**: `Empty (Versions: [])`
+> **Default**:  
+> ```yaml
+> Versions: []
+> ```
 
 This List is used to set what MC Versions are allowed to join the Network.  
 Note that instead of the actual MC version (i.e. 1.15) do you instead set the Protocol Version of it.
@@ -51,7 +54,10 @@ A list of supported Versions can be found in the [[Supported Protocols]] page of
 
 ### LogDenial
 > **Type**: `Boolean`  
-> **Default**: `true`
+> **Default**:  
+> ```yaml
+> LogDenial: true
+> ```
 
 This setting allows you to choose, if OneVersionRemake should log denied logins or not.
 
@@ -60,12 +66,15 @@ When this is set to true will any attempted join with a [not supported version](
 
 ### MajorOnly
 > **Type**: `Boolean`  
-> **Default**: `true`
+> **Default**:  
+> ```yaml
+> MajorOnly: false
+> ```
 
 When this option is set to true, will the `{version}` placeholder only display the Major MC versions of the [defined Protocol versions](#versions).
 
 **Example**:  
-- Following setup:
+- Setup:
   ```yaml
   Versions:
   - 477
@@ -83,12 +92,12 @@ When this option is set to true, will the `{version}` placeholder only display t
   - 754
   ```
   
-  With `MajorOnly` set to `true`:
+  With `MajorOnly` set to `false`:
   ```
   1.14, 1.14.2, 1.14.3, 1.14.4, .1.15, 1.15.1, 1.15.2, 1.16, 1.16.1, 1.16.2, 1.16.3, 1.16.5
   ```
   
-  With `MajorOnly` set to `false`:
+  With `MajorOnly` set to `true`:
   ```
   1.14.x, 1.15.x, 1.16.x
   ```
@@ -162,9 +171,10 @@ These options are not supported in any of the messages.
 | `<insert:_text_>`          | Will render but not perform on click.                                |
 
 ### PlayerCount
+> **Type**: `String`  
 > **Default**:
-> ```
-> <red>Minecraft {version}
+> ```yaml
+> '<red>Minecraft {version}'
 > ```
 > **Supported Formatting**:
 > 
@@ -174,8 +184,9 @@ Changes the text that usually displays the player count (`<online>/<total>`).
 You can set this to an empty String (`PlayerCount: ''`) to not alter the text or to just a color/formatting code (`PlayerCount: '<red>'`) to hide it completely!
 
 ### Kick
+> **Type**: `List (String)`  
 > **Default**:
-> ```
+> ```yaml
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>This server supports the following Versions:'
 > - '<gray>{version}'
@@ -194,8 +205,9 @@ This setting can NOT be disabled and will default to the following text when set
 ```
 
 ### Hover
+> **Type**: `List (String)`  
 > **Default**:
-> ```
+> ```yaml
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>Please change your version to {version}.' 
 > ```
@@ -209,8 +221,9 @@ This text usually displays (random) online players on the network, but we can us
 You can set it to an empty list (`Hover: []`) to not change the Players shown.
 
 ### Motd
+> **Type**: `List (String)`  
 > **Default**:
-> ```
+> ```yaml
 > - '<red>Unsupported Minecraft Version {userVersion}'
 > - '<red>Please use <gray>{version}</gray>.'
 > ```
