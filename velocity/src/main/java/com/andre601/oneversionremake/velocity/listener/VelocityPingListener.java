@@ -48,7 +48,6 @@ public class VelocityPingListener{
         int userProtocol = protocolVersion.getProtocol();
     
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
-        List<String> hoverMessage = plugin.getConfigHandler().getStringList("Messages", "Hover");
         
         if(serverProtocols.isEmpty())
             return;
@@ -59,6 +58,7 @@ public class VelocityPingListener{
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
         List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
+        List<String> hoverMessage = plugin.getConfigHandler().getStringList("Messages", "Hover");
         
         if(!serverProtocols.contains(userProtocol)){
             ServerPing.Builder builder = ping.asBuilder();
