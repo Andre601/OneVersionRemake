@@ -61,7 +61,7 @@ public class VelocityPingListener{
         List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
-            ServerPing.Builder builder = ServerPing.builder();
+            ServerPing.Builder builder = ping.asBuilder();
             
             if(!hoverMessage.isEmpty())
                 builder.samplePlayers(getSamplePlayers(hoverMessage, serverProtocols, userProtocol, majorOnly));
@@ -77,12 +77,7 @@ public class VelocityPingListener{
                     motd = motd.subList(0, 1);
                 
                 builder.description(Parser.toTextComponent(motd, serverProtocols, userProtocol, majorOnly));
-            }else{
-                builder.description(ping.getDescriptionComponent());
             }
-            
-            // Prevents breaking favicons
-            ping.getFavicon().ifPresent(builder::favicon);
             
             event.setPing(builder.build());
         }
