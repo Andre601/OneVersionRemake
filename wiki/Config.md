@@ -109,66 +109,66 @@ The `Messages` section allows you to define the different messages displayed whe
 OneVersionRemake uses the [MiniMessage Add-on][minimessage] from [Kyori Adventure][adventure] to provide basic but also advanced color and text formatting options.  
 Depending on the config option are either only [basic](#basic-formatting) or [advanced](#advanced-formatting) options supported.
 
-#### Basic Formatting
+- #### Basic Formatting
 
-##### Colors
+  ##### Colors
 
-| Option 1                   | Option 2                         |
-| -------------------------- | -------------------------------- |
-| [`<aqua>`][colors]         | [`<color:aqua>`][colors]         |
-| [`<black>`][colors]        | [`<color:black>`][colors]        |
-| [`<blue>`][colors]         | [`<color:blue>`][colors]         |
-| [`<dark_aqua>`][colors]    | [`<color:dark_aqua>`][colors]    |
-| [`<dark_blue>`][colors]    | [`<color:dark_blue>`][colors]    |
-| [`<dark_gray>`][colors]    | [`<color:dark_gray>`][colors]    |
-| [`<dark_green>`][colors]   | [`<color:dark_green>`][colors]   |
-| [`<dark_purple>`][colors]  | [`<color:dark_purple>`][colors]  |
-| [`<dark_red>`][colors]     | [`<color:dark_red>`][colors]     |
-| [`<gold>`][colors]         | [`<color:gold>`][colors]         |
-| [`<gray>`][colors]         | [`<color:gray>`][colors]         |
-| [`<green>`][colors]        | [`<color:green>`][colors]        |
-| [`<light_purple>`][colors] | [`<color:light_purple>`][colors] |
-| [`<red>`][colors]          | [`<color:red>`][colors]          |
-| [`<white>`][colors]        | [`<color:white>`][colors]        |
-| [`<yellow>`][colors]       | [`<color:yellow>`][colors]       |
+  | Option 1                   | Option 2                         |
+  | -------------------------- | -------------------------------- |
+  | [`<aqua>`][colors]         | [`<color:aqua>`][colors]         |
+  | [`<black>`][colors]        | [`<color:black>`][colors]        |
+  | [`<blue>`][colors]         | [`<color:blue>`][colors]         |
+  | [`<dark_aqua>`][colors]    | [`<color:dark_aqua>`][colors]    |
+  | [`<dark_blue>`][colors]    | [`<color:dark_blue>`][colors]    |
+  | [`<dark_gray>`][colors]    | [`<color:dark_gray>`][colors]    |
+  | [`<dark_green>`][colors]   | [`<color:dark_green>`][colors]   |
+  | [`<dark_purple>`][colors]  | [`<color:dark_purple>`][colors]  |
+  | [`<dark_red>`][colors]     | [`<color:dark_red>`][colors]     |
+  | [`<gold>`][colors]         | [`<color:gold>`][colors]         |
+  | [`<gray>`][colors]         | [`<color:gray>`][colors]         |
+  | [`<green>`][colors]        | [`<color:green>`][colors]        |
+  | [`<light_purple>`][colors] | [`<color:light_purple>`][colors] |
+  | [`<red>`][colors]          | [`<color:red>`][colors]          |
+  | [`<white>`][colors]        | [`<color:white>`][colors]        |
+  | [`<yellow>`][colors]       | [`<color:yellow>`][colors]       |
 
-##### Formatting
+  ##### Formatting
 
-| Name                            | Alias                 |
-| ------------------------------- | --------------------- |
-| [`<bold>`][formatting]          | [`<b>`][formatting]   |
-| [`<italic>`][formatting]        | [`<em>`][formatting]  |
-|                                 | [`<i>`][formatting]   |
-| [`<obfuscated>`][formatting]    | [`<obf>`][formatting] |
-| [`<reset>`][reset]              | [`<r>`][reset]        |
-| [`<strikethrough>`][formatting] | [`<st>`][formatting]  |
-| [`<underlined>`][formatting]    | `none`                |
+  | Name                            | Alias                 |
+  | ------------------------------- | --------------------- |
+  | [`<bold>`][formatting]          | [`<b>`][formatting]   |
+  | [`<italic>`][formatting]        | [`<em>`][formatting]  |
+  |                                 | [`<i>`][formatting]   |
+  | [`<obfuscated>`][formatting]    | [`<obf>`][formatting] |
+  | [`<reset>`][reset]              | [`<r>`][reset]        |
+  | [`<strikethrough>`][formatting] | [`<st>`][formatting]  |
+  | [`<underlined>`][formatting]    | `none`                |
 
-#### Advanced Formatting
-Includes [Basic Formatting](#basic-formatting) but also some more advanced options:
+- #### Advanced Formatting
+  Includes [Basic Formatting](#basic-formatting) but also some more advanced options:
 
-| Option         | Format                                         |
-| -------------- | ---------------------------------------------- |
-| RGB Colors     | [`<#rrggbb>`][colors]                          |
-|                | [`<color:#rrggbb>`][colorsVerbose]             |
-| Gradients*     | [`<gradient:#rrggbb:#rrggbb>`][gradient]       |
-| Keybind        | [`<key:_key_>`][keybind]                       |
-| Rainbow        | [`<rainbow>`][rainbow]                         |
-| Translatable** | [`<lang:_key_>`][translatable]                 |
-|                | [`<lang:_key_:_optional1_:...>`][translatable] |
+  | Option         | Format                                         |
+  | -------------- | ---------------------------------------------- |
+  | RGB Colors     | [`<#rrggbb>`][colors]                          |
+  |                | [`<color:#rrggbb>`][colorsVerbose]             |
+  | Gradients*     | [`<gradient:#rrggbb:#rrggbb>`][gradient]       |
+  | Keybind        | [`<key:_key_>`][keybind]                       |
+  | Rainbow        | [`<rainbow>`][rainbow]                         |
+  | Translatable** | [`<lang:_key_>`][translatable]                 |
+  |                | [`<lang:_key_:_optional1_:...>`][translatable] |
 
-*Also supports [Color Names](#colors).  
-**`_optionalX_` will be used to replace placeholders in the returned text.
+  *Also supports [Color Names](#colors).  
+  **`_optionalX_` will be used to replace placeholders in the returned text.
 
-#### Not supported options
-These options are not supported in any of the messages.
+- #### Not supported options
+  These options are not supported in any of the messages.
 
-| Option                     | Reason                                                               |
-| -------------------------- | -------------------------------------------------------------------- |
-| `<click:_action_:_value_>` | Will render but won't perform anything on click.                     |
-| `<font:_name_>`            | Requires an active resource pack for the client to display the font. |
-| `<hover:_action_:_value_>` | Will render but won't show anything on hover.                        |
-| `<insert:_text_>`          | Will render but not perform on click.                                |
+  | Option                     | Reason                                                               |
+  | -------------------------- | -------------------------------------------------------------------- |
+  | `<click:_action_:_value_>` | Will render but won't perform anything on click.                     |
+  | `<font:_name_>`            | Requires an active resource pack for the client to display the font. |
+  | `<hover:_action_:_value_>` | Will render but won't show anything on hover.                        |
+  | `<insert:_text_>`          | Will render but not perform on click.                                |
 
 ### PlayerCount
 > **Type**: `String`  
