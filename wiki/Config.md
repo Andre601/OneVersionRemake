@@ -142,7 +142,7 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
   | [`<obfuscated>`][formatting]    | [`<obf>`][formatting] |
   | [`<reset>`][reset]              | [`<r>`][reset]        |
   | [`<strikethrough>`][formatting] | [`<st>`][formatting]  |
-  | [`<underlined>`][formatting]    | `none`                |
+  | [`<underlined>`][formatting]    |                       |
 
 - #### Advanced Formatting
   Includes [Basic Formatting](#basic-formatting) but also some more advanced options:
@@ -170,6 +170,7 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
   | `<hover:_action_:_value_>` | Will render but won't show anything on hover.                        |
   | `<insert:_text_>`          | Will render but not perform on click.                                |
 
+----
 ### PlayerCount
 > **Type**: `String`  
 > **Default**:
