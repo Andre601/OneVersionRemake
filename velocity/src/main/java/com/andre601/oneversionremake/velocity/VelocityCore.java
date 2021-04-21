@@ -68,7 +68,8 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadCommands(){
-        CommandMeta commandMeta = getProxy().getCommandManager().metaBuilder("oneversionremake")
+        CommandMeta commandMeta = getProxy().getCommandManager()
+                .metaBuilder("oneversionremake")
                 .aliases("ovr")
                 .build();
         

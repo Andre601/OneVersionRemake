@@ -40,18 +40,17 @@ This section of the config contains the main settings used for things like deter
 > ```yaml
 > Versions: []
 > ```
-> 
-> **Description**:  
-> This List is used to set what MC Versions are allowed to join the Network.  
-> Note that instead of the actual MC version (i.e. 1.15) do you instead set the Protocol Version of it.
-> 
-> Protocol Versions are, in most simplistic terms, unique numbers to determine what MC version is joining the network.
-> 
-> You can find a full list of Protocol Versions on the official Minecraft Wiki:
-> https://minecraft.gamepedia.com/Protocol_version#Java_Edition_2
-> 
-> Note that only a selected list of versions is supported by the `{version}` and `{userVersion}` placeholders and will be turned into readable MC versions.  
-> A list of supported Versions can be found in the [[Supported Protocols]] page of this wiki.
+
+This List is used to set what MC Versions are allowed to join the Network.  
+Note that instead of the actual MC version (i.e. 1.15) do you instead set the Protocol Version of it.
+
+Protocol Versions are, in most simplistic terms, unique numbers to determine what MC version is joining the network.
+
+You can find a full list of Protocol Versions on the official Minecraft Wiki:
+https://minecraft.gamepedia.com/Protocol_version#Java_Edition_2
+
+Note that only a selected list of versions is supported by the `{version}` and `{userVersion}` placeholders and will be turned into readable MC versions.  
+A list of supported Versions can be found in the [[Supported Protocols]] page of this wiki.
 
 ### LogDenial
 > **Type**: `Boolean`  
@@ -59,12 +58,13 @@ This section of the config contains the main settings used for things like deter
 > ```yaml
 > LogDenial: true
 > ```
-> 
-> **Description**:  
-> This setting allows you to choose, if OneVersionRemake should log denied logins or not.
-> 
-> When this is set to true will any attempted join with a [not supported version](#versions) be denied and the following message printed into the console:  
-> > `[OneVersionRemake] Denied login for Player <player> with MC version <mcversion> (Protocol version <protocol>)`
+
+This setting allows you to choose, if OneVersionRemake should log denied logins or not.
+
+When this is set to true will any attempted join with a [not supported version](#versions) be denied and the following message printed into the console:  
+```
+[OneVersionRemake] Denied login for Player <player> with MC version <mcversion> (Protocol version <protocol>)
+```
 
 ### MajorOnly
 > **Type**: `Boolean`  
@@ -72,38 +72,37 @@ This section of the config contains the main settings used for things like deter
 > ```yaml
 > MajorOnly: false
 > ```
-> 
-> **Description**:  
-> When this option is set to true, will the `{version}` placeholder only display the Major MC versions of the [defined Protocol versions](#versions).
-> 
-> *Example*:  
-> - Setup:
->   ```yaml
->   Versions:
->   - 477
->   - 480
->   - 485
->   - 490
->   - 498
->   - 573
->   - 575
->   - 578
->   - 735
->   - 736
->   - 751
->   - 753
->   - 754
->   ```
->   
->   With `MajorOnly` set to `false`:
->   ```
->   1.14, 1.14.2, 1.14.3, 1.14.4, .1.15, 1.15.1, 1.15.2, 1.16, 1.16.1, 1.16.2, 1.16.3, 1.16.5
->   ```
->   
->   With `MajorOnly` set to `true`:
->   ```
->   1.14.x, 1.15.x, 1.16.x
->   ```
+
+When this option is set to true, will the `{version}` placeholder only display the Major MC versions of the [defined Protocol versions](#versions).
+
+*Example*:  
+- Setup:
+  ```yaml
+  Versions:
+  - 477
+  - 480
+  - 485
+  - 490
+  - 498
+  - 573
+  - 575
+  - 578
+  - 735
+  - 736
+  - 751
+  - 753
+  - 754
+  ```
+  
+  With `MajorOnly` set to `false`:
+  ```
+  1.14, 1.14.2, 1.14.3, 1.14.4, .1.15, 1.15.1, 1.15.2, 1.16, 1.16.1, 1.16.2, 1.16.3, 1.16.5
+  ```
+  
+  With `MajorOnly` set to `true`:
+  ```
+  1.14.x, 1.15.x, 1.16.x
+  ```
 
 ## Messages
 The `Messages` section allows you to define the different messages displayed when a player either joins or views a server with an unsupported version.
@@ -182,9 +181,10 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
 > ```
 > **Supported Formatting**: [Basic](#basic-formatting)
 > 
-> **Description**:  
-> Changes the text that usually displays the player count (`<online>/<total>`).  
-> You can set this to an empty String (`PlayerCount: ''`) to not alter the text or to just a color/formatting code (`PlayerCount: '<red>'`) to hide it completely!
+> - [Basic](#basic-formatting)
+
+Changes the text that usually displays the player count (`<online>/<total>`).  
+You can set this to an empty String (`PlayerCount: ''`) to not alter the text or to just a color/formatting code (`PlayerCount: '<red>'`) to hide it completely!
 
 ### Kick
 > **Type**: `List (String)`  
@@ -197,15 +197,16 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
 > - ''
 > - '<red>Please change your Version and try again.' 
 > ```
-> **Supported Formatting**: [Advanced](#advanced-formatting)
-> 
-> **Description**:  
-> The text to display when the Player gets kicked for using an unsupported MC version.
-> 
-> This setting can NOT be disabled and will default to the following text when set to an empty list:
-> ```
-> <red>This Server is running MC {version}! Please change your client version.
-> ```
+> **Supported Formatting**:
+>
+> - [Advanced](#advanced-formatting)
+
+The text to display when the Player gets kicked for using an unsupported MC version.
+
+This setting can NOT be disabled and will default to the following text when set to an empty list:
+```
+<red>This Server is running MC {version}! Please change your client version.
+```
 
 ### Hover
 > **Type**: `List (String)`  
@@ -215,13 +216,14 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>Please change your version to {version}.' 
 > ```
-> **Supported Formatting**: [Basic](#basic-formatting)
+> **Supported Formatting**:
 > 
-> **Description**:  
-> This is the text displayed when the player hovers with his cursor over the [Player Count](#playercount).
-> 
-> This text usually displays (random) online players on the network, but we can use it to display this custom text instead.  
-> You can set it to an empty list (`Hover: []`) to not change the Players shown.
+> - [Basic](#basic-formatting)
+
+This is the text displayed when the player hovers with his cursor over the [Player Count](#playercount).
+
+This text usually displays (random) online players on the network, but we can use it to display this custom text instead.  
+You can set it to an empty list (`Hover: []`) to not change the Players shown.
 
 ### Motd
 > **Type**: `List (String)`  
@@ -231,10 +233,11 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
 > - '<red>Unsupported Minecraft Version {userVersion}'
 > - '<red>Please use <gray>{version}</gray>.'
 > ```
-> **Supported Formatting**: [Advanced](#advanced-formatting)
+> **Supported Formatting**:
 > 
-> **Description**:  
-> This text is shown in the MOTD when the server is displayed in the Server list of the client.
-> 
-> You can set this to an empty list (`Motd: []`) to not change the MOTD displayed.  
-> Only the first 2 lines will be used from the list.
+> - [Advanced](#advanced-formatting)
+
+This text is shown in the MOTD when the server is displayed in the Server list of the client.
+
+You can set this to an empty list (`Motd: []`) to not change the MOTD displayed.  
+Only the first 2 lines will be used from the list.
