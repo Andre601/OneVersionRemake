@@ -19,6 +19,7 @@
 package com.andre601.oneversionremake.bungeecord.listener;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
+import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.Parser;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.ServerPing;
@@ -64,8 +65,11 @@ public class BungeePingListener implements Listener{
         List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
-            if(!hoverMessage.isEmpty())
-                ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol, majorOnly));
+            if(!hoverMessage.isEmpty()){
+                ServerPing.PlayerInfo[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly);
+                if(players != null) 
+                    ping.getPlayers().setSample(players);
+            }
             
             if(!playerCount.isEmpty())
                 protocol.setName(Parser.toString(playerCount, serverProtocols, userProtocol, majorOnly));
