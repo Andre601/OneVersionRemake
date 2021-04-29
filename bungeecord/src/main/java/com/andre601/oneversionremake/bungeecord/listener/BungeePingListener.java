@@ -30,7 +30,6 @@ import net.md_5.bungee.event.EventPriority;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 public class BungeePingListener implements Listener{
     
@@ -64,8 +63,11 @@ public class BungeePingListener implements Listener{
         List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
-            if(!hoverMessage.isEmpty())
-                ping.getPlayers().setSample(getSamplePlayers(hoverMessage, serverProtocols, userProtocol, majorOnly));
+            if(!hoverMessage.isEmpty()){
+                ServerPing.PlayerInfo[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly);
+                if(players != null)
+                    ping.getPlayers().setSample(players);
+            }
             
             if(!playerCount.isEmpty())
                 protocol.setName(Parser.toString(playerCount, serverProtocols, userProtocol, majorOnly));
@@ -88,14 +90,5 @@ public class BungeePingListener implements Listener{
             ping.setVersion(protocol);
             event.setResponse(ping);
         }
-    }
-    
-    private ServerPing.PlayerInfo[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        ServerPing.PlayerInfo[] samplePlayers = new ServerPing.PlayerInfo[lines.size()];
-        for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.PlayerInfo(Parser.toString(lines.get(i), serverProtocols, userProtocol, majorOnly), UUID.randomUUID());
-        }
-        
-        return samplePlayers;
     }
 }

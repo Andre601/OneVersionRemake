@@ -34,11 +34,13 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.server.ServerPing;
 import org.bstats.charts.DrilldownPie;
 import org.bstats.velocity.Metrics;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class VelocityCore implements PluginCore{
     
@@ -121,5 +123,10 @@ public class VelocityCore implements PluginCore{
     
     public ProxyServer getProxy(){
         return proxy;
+    }
+    
+    public ServerPing.SamplePlayer[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        return core.getPlayers(ServerPing.SamplePlayer.class, lines, serverProtocols, userProtocol, majorOnly)
+                   .toArray(new ServerPing.SamplePlayer[0]);
     }
 }

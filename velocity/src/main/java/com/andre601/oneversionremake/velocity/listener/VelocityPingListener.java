@@ -27,7 +27,6 @@ import com.velocitypowered.api.proxy.server.ServerPing;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 public class VelocityPingListener{
     
@@ -63,8 +62,11 @@ public class VelocityPingListener{
         if(!serverProtocols.contains(userProtocol)){
             ServerPing.Builder builder = ping.asBuilder();
             
-            if(!hoverMessage.isEmpty())
-                builder.samplePlayers(getSamplePlayers(hoverMessage, serverProtocols, userProtocol, majorOnly));
+            if(!hoverMessage.isEmpty()){
+                ServerPing.SamplePlayer[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly);
+                if(players != null)
+                    builder.samplePlayers(players);
+            }
             
             if(!playerCount.isEmpty()){
                 playerCount = Parser.toString(playerCount, serverProtocols, userProtocol, majorOnly);
@@ -81,14 +83,5 @@ public class VelocityPingListener{
             
             event.setPing(builder.build());
         }
-    }
-    
-    private ServerPing.SamplePlayer[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        ServerPing.SamplePlayer[] samplePlayers = new ServerPing.SamplePlayer[lines.size()];
-        for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.SamplePlayer(Parser.toString(lines.get(i), serverProtocols, userProtocol, majorOnly), UUID.randomUUID());
-        }
-        
-        return samplePlayers;
     }
 }

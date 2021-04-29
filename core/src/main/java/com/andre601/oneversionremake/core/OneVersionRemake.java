@@ -26,10 +26,9 @@ import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class OneVersionRemake{
     
@@ -97,6 +96,24 @@ public class OneVersionRemake{
         }
         
         return map;
+    }
+    
+    public <T> List<T> getPlayers(Class<T> clazz, List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        try{
+            final List<T> players = new ArrayList<>(lines.size());
+            final Constructor<T> constructor = clazz.getDeclaredConstructor(String.class, UUID.class);
+            constructor.setAccessible(true);
+    
+            for(String line : lines){
+                players.add(constructor.newInstance(
+                        Parser.toString(line, serverProtocols, userProtocol, majorOnly), UUID.randomUUID()
+                ));
+            }
+            
+            return players;
+        }catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex){
+            return null;
+        }
     }
     
     private void start(){
