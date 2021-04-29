@@ -106,6 +106,7 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     public ServerPing.PlayerInfo[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return core.getPlayers(ServerPing.PlayerInfo.class, lines, serverProtocols, userProtocol, majorOnly);
+        return core.getPlayers(ServerPing.PlayerInfo.class, lines, serverProtocols, userProtocol, majorOnly)
+                   .toArray(new ServerPing.PlayerInfo[0]);
     }
 }

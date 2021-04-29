@@ -19,7 +19,6 @@
 package com.andre601.oneversionremake.bungeecord.listener;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
-import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.Parser;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.ServerPing;
@@ -31,7 +30,6 @@ import net.md_5.bungee.event.EventPriority;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 public class BungeePingListener implements Listener{
     
@@ -67,7 +65,7 @@ public class BungeePingListener implements Listener{
         if(!serverProtocols.contains(userProtocol)){
             if(!hoverMessage.isEmpty()){
                 ServerPing.PlayerInfo[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly);
-                if(players != null) 
+                if(players != null)
                     ping.getPlayers().setSample(players);
             }
             
@@ -92,14 +90,5 @@ public class BungeePingListener implements Listener{
             ping.setVersion(protocol);
             event.setResponse(ping);
         }
-    }
-    
-    private ServerPing.PlayerInfo[] getSamplePlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        ServerPing.PlayerInfo[] samplePlayers = new ServerPing.PlayerInfo[lines.size()];
-        for(int i = 0; i < samplePlayers.length; i++){
-            samplePlayers[i] = new ServerPing.PlayerInfo(Parser.toString(lines.get(i), serverProtocols, userProtocol, majorOnly), UUID.randomUUID());
-        }
-        
-        return samplePlayers;
     }
 }

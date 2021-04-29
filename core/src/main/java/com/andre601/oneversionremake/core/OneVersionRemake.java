@@ -98,7 +98,7 @@ public class OneVersionRemake{
         return map;
     }
     
-    public <T> T[] getPlayers(Class<T> clazz, List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+    public <T> List<T> getPlayers(Class<T> clazz, List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         try{
             final List<T> players = new ArrayList<>(lines.size());
             final Constructor<T> constructor = clazz.getDeclaredConstructor(String.class, UUID.class);
@@ -110,8 +110,7 @@ public class OneVersionRemake{
                 ));
             }
             
-            // noinspection unchecked
-            return (T[])players.toArray();
+            return players;
         }catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex){
             return null;
         }
