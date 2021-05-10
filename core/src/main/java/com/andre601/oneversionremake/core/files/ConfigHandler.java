@@ -19,6 +19,7 @@
 package com.andre601.oneversionremake.core.files;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
@@ -34,6 +35,7 @@ import java.util.List;
 public class ConfigHandler{
     
     private final OneVersionRemake core;
+    private final ProxyLogger logger;
     
     private final File config;
     private final File path;
@@ -42,6 +44,7 @@ public class ConfigHandler{
     
     public ConfigHandler(OneVersionRemake core, Path path){
         this.core = core;
+        logger = core.getProxyLogger();
         
         this.config = new File(path.toFile(), "config.yml");
         this.path = path.toFile();
@@ -49,15 +52,20 @@ public class ConfigHandler{
     
     public boolean loadConfig(){
         if(!path.isDirectory() && !path.mkdirs()){
-            core.getProxyLogger().warn("Could not create folder for plugin!");
+            logger.warn("Could not create folder for plugin!");
             return false;
         }
         
         if(!config.exists()){
             try(InputStream is = core.getClass().getResourceAsStream("/config.yml")){
+                if(is == null){
+                    logger.warn("Unable to create config file! InputStream was null.");
+                    return false;
+                }
+                
                 Files.copy(is, config.toPath());
             }catch(IOException ex){
-                core.getProxyLogger().warn("Unable to create config file!", ex);
+                logger.warn("Unable to create config file!", ex);
                 return false;
             }
         }
@@ -69,7 +77,7 @@ public class ConfigHandler{
         try{
             node = loader.load();
         }catch(IOException ex){
-            core.getProxyLogger().warn("There was an issue while attempting to load the config.", ex);
+            logger.warn("There was an issue while attempting to load the config.", ex);
             return false;
         }
         
@@ -85,7 +93,7 @@ public class ConfigHandler{
             node = loader.load();
             return true;
         }catch(IOException ex){
-            core.getProxyLogger().warn("There was an issue while attempting to reload the config", ex);
+            logger.warn("There was an issue while attempting to reload the config", ex);
             return false;
         }
     }

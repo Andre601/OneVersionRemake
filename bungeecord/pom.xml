@@ -123,6 +123,7 @@
                             <excludes>
                                 <exclude>META-INF/*.SF</exclude>
                                 <exclude>META-INF/*.RSA</exclude>
+                                <exclude>META-INF/versions/16/</exclude>
                             </excludes>
                         </filter>
                     </filters>
