@@ -22,16 +22,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>velocity</artifactId>
+    <artifactId>velocity-legacy</artifactId>
     <packaging>jar</packaging>
     <version>${plugin.version}</version>
-
+    
     <parent>
         <artifactId>parent</artifactId>
         <groupId>com.andre601.oneversionremake</groupId>
         <version>parent</version>
     </parent>
-
+    
     <repositories>
         <repository>
             <id>velocity</id>
@@ -42,7 +42,7 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
     </repositories>
-
+    
     <dependencies>
         <dependency>
             <groupId>com.andre601.oneversionremake</groupId>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <version>1.1.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -76,7 +76,7 @@
     </dependencies>
 
     <build>
-        <finalName>OneVersionRemake-Velocity-${project.version}</finalName>
+        <finalName>OneVersionRemake-Velocity-legacy-${project.version}</finalName>
         <resources>
             <resource>
                 <filtering>true</filtering>

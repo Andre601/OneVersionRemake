@@ -18,7 +18,8 @@
     
     <modules>
         <module>core</module>
-        <module>velocity</module>
+        <module>velocity-legacy</module>
         <module>bungeecord</module>
+        <module>velocity</module>
     </modules>
 </project>

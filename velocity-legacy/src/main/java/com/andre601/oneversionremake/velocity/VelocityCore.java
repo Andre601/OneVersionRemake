@@ -31,7 +31,7 @@ import com.andre601.oneversionremake.velocity.logging.VelocityLogger;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.lifecycle.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
@@ -70,12 +70,12 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadCommands(){
-        CommandMeta commandMeta = getProxy().commandManager()
-                .createMetaBuilder("oneversionremake")
+        CommandMeta commandMeta = getProxy().getCommandManager()
+                .metaBuilder("oneversionremake")
                 .aliases("ovr")
                 .build();
         
-        getProxy().commandManager().register(commandMeta, new CmdOneVersionRemake(this));
+        getProxy().getCommandManager().register(commandMeta, new CmdOneVersionRemake(this));
     }
     
     @Override
@@ -87,7 +87,7 @@ public class VelocityCore implements PluginCore{
     @Override
     public void loadMetrics(){
         Metrics metrics = factory.make(this, 10341);
-        
+    
         metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
     }
     
@@ -127,6 +127,6 @@ public class VelocityCore implements PluginCore{
     
     public ServerPing.SamplePlayer[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         return core.getPlayers(ServerPing.SamplePlayer.class, lines, serverProtocols, userProtocol, majorOnly)
-                .toArray(new ServerPing.SamplePlayer[0]);
+                   .toArray(new ServerPing.SamplePlayer[0]);
     }
 }
