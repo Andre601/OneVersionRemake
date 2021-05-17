@@ -22,8 +22,8 @@ public enum ProxyPlatform{
     
     BUNGEECORD     ("BungeeCord"),
     WATERFALL      ("Waterfall"),
-    VELOCITY       ("Velocity 2.x"),
-    VELOCITY_LEGACY("Velocity 1.x");
+    VELOCITY       ("Velocity 2"),
+    VELOCITY_LEGACY("Velocity");
     
     private final String name;
     
