@@ -20,9 +20,10 @@ package com.andre601.oneversionremake.core.enums;
 
 public enum ProxyPlatform{
     
-    BUNGEECORD("BungeeCord"),
-    WATERFALL ("Waterfall"),
-    VELOCITY  ("Velocity");
+    BUNGEECORD     ("BungeeCord"),
+    WATERFALL      ("Waterfall"),
+    VELOCITY       ("Velocity 2.x"),
+    VELOCITY_LEGACY("Velocity 1.x");
     
     private final String name;
     
