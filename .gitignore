@@ -21,3 +21,7 @@ hs_err_pid*
 /*.ipr
 /*.iws
 /atlassian-ide-plugin.xml
+*/dependency-reduced-pom.xml
+*/velocity*.iml
+*/core.iml
+*/bungeecord.iml
