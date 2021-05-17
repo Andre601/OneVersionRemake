@@ -121,6 +121,11 @@ public class VelocityCore implements PluginCore{
         return core.getVersion();
     }
     
+    @Override
+    public String getProxyVersion(){
+        return getProxy().version().version();
+    }
+    
     public ProxyServer getProxy(){
         return proxy;
     }

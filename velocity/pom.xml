@@ -25,6 +25,7 @@
     <artifactId>velocity</artifactId>
     <packaging>jar</packaging>
     <version>${plugin.version}</version>
+    <description>${plugin.description}</description>
 
     <parent>
         <artifactId>parent</artifactId>

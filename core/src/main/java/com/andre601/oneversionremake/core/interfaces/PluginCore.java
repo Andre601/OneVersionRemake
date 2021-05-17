@@ -43,4 +43,6 @@ public interface PluginCore{
     CommandHandler getCommandHandler();
     
     String getVersion();
+    
+    String getProxyVersion();
 }

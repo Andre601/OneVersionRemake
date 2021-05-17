@@ -105,6 +105,13 @@ public class BungeeCore extends Plugin implements PluginCore{
         return core.getVersion();
     }
     
+    @Override
+    public String getProxyVersion(){
+        String[] version = getProxy().getVersion().split(":");
+        
+        return String.format("%s (Build #%s)", version[2], version[4]);
+    }
+    
     public ServerPing.PlayerInfo[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         return core.getPlayers(ServerPing.PlayerInfo.class, lines, serverProtocols, userProtocol, majorOnly)
                    .toArray(new ServerPing.PlayerInfo[0]);

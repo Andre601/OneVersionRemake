@@ -20,6 +20,7 @@ package com.andre601.oneversionremake.core;
 
 import com.andre601.oneversionremake.core.commands.CommandHandler;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
+import com.andre601.oneversionremake.core.enums.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
@@ -118,6 +119,14 @@ public class OneVersionRemake{
     
     private void start(){
         loadVersion();
+        
+        if((pluginCore.getProxyPlatform() != ProxyPlatform.BUNGEECORD) && (pluginCore.getProxyPlatform() != ProxyPlatform.WATERFALL)){
+            if((isNewVelocity() && isLegacyPlugin()) || (!isNewVelocity() && !isLegacyPlugin())){
+                printIncompatabilityWarning();
+                return;
+            }
+        }
+        
         printBanner();
         
         if(configHandler.loadConfig()){
@@ -168,7 +177,7 @@ public class OneVersionRemake{
         getProxyLogger().info("\\____/ |___/_/ |_|");
         getProxyLogger().info("");
         getProxyLogger().info("OneVersionRemake v" + getVersion());
-        getProxyLogger().info("Platform: " + pluginCore.getProxyPlatform().getName());
+        getProxyLogger().info("Platform: " + pluginCore.getProxyPlatform().getName() + " v" + pluginCore.getProxyVersion());
         getProxyLogger().info("");
     }
     
@@ -186,6 +195,15 @@ public class OneVersionRemake{
         getProxyLogger().warn("================================================================================");
     }
     
+    private void printIncompatabilityWarning(){
+        getProxyLogger().warn("================================================================================");
+        getProxyLogger().warn("WARNING!");
+        getProxyLogger().warn("You're using Velocity 2 while the plugin itself is for Velocity 1.1.0!");
+        getProxyLogger().warn("");
+        getProxyLogger().warn("The Legacy-plugin is incompatible with Velocity 2 and will be disabled...");
+        getProxyLogger().warn("================================================================================");
+    }
+    
     private void loadVersion(){
         try(InputStream is = getClass().getResourceAsStream("/core.properties")){
             Properties properties = new Properties();
@@ -196,5 +214,19 @@ public class OneVersionRemake{
         }catch(IOException ex){
             version = "UNKNOWN";
         }
+    }
+    
+    private boolean isNewVelocity(){
+        try{
+            int maj = Integer.parseInt(pluginCore.getProxyVersion().split("\\.")[0]);
+            
+            return maj >= 2;
+        }catch(NumberFormatException ex){
+            return false;
+        }
+    }
+    
+    private boolean isLegacyPlugin(){
+        return pluginCore.getProxyPlatform() == ProxyPlatform.VELOCITY_LEGACY;
     }
 }
