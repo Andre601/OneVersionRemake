@@ -98,7 +98,7 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public ProxyPlatform getProxyPlatform(){
-        return ProxyPlatform.VELOCITY;
+        return ProxyPlatform.VELOCITY_LEGACY;
     }
     
     @Override
