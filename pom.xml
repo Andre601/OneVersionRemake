@@ -11,7 +11,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <plugin.version>3.5.0</plugin.version>
+        
+        <plugin.version>3.5.1</plugin.version>
+        <plugin.description>Only allow specific client versions on your Network.</plugin.description>
+        
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
     </properties>

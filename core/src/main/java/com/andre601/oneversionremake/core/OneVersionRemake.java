@@ -168,7 +168,7 @@ public class OneVersionRemake{
         getProxyLogger().info("\\____/ |___/_/ |_|");
         getProxyLogger().info("");
         getProxyLogger().info("OneVersionRemake v" + getVersion());
-        getProxyLogger().info("Platform: " + pluginCore.getProxyPlatform().getName());
+        getProxyLogger().info("Platform: " + pluginCore.getProxyPlatform().getName() + " v" + pluginCore.getProxyVersion());
         getProxyLogger().info("");
     }
     

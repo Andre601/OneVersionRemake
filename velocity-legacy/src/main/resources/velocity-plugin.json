@@ -2,7 +2,7 @@
   "id": "oneversionremake",
   "name": "OneVersionRemake",
   "version": "${project.version}",
-  "description": "Block connections from Players with versions not matching your Network's.",
+  "description": "${project.description}",
   "authors": [
     "Andre_601"
   ],

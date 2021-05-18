@@ -35,8 +35,6 @@ import com.velocitypowered.api.event.lifecycle.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
-import org.bstats.charts.DrilldownPie;
-import org.bstats.velocity.Metrics;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
@@ -48,17 +46,13 @@ public class VelocityCore implements PluginCore{
     private final ProxyServer proxy;
     private final Path path;
     
-    private final Metrics.Factory factory;
-    
     private OneVersionRemake core;
     
-    @Inject
-    public VelocityCore(ProxyServer proxy, @DataDirectory Path path, Metrics.Factory factory){
+    @Inject // TODO: Re-Add Metrics.Factory factory once Velocity 2 supports it
+    public VelocityCore(ProxyServer proxy, @DataDirectory Path path){
         this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
         this.proxy = proxy;
         this.path = path;
-        
-        this.factory = factory;
     }
     
     @Subscribe
@@ -86,9 +80,11 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadMetrics(){
-        Metrics metrics = factory.make(this, 10341);
+        // TODO: Re-Add Metrics once available for Velocity 2
+        //Metrics metrics = factory.make(this, 10341);
         
-        metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
+        //metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
+        
     }
     
     @Override
@@ -119,6 +115,11 @@ public class VelocityCore implements PluginCore{
     @Override
     public String getVersion(){
         return core.getVersion();
+    }
+    
+    @Override
+    public String getProxyVersion(){
+        return getProxy().version().version();
     }
     
     public ProxyServer getProxy(){
