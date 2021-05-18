@@ -31,6 +31,24 @@ You should find the plugin jars in `bungeecord/target`, `velocity-legacy/target`
 Any contribution is welcome when it helps improving the plugin's performance.  
 Just make sure the code is readable and easy to understand for others.
 
+### Modules
+The project is split into 4 different modules which all have their own purpose.
+
+#### `core`
+The `core` module contains platform-independent code that will be used by the other modules.  
+Whenever you add a new feature that should be used on BungeeCord AND Velocity should you first try to make it platform-independent by adding it to this module.
+
+#### `bungeecord`
+The `bungeecord` module contains code specific to BungeeCord and maybe also some Waterfall-specific code.
+
+#### `velocity`
+The `velocity` module contains code specific to Velocity 2.0.0 or higher.  
+The generated jar from this module is incompatible with Velocity 1.x!
+
+#### `velocity-legacy`
+The `velocity-legacy` module contains the original code for Velocity 1.x.  
+The generated jar from this module is incompatible with Velocity 2.0.0 or newer.
+
 ## Links
 - [Spigot]
 - [Wiki]
