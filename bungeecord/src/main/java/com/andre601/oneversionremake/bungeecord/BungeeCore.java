@@ -78,10 +78,15 @@ public class BungeeCore extends Plugin implements PluginCore{
     @Override
     public ProxyPlatform getProxyPlatform(){
         try{
-            Class.forName("io.github.waterfallmc.waterfall.conf.WaterfallConfiguration");
-            return ProxyPlatform.WATERFALL;
-        }catch(ClassNotFoundException ex){
-            return ProxyPlatform.BUNGEECORD;
+            Class.forName("dev._21studios.flamecord.FlameCord");
+            return ProxyPlatform.FLAMECORD;
+        }catch(ClassNotFoundException ignored){
+            try{
+                Class.forName("io.github.waterfallmc.waterfall.conf.WaterfallConfiguration");
+                return ProxyPlatform.WATERFALL;
+            }catch(ClassNotFoundException ignored1){
+                return ProxyPlatform.BUNGEECORD;
+            }
         }
     }
     
@@ -108,6 +113,11 @@ public class BungeeCore extends Plugin implements PluginCore{
     @Override
     public String getProxyVersion(){
         String[] version = getProxy().getVersion().split(":");
+        if(version.length <= 0)
+            return "UNKNOWN";
+        
+        if(version.length == 1)
+            return version[0];
         
         return String.format("%s (Build #%s)", version[2], version[4]);
     }
