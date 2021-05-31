@@ -31,7 +31,7 @@ import com.andre601.oneversionremake.velocity.logging.VelocityLogger;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.lifecycle.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
@@ -48,7 +48,7 @@ public class VelocityCore implements PluginCore{
     
     private OneVersionRemake core;
     
-    @Inject // TODO: Re-Add Metrics.Factory factory once Velocity 2 supports it
+    @Inject // TODO: Re-Add Metrics.Factory factory once Velocity 3 supports it
     public VelocityCore(ProxyServer proxy, @DataDirectory Path path){
         this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
         this.proxy = proxy;
@@ -64,12 +64,12 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadCommands(){
-        CommandMeta commandMeta = getProxy().commandManager()
-                .createMetaBuilder("oneversionremake")
+        CommandMeta commandMeta = getProxy().getCommandManager()
+                .metaBuilder("oneversionremake")
                 .aliases("ovr")
                 .build();
         
-        getProxy().commandManager().register(commandMeta, new CmdOneVersionRemake(this));
+        getProxy().getCommandManager().register(commandMeta, new CmdOneVersionRemake(this));
     }
     
     @Override
@@ -80,6 +80,7 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadMetrics(){
+        getProxyLogger().info("Metrics currently not available. Skipping setup...");
         // TODO: Re-Add Metrics once available for Velocity 2
         //Metrics metrics = factory.make(this, 10341);
         
@@ -119,7 +120,7 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public String getProxyVersion(){
-        return getProxy().version().version();
+        return getProxy().getVersion().getVersion();
     }
     
     public ProxyServer getProxy(){

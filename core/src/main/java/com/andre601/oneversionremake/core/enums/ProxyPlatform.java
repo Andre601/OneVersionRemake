@@ -20,10 +20,14 @@ package com.andre601.oneversionremake.core.enums;
 
 public enum ProxyPlatform{
     
+    // BungeeCord and forks
     BUNGEECORD     ("BungeeCord"),
     FLAMECORD      ("FlameCord"),
+    TRAVERTINE     ("Travertine"),
     WATERFALL      ("Waterfall"),
-    VELOCITY       ("Velocity 2"),
+    
+    // Velocity
+    VELOCITY       ("Velocity 3"),
     VELOCITY_LEGACY("Velocity");
     
     private final String name;

@@ -22,7 +22,7 @@ import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.ProxyPingEvent;
+import com.velocitypowered.api.event.proxy.ProxyPingEvent;
 import com.velocitypowered.api.proxy.server.ServerPing;
 
 import java.util.Comparator;
@@ -34,17 +34,17 @@ public class VelocityPingListener{
     
     public VelocityPingListener(VelocityCore plugin){
         this.plugin = plugin;
-        plugin.getProxy().eventManager().register(plugin, this);
+        plugin.getProxy().getEventManager().register(plugin, this);
     }
     
     @Subscribe(order = PostOrder.FIRST)
     public void onProxyPing(ProxyPingEvent event){
-        ServerPing ping = event.ping();
-        ServerPing.Version protocolVersion = ping.version();
+        ServerPing ping = event.getPing();
+        ServerPing.Version protocolVersion = ping.getVersion();
         if(protocolVersion == null)
             return;
         
-        int userProtocol = protocolVersion.protocol();
+        int userProtocol = protocolVersion.getProtocol();
         
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
         

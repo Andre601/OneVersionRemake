@@ -37,6 +37,7 @@ import org.bstats.charts.SimplePie;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 
 public class BungeeCore extends Plugin implements PluginCore{
     
@@ -77,16 +78,19 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     @Override
     public ProxyPlatform getProxyPlatform(){
-        try{
-            Class.forName("dev._21studios.flamecord.FlameCord");
-            return ProxyPlatform.FLAMECORD;
-        }catch(ClassNotFoundException ignored){
-            try{
-                Class.forName("io.github.waterfallmc.waterfall.conf.WaterfallConfiguration");
+        switch(getProxy().getName().toLowerCase(Locale.ROOT)){
+            case "flamecord":
+                return ProxyPlatform.FLAMECORD;
+            
+            case "travertine":
+                return ProxyPlatform.TRAVERTINE;
+            
+            case "waterfall":
                 return ProxyPlatform.WATERFALL;
-            }catch(ClassNotFoundException ignored1){
+            
+            case "bungeecord":
+            default:
                 return ProxyPlatform.BUNGEECORD;
-            }
         }
     }
     
