@@ -115,24 +115,24 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
 
   ##### Colors
 
-  | Option 1                   | Option 2                         |
-  | -------------------------- | -------------------------------- |
-  | [`<aqua>`][colors]         | [`<color:aqua>`][colors]         |
-  | [`<black>`][colors]        | [`<color:black>`][colors]        |
-  | [`<blue>`][colors]         | [`<color:blue>`][colors]         |
-  | [`<dark_aqua>`][colors]    | [`<color:dark_aqua>`][colors]    |
-  | [`<dark_blue>`][colors]    | [`<color:dark_blue>`][colors]    |
-  | [`<dark_gray>`][colors]    | [`<color:dark_gray>`][colors]    |
-  | [`<dark_green>`][colors]   | [`<color:dark_green>`][colors]   |
-  | [`<dark_purple>`][colors]  | [`<color:dark_purple>`][colors]  |
-  | [`<dark_red>`][colors]     | [`<color:dark_red>`][colors]     |
-  | [`<gold>`][colors]         | [`<color:gold>`][colors]         |
-  | [`<gray>`][colors]         | [`<color:gray>`][colors]         |
-  | [`<green>`][colors]        | [`<color:green>`][colors]        |
-  | [`<light_purple>`][colors] | [`<color:light_purple>`][colors] |
-  | [`<red>`][colors]          | [`<color:red>`][colors]          |
-  | [`<white>`][colors]        | [`<color:white>`][colors]        |
-  | [`<yellow>`][colors]       | [`<color:yellow>`][colors]       |
+  | Option 1                                        | Option 2                                                    |
+  | ----------------------------------------------- | ----------------------------------------------------------- |
+  | [`<aqua>`][colors]                              | [`<color:aqua>`][colors]                                    |
+  | [`<black>`][colors]                             | [`<color:black>`][colors]                                   |
+  | [`<blue>`][colors]                              | [`<color:blue>`][colors]                                    |
+  | [`<dark_aqua>`][colors]                         | [`<color:dark_aqua>`][colors]                               |
+  | [`<dark_blue>`][colors]                         | [`<color:dark_blue>`][colors]                               |
+  | [`<dark_gray>`][colors]/[`<dark_grey>`][colors] | [`<color:dark_gray>`][colors]/[`<color:dark_grey>`][colors] |
+  | [`<dark_green>`][colors]                        | [`<color:dark_green>`][colors]                              |
+  | [`<dark_purple>`][colors]                       | [`<color:dark_purple>`][colors]                             |
+  | [`<dark_red>`][colors]                          | [`<color:dark_red>`][colors]                                |
+  | [`<gold>`][colors]                              | [`<color:gold>`][colors]                                    |
+  | [`<gray>`][colors]                              | [`<color:gray>`][colors]                                    |
+  | [`<green>`][colors]                             | [`<color:green>`][colors]                                   |
+  | [`<light_purple>`][colors]                      | [`<color:light_purple>`][colors]                            |
+  | [`<red>`][colors]                               | [`<color:red>`][colors]                                     |
+  | [`<white>`][colors]                             | [`<color:white>`][colors]                                   |
+  | [`<yellow>`][colors]                            | [`<color:yellow>`][colors]                                  |
 
   ##### Formatting
 
