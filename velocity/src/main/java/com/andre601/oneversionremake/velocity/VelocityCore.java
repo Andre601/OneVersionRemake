@@ -48,7 +48,7 @@ public class VelocityCore implements PluginCore{
     
     private OneVersionRemake core;
     
-    @Inject // TODO: Re-Add Metrics.Factory factory once Velocity 2 supports it
+    @Inject // TODO: Re-Add Metrics.Factory factory once Velocity 3 supports it
     public VelocityCore(ProxyServer proxy, @DataDirectory Path path){
         this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
         this.proxy = proxy;
@@ -80,6 +80,7 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadMetrics(){
+        getProxyLogger().info("Metrics currently not available. Skipping setup...");
         // TODO: Re-Add Metrics once available for Velocity 2
         //Metrics metrics = factory.make(this, 10341);
         
