@@ -22,9 +22,8 @@ import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.event.PostOrder;
-import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.player.PreLoginEvent;
+import com.velocitypowered.api.event.connection.PreLoginEvent;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +34,7 @@ public class VelocityLoginListener{
     
     public VelocityLoginListener(VelocityCore plugin){
         this.plugin = plugin;
-        plugin.getProxy().eventManager().register(plugin, this);
+        plugin.getProxy().getEventManager().register(plugin, this);
     }
     
     @Subscribe(order = PostOrder.FIRST)
@@ -44,23 +43,23 @@ public class VelocityLoginListener{
         List<String> kickMessage = plugin.getConfigHandler().getStringList("Messages", "Kick");
         
         boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
-        int userProtocol = event.connection().protocolVersion().protocol();
+        int userProtocol = event.getConnection().getProtocolVersion().getProtocol();
         if(serverProtocols.isEmpty())
             return;
         
         if(!serverProtocols.contains(userProtocol)){
             if(kickMessage.isEmpty())
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
-            
-            ResultedEvent.ComponentResult result = PreLoginEvent.ComponentResult.denied(
-                    Parser.toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly));
+    
+            PreLoginEvent.PreLoginComponentResult result = PreLoginEvent.PreLoginComponentResult
+                    .denied(Parser.toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly));
             
             event.setResult(result);
             
             if(plugin.getConfigHandler().getBoolean(true, "Protocol", "LogDenial")){
                 plugin.getProxyLogger().info(String.format(
                         "Denied login for Player %s with MC version %s (Protocol Version %d)",
-                        event.username(),
+                        event.getUsername(),
                         ProtocolVersion.getFriendlyName(userProtocol),
                         userProtocol
                 ));
