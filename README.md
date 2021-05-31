@@ -39,15 +39,17 @@ The `core` module contains platform-independent code that will be used by the ot
 Whenever you add a new feature that should be used on BungeeCord AND Velocity should you first try to make it platform-independent by adding it to this module.
 
 #### `bungeecord`
-The `bungeecord` module contains code specific to BungeeCord and maybe also some Waterfall-specific code.
+BungeeCord related code.  
+The jar build in this module *should* support BungeeCord, Waterfall, Travertine and FlameCord.  
+No guarantee is given for the last two forks.
 
 #### `velocity`
-The `velocity` module contains code specific to Velocity 2.0.0 or higher.  
-The generated jar from this module is incompatible with Velocity 1.x!
+This module contains the code required to build a Jar supporting Velocity 3.0.0  
+This version of Velocity is still under heavy development, and you're not recommended using it for production.
 
 #### `velocity-legacy`
-The `velocity-legacy` module contains the original code for Velocity 1.x.  
-The generated jar from this module is incompatible with Velocity 2.0.0 or newer.
+This module contains the code originally made for Velocity 1.x  
+It is recommended to use Jars for this version of Velocity for Production enviroments.
 
 ## Links
 - [Spigot]
