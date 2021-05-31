@@ -19,5 +19,5 @@ jobs:
     - name: Upload jar
       uses: AButler/upload-release-assets@v2.0
       with:
-        files: 'bungeecord/target/OneVersionRemake-*.jar;velocity/target/OneVersionRemake-*.jar'
+        files: 'bungeecord/target/OneVersionRemake-*.jar;velocity/target/OneVersionRemake-*.jar;velocity-legacy/target/OneVersionRemake-*.jar'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
