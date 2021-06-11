@@ -1,7 +1,8 @@
-name-template: 'v$RESOLVED_VERSION'
+name-template: 'v$RESOLVED_VERSION:'
 tag-template: 'v$RESOLVED_VERSION'
 
 # The categories each label corresponds to
+category-template: "### $TITLE"
 categories:
   - title: '🚀 Features'
     labels:
@@ -39,7 +40,4 @@ version-resolver:
       - 'Action: Update Patch'
   default: patch
 
-template: |
-  # Changes since `$PREVIOUS_TAG`
-
-  $CHANGES
+template: '$CHANGES'
