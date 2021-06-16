@@ -179,9 +179,8 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
 > ```yaml
 > PlayerCount: '<red>Minecraft {version}'
 > ```
-> **Supported Formatting**: [Basic](#basic-formatting)
 > 
-> - [Basic](#basic-formatting)
+> **Supported Formatting**: [Basic](#basic-formatting)
 
 Changes the text that usually displays the player count (`<online>/<total>`).  
 You can set this to an empty String (`PlayerCount: ''`) to not alter the text or to just a color/formatting code (`PlayerCount: '<red>'`) to hide it completely!
@@ -197,9 +196,8 @@ You can set this to an empty String (`PlayerCount: ''`) to not alter the text or
 > - ''
 > - '<red>Please change your Version and try again.' 
 > ```
-> **Supported Formatting**:
->
-> - [Advanced](#advanced-formatting)
+> 
+> **Supported Formatting**:  [Advanced](#advanced-formatting)
 
 The text to display when the Player gets kicked for using an unsupported MC version.
 
@@ -216,9 +214,8 @@ This setting can NOT be disabled and will default to the following text when set
 > - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
 > - '<red>Please change your version to {version}.' 
 > ```
-> **Supported Formatting**:
 > 
-> - [Basic](#basic-formatting)
+> **Supported Formatting**: [Basic](#basic-formatting)
 
 This is the text displayed when the player hovers with his cursor over the [Player Count](#playercount).
 
@@ -233,9 +230,8 @@ You can set it to an empty list (`Hover: []`) to not change the Players shown.
 > - '<red>Unsupported Minecraft Version {userVersion}'
 > - '<red>Please use <gray>{version}</gray>.'
 > ```
-> **Supported Formatting**:
 > 
-> - [Advanced](#advanced-formatting)
+> **Supported Formatting**: [Advanced](#advanced-formatting)
 
 This text is shown in the MOTD when the server is displayed in the Server list of the client.
 
