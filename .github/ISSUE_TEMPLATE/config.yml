@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Support
+    url: https://discord.gg/6dazXp6
+    about: "The Discord is a go-to place for getting fast support. Head over to the #oneversionremake channel for support."
+  - name: Wiki
+    url: https://github.com/Andre601/OneVersionRemake/wiki
+    about: "The Wiki contains helpful information about the configuration and other things."
+  - name: Hastebin
+    url: https://paste.helpch.at
+    about: Use this Hastebin-site for sharing errors and configuration files.
+  - name: Update Wiki
+    url: https://github.com/PlaceholderAPI/PlaceholderAPI/pulls
+    about: Please make a Pull request towards the "wiki" folder to update the wiki.
+  - name: Feedback
+    url: https://github.com/Andre601/OneVersionRemake/discussions
+    about: "Share your feedback on the Discussions page of this Repository."
