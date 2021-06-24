@@ -19,6 +19,7 @@ body:
       - label: "My issue isn't already found on the Issue tracker."
         required: true
       - label: "I use the latest release or development build of the plugin."
+        required: true
 - type: dropdown
   attributes:
     label: "Platform"
