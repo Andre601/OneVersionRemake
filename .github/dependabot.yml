@@ -7,6 +7,34 @@ updates:
   open-pull-requests-limit: 10
   labels:
   - 'Type: Update (Dependency)'
+  - 'Target: Core'
+- package-ecosystem: maven
+  directory: "/bungeecord"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  labels:
+  - 'Type: Update (Dependency)'
+  - 'Target: BungeeCord'
+- package-ecosystem: maven
+  directory: "/velocity"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  labels:
+  - 'Type: Update (Dependency)'
+  - 'Target: Velocity'
+- package-ecosystem: maven
+  directory: "/velocity-legacy"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  labels:
+  - 'Type: Update (Dependency)'
+  - 'Target: Velocity (Legacy)'
+  ignore:
+  - dependency-name: "com.velocitypowered:velocity-api"
+    versions: ["3.x"]
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
