@@ -34,7 +34,7 @@ updates:
   - 'Target: Velocity (Legacy)'
   ignore:
   - dependency-name: "com.velocitypowered:velocity-api"
-    versions: ["3.x"]
+    versions: ["[3.0.0,)"]
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
