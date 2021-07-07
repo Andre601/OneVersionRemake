@@ -20,7 +20,6 @@ package com.andre601.oneversionremake.core.commands;
 
 import com.andre601.oneversionremake.core.CommandPermissions;
 import com.andre601.oneversionremake.core.OneVersionRemake;
-import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.interfaces.CmdSender;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -62,7 +61,7 @@ public class CommandHandler{
                 if(protocols.isEmpty()){
                     sender.sendMsg(NamedTextColor.RED, "None");
                 }else{
-                    sender.sendMsg(NamedTextColor.GRAY, ProtocolVersion.getFriendlyNames(protocols, false));
+                    sender.sendMsg(NamedTextColor.GRAY, core.getProtocolVersionResolver().getFriendlyNames(protocols, false));
                 }
                 
                 sender.sendMsg();

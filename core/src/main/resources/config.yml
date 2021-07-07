@@ -16,9 +16,25 @@
 # Created with Version ${project.version}
 #
 # +---------------------------------------------------------------------------+
-# |                             Protocol Settings                             |
+# |                               Main Settings                               |
 # |                                                                           |
 # | Main Settings for the plugin.                                             |
+# |                                                                           |
+# | https://github.com/Andre601/OneVersionRemake/wiki/Config#settings         |
+# +---------------------------------------------------------------------------+
+Settings:
+  # +-------------------------------------------------------------------------+
+  # | Whether OneVersionRemake should download the latest versions.json on    |
+  # | Proxy (re)start.                                                        |
+  # |                                                                         |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#updateversions |
+  # +-------------------------------------------------------------------------+
+  UpdateVersions: true
+
+# +---------------------------------------------------------------------------+
+# |                             Protocol Settings                             |
+# |                                                                           |
+# | Protocol Settings for the plugin.                                         |
 # |                                                                           |
 # | https://github.com/Andre601/OneVersionRemake/wiki/Config#protocol         |
 # +---------------------------------------------------------------------------+

@@ -18,8 +18,10 @@
 
 package com.andre601.oneversionremake.core.interfaces;
 
+import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.core.commands.CommandHandler;
-import com.andre601.oneversionremake.core.enums.ProxyPlatform;
+import com.andre601.oneversionremake.core.proxy.ProtocolVersionResolver;
+import com.andre601.oneversionremake.core.proxy.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 
 import java.nio.file.Path;
@@ -40,7 +42,11 @@ public interface PluginCore{
     
     ConfigHandler getConfigHandler();
     
+    ProtocolVersionResolver getProtocolVersionResolver();
+    
     CommandHandler getCommandHandler();
+    
+    Parser getComponentParser();
     
     String getVersion();
     

@@ -23,8 +23,10 @@ import com.andre601.oneversionremake.bungeecord.listener.BungeeLoginListener;
 import com.andre601.oneversionremake.bungeecord.listener.BungeePingListener;
 import com.andre601.oneversionremake.bungeecord.logging.BungeeLogger;
 import com.andre601.oneversionremake.core.OneVersionRemake;
+import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.core.commands.CommandHandler;
-import com.andre601.oneversionremake.core.enums.ProxyPlatform;
+import com.andre601.oneversionremake.core.proxy.ProtocolVersionResolver;
+import com.andre601.oneversionremake.core.proxy.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
@@ -105,8 +107,18 @@ public class BungeeCore extends Plugin implements PluginCore{
     }
     
     @Override
+    public ProtocolVersionResolver getProtocolVersionResolver(){
+        return core.getProtocolVersionResolver();
+    }
+    
+    @Override
     public CommandHandler getCommandHandler(){
         return core.getCommandHandler();
+    }
+    
+    @Override
+    public Parser getComponentParser(){
+        return core.getComponentParser();
     }
     
     @Override

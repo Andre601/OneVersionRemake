@@ -16,7 +16,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.andre601.oneversionremake.core.enums;
+package com.andre601.oneversionremake.core.proxy;
 
 public enum ProxyPlatform{
     
