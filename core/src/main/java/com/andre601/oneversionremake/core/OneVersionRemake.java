@@ -152,6 +152,7 @@ public class OneVersionRemake{
                 getProxyLogger().info("Loaded versions.json!");
             }else{
                 getProxyLogger().warn("Couldn't load versions.json! Check previous lines for any errors and warnings.");
+                return;
             }
         }
     
