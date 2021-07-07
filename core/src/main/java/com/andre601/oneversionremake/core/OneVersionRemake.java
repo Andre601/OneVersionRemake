@@ -19,10 +19,10 @@
 package com.andre601.oneversionremake.core;
 
 import com.andre601.oneversionremake.core.commands.CommandHandler;
-import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
+import com.andre601.oneversionremake.core.proxy.ProtocolVersionResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +35,8 @@ public class OneVersionRemake{
     private final PluginCore pluginCore;
     private final ConfigHandler configHandler;
     private final CommandHandler commandHandler;
+    private final ProtocolVersionResolver protocolVersionResolver;
+    private final Parser parser;
     
     private String version;
     
@@ -42,6 +44,8 @@ public class OneVersionRemake{
         this.pluginCore = pluginCore;
         this.configHandler = new ConfigHandler(this, pluginCore.getPath());
         this.commandHandler = new CommandHandler(this);
+        this.protocolVersionResolver = new ProtocolVersionResolver(this, pluginCore.getPath());
+        this.parser = new Parser(this);
         
         start();
     }
@@ -66,12 +70,20 @@ public class OneVersionRemake{
         return commandHandler;
     }
     
+    public ProtocolVersionResolver getProtocolVersionResolver(){
+        return protocolVersionResolver;
+    }
+    
+    public Parser getComponentParser(){
+        return parser;
+    }
+    
     public Map<String, Map<String, Integer>> getPieMap(){
         Map<String, Map<String, Integer>> map = new HashMap<>();
         
         List<Integer> versions = getConfigHandler().getIntList("Protocol", "Versions");
         if(versions.isEmpty()){
-            String unknown = ProtocolVersion.getFriendlyName(0);
+            String unknown = getProtocolVersionResolver().getFriendlyName(0);
             
             Map<String, Integer> entry = new HashMap<>();
             
@@ -82,8 +94,8 @@ public class OneVersionRemake{
         }
         
         for(int version : versions){
-            String major = ProtocolVersion.getMajor(version);
-            String name = ProtocolVersion.getFriendlyName(version);
+            String major = getProtocolVersionResolver().getMajor(version);
+            String name = getProtocolVersionResolver().getFriendlyName(version);
             
             Map<String, Integer> entry = new HashMap<>();
             entry.put(name, 1);
@@ -106,7 +118,7 @@ public class OneVersionRemake{
     
             for(String line : lines){
                 players.add(constructor.newInstance(
-                        Parser.toString(line, serverProtocols, userProtocol, majorOnly), UUID.randomUUID()
+                        getComponentParser().toString(line, serverProtocols, userProtocol, majorOnly), UUID.randomUUID()
                 ));
             }
             
@@ -126,6 +138,16 @@ public class OneVersionRemake{
             getProxyLogger().warn("Couldn't load config.yml! Check above lines for errors and warnings.");
             return;
         }
+        
+        if(configHandler.getBoolean(true, "Settings", "UpdateVersions")){
+            getProxyLogger().info("Fetsching latest versions.json from GitHub...");
+            if(protocolVersionResolver.loadFile()){
+                getProxyLogger().info("Loaded versions.json!");
+            }else{
+                getProxyLogger().warn("Couldn't load versions.json! Check previous lines for any errors and warnings.");
+                return;
+            }
+        }
     
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
         boolean versionsSet;
@@ -135,7 +157,7 @@ public class OneVersionRemake{
             versionsSet = false;
         }else{
             getProxyLogger().info("Loaded the following Protocol Version(s):");
-            getProxyLogger().info(ProtocolVersion.getFriendlyNames(protocols, false));
+            getProxyLogger().info(getProtocolVersionResolver().getFriendlyNames(protocols, false));
             
             versionsSet = true;
         }

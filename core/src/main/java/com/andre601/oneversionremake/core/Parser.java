@@ -18,7 +18,6 @@
 
 package com.andre601.oneversionremake.core;
 
-import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -27,18 +26,24 @@ import java.util.List;
 
 public class Parser{
     
-    public static Component toTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+    private final OneVersionRemake core;
+    
+    public Parser(OneVersionRemake core){
+        this.core = core;
+    }
+    
+    public Component toTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         return MiniMessage.get().parse(parse(String.join("\n", lines), serverProtocols, userProtocol, majorOnly));
     }
     
-    public static String toString(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+    public String toString(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         Component component = MiniMessage.get().parse(parse(text, serverProtocols, userProtocol, majorOnly));
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
     
-    private static String parse(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return text.replace("{version}", ProtocolVersion.getFriendlyNames(serverProtocols, majorOnly))
-                .replace("{userVersion}", ProtocolVersion.getFriendlyName(userProtocol));
+    private String parse(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        return text.replace("{version}", core.getProtocolVersionResolver().getFriendlyNames(serverProtocols, majorOnly))
+                .replace("{userVersion}", core.getProtocolVersionResolver().getFriendlyName(userProtocol));
     }
     
 }

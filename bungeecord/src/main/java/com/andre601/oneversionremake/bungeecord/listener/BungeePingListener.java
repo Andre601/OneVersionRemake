@@ -19,7 +19,6 @@
 package com.andre601.oneversionremake.bungeecord.listener;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
-import com.andre601.oneversionremake.core.Parser;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -70,14 +69,14 @@ public class BungeePingListener implements Listener{
             }
             
             if(!playerCount.isEmpty())
-                protocol.setName(Parser.toString(playerCount, serverProtocols, userProtocol, majorOnly));
+                protocol.setName(plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly));
             
             if(!motd.isEmpty()){
                 if(motd.size() > 2)
                     motd = motd.subList(0, 1);
                 
                 TextComponent component = new TextComponent(BungeeComponentSerializer.get().serialize(
-                        Parser.toTextComponent(motd, serverProtocols, userProtocol, majorOnly)
+                        plugin.getComponentParser().toTextComponent(motd, serverProtocols, userProtocol, majorOnly)
                 ));
                 
                 ping.setDescriptionComponent(component);

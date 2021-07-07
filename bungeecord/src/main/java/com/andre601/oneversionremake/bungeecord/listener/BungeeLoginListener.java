@@ -19,8 +19,6 @@
 package com.andre601.oneversionremake.bungeecord.listener;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
-import com.andre601.oneversionremake.core.Parser;
-import com.andre601.oneversionremake.core.enums.ProtocolVersion;
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -54,7 +52,7 @@ public class BungeeLoginListener implements Listener{
                 kickMessage = Collections.singletonList("<red>This Server is running MC {version}! Please change your client version.");
             
             event.setCancelReason(BungeeComponentSerializer.get().serialize(
-                    Parser.toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly)
+                    plugin.getComponentParser().toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly)
             ));
             event.setCancelled(true);
             
@@ -62,7 +60,7 @@ public class BungeeLoginListener implements Listener{
                 plugin.getProxyLogger().info(String.format(
                         "Denied login for Player %s with MC version %s (Protocol Version %d)",
                         event.getConnection().getName(),
-                        ProtocolVersion.getFriendlyName(userProtocol),
+                        plugin.getProtocolVersionResolver().getFriendlyName(userProtocol),
                         userProtocol
                 ));
             }

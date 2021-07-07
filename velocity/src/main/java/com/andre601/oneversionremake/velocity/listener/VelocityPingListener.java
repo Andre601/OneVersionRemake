@@ -18,7 +18,6 @@
 
 package com.andre601.oneversionremake.velocity.listener;
 
-import com.andre601.oneversionremake.core.Parser;
 import com.andre601.oneversionremake.velocity.VelocityCore;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
@@ -69,7 +68,7 @@ public class VelocityPingListener{
             }
             
             if(!playerCount.isEmpty()){
-                playerCount = Parser.toString(playerCount, serverProtocols, userProtocol, majorOnly);
+                playerCount = plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly);
                 
                 builder.version(new ServerPing.Version(serverProtocols.get(0), playerCount));
             }
@@ -78,7 +77,7 @@ public class VelocityPingListener{
                 if(motd.size() > 2)
                     motd = motd.subList(0, 1);
                 
-                builder.description(Parser.toTextComponent(motd, serverProtocols, userProtocol, majorOnly));
+                builder.description(plugin.getComponentParser().toTextComponent(motd, serverProtocols, userProtocol, majorOnly));
             }
             
             event.setPing(builder.build());
