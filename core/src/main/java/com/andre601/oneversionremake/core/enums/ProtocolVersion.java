@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum ProtocolVersion{
+    MC_1_17_1(756, "1.17.1", "1.17.x"),
     MC_1_17  (755, "1.17",   "1.17.x"),
     
     MC_1_16_5(754, "1.16.5", "1.16.x"),
