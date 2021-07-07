@@ -140,7 +140,7 @@ public class OneVersionRemake{
         }
         
         if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
-            getProxyLogger().info("Fetsching latest versions.json from GitHub...");
+            getProxyLogger().info("Fetching latest versions.json from GitHub...");
             if(getProtocolVersionResolver().loadFile()){
                 getProxyLogger().info("Updated versions.json!");
             }else{
