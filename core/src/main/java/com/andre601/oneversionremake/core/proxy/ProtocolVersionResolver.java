@@ -59,6 +59,10 @@ public class ProtocolVersionResolver{
         this.path = path.toFile();
     }
     
+    public boolean hasFile(){
+        return file.exists();
+    }
+    
     public boolean loadFile(){
         if(!path.isDirectory() && !path.mkdirs()){
             logger.warn("Could not create folder for plugin!");
@@ -76,11 +80,15 @@ public class ProtocolVersionResolver{
             logger.warn("Unable to create versions.json! Encountered IOException.", ex);
             return false;
         }
+        
+        return setupConfigurate();
+    }
     
+    public boolean setupConfigurate(){
         GsonConfigurationLoader loader = GsonConfigurationLoader.builder()
                 .file(file)
                 .build();
-        
+    
         try{
             node = loader.load();
         }catch(IOException ex){

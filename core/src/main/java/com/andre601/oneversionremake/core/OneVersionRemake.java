@@ -132,20 +132,26 @@ public class OneVersionRemake{
         loadVersion();
         printBanner();
         
-        if(configHandler.loadConfig()){
+        if(getConfigHandler().loadConfig()){
             getProxyLogger().info("Loaded config.yml!");
         }else{
             getProxyLogger().warn("Couldn't load config.yml! Check above lines for errors and warnings.");
             return;
         }
         
-        if(configHandler.getBoolean(true, "Settings", "UpdateVersions")){
+        if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
             getProxyLogger().info("Fetsching latest versions.json from GitHub...");
-            if(protocolVersionResolver.loadFile()){
+            if(getProtocolVersionResolver().loadFile()){
+                getProxyLogger().info("Updated versions.json!");
+            }else{
+                getProxyLogger().warn("Couldn't update versions.json! Check previous lines for any errors and warnings.");
+                return;
+            }
+        }else{
+            if(getProtocolVersionResolver().setupConfigurate()){
                 getProxyLogger().info("Loaded versions.json!");
             }else{
                 getProxyLogger().warn("Couldn't load versions.json! Check previous lines for any errors and warnings.");
-                return;
             }
         }
     

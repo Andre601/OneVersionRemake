@@ -17,6 +17,8 @@ The config.yml of OneVersionRemake has a lot of settings for you to use.
 This page tries to explain each option as detailed as possible!
 
 ## Contents
+- [Settings](#settings)
+  - [UpdateVersions](#updateversions)
 - [Protocol](#protocol)
   - [Versions](#versions)
   - [LogDenial](#logdenial)
@@ -30,6 +32,18 @@ This page tries to explain each option as detailed as possible!
   - [Kick](#kick)
   - [Hover](#hover)
   - [Motd](#motd)
+
+## Settings
+Main Settings of the plugin that do not fit any of the other sections.
+
+### UpdateVersions
+> **Type**: `Boolean`  
+> **Default**:  
+> ```yaml
+> UpdateVersions: true
+> ```
+
+This options sets whether OneVersionRemake should download the latest versions.json or not when enabling.
 
 ## Protocol
 This section of the config contains the main settings used for things like determining what versions are allowed on the Network.
