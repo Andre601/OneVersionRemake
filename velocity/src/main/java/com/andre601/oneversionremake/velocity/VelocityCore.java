@@ -37,6 +37,8 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.ServerPing;
+import org.bstats.charts.DrilldownPie;
+import org.bstats.velocity.Metrics;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
@@ -48,13 +50,17 @@ public class VelocityCore implements PluginCore{
     private final ProxyServer proxy;
     private final Path path;
     
+    private final Metrics.Factory factory;
+    
     private OneVersionRemake core;
     
-    @Inject // TODO: Re-Add Metrics.Factory factory once Velocity 3 supports it
-    public VelocityCore(ProxyServer proxy, @DataDirectory Path path){
+    @Inject
+    public VelocityCore(ProxyServer proxy, @DataDirectory Path path, Metrics.Factory factory){
         this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
+        
         this.proxy = proxy;
         this.path = path;
+        this.factory = factory;
     }
     
     @Subscribe
@@ -83,10 +89,9 @@ public class VelocityCore implements PluginCore{
     @Override
     public void loadMetrics(){
         getProxyLogger().info("Metrics currently not available. Skipping setup...");
-        // TODO: Re-Add Metrics once available for Velocity 2
-        //Metrics metrics = factory.make(this, 10341);
+        Metrics metrics = factory.make(this, 10341);
         
-        //metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
+        metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
         
     }
     

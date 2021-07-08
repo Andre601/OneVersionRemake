@@ -57,9 +57,9 @@ public class VelocityCore implements PluginCore{
     @Inject
     public VelocityCore(ProxyServer proxy, @DataDirectory Path path, Metrics.Factory factory){
         this.logger = new VelocityLogger(LoggerFactory.getLogger("OneVersionRemake"));
+        
         this.proxy = proxy;
         this.path = path;
-        
         this.factory = factory;
     }
     

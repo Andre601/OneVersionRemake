@@ -45,7 +45,7 @@ public class ProtocolVersionResolver{
     
     private final ProxyLogger logger;
     
-    private final File file;
+    private final Path file;
     private final File path;
     
     private ConfigurationNode node = null;
@@ -55,12 +55,12 @@ public class ProtocolVersionResolver{
         
         this.logger = core.getProxyLogger();
         
-        this.file = new File(path.toFile(), "versions.json");
+        this.file = path.resolve("versions.json");
         this.path = path.toFile();
     }
     
     public boolean hasFile(){
-        return file.exists();
+        return file.toFile().exists();
     }
     
     public boolean loadFile(){
@@ -71,11 +71,10 @@ public class ProtocolVersionResolver{
         
         try(InputStream is = updateCache()){
             if(is == null){
-                logger.warn("Unable to create versions.json! InputStream was null.");
                 return false;
             }
             
-            Files.copy(is, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(is, file, StandardCopyOption.REPLACE_EXISTING);
         }catch(IOException ex){
             logger.warn("Unable to create versions.json! Encountered IOException.", ex);
             return false;
@@ -86,7 +85,7 @@ public class ProtocolVersionResolver{
     
     public boolean setupConfigurate(){
         GsonConfigurationLoader loader = GsonConfigurationLoader.builder()
-                .file(file)
+                .file(file.toFile())
                 .build();
     
         try{
@@ -110,19 +109,45 @@ public class ProtocolVersionResolver{
             HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
             
             if(response.statusCode() != 200){
-                logger.warn("Unable to establish connection! Site responded with non-successfull status-code " + response.statusCode() + "!");
-                return null;
+                String CONNECTION_ERR = "Unable to establish connection! Status-Code %d (%s)";
+                
+                switch(response.statusCode()){
+                    case 404:
+                        logger.warn(String.format(CONNECTION_ERR, response.statusCode(), "Site not available"));
+                        logger.warn("Please report this to the Developer!");
+                        return null;
+                    
+                    case 429:
+                        logger.warn(String.format(CONNECTION_ERR, response.statusCode(), "Rate Limited"));
+                        logger.warn("You connect too many times in a short period. Please delay any further restarts.");
+                        return null;
+                    
+                    case 500:
+                        logger.warn(String.format(CONNECTION_ERR, response.statusCode(), "Internal Server Error"));
+                        logger.warn("The Server (GitHub) had an unexpected error when handling the request. Try again later.");
+                        return null;
+                    
+                    default:
+                        logger.warn("Encountered unknown Response code " + response.statusCode());
+                        logger.warn("Inform the developer about this on their Discord. This is NOT a bug however!");
+                        return null;
+                }
             }
             
             return response.body();
-        }catch(URISyntaxException ex){
-            core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! URI was invalid!");
-            return null;
-        }catch(IOException ex){
-            core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Request was non-successful!");
-            return null;
-        }catch(InterruptedException ex){
-            core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Request was interrupted!");
+        }catch(Exception ex){
+            if(ex instanceof URISyntaxException){
+                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! URI was invalid!");
+            }else
+            if(ex instanceof IOException){
+                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Request was non-successful!");
+            }else
+            if(ex instanceof InterruptedException){
+                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Request was interrupted!");
+            }else{
+                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Received unknown Exception!", ex);
+            }
+            
             return null;
         }
     }
