@@ -139,22 +139,8 @@ public class OneVersionRemake{
             return;
         }
         
-        if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
-            getProxyLogger().info("Fetching latest versions.json from GitHub...");
-            if(getProtocolVersionResolver().loadFile()){
-                getProxyLogger().info("Updated versions.json!");
-            }else{
-                getProxyLogger().warn("Couldn't update versions.json! Check previous lines for any errors and warnings.");
-                return;
-            }
-        }else{
-            if(getProtocolVersionResolver().setupConfigurate()){
-                getProxyLogger().info("Loaded versions.json!");
-            }else{
-                getProxyLogger().warn("Couldn't load versions.json! Check previous lines for any errors and warnings.");
-                return;
-            }
-        }
+        if(!loadFile())
+            return;
     
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
         boolean versionsSet;
@@ -225,5 +211,26 @@ public class OneVersionRemake{
         }catch(IOException ex){
             version = "UNKNOWN";
         }
+    }
+    
+    private boolean loadFile(){
+        if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
+            getProxyLogger().info("Fetching latest versions.json from GitHub.com...");
+            if(getProtocolVersionResolver().loadFile()){
+                getProxyLogger().info("Updated versions.json!");
+                return true;
+            }else{
+                getProxyLogger().warn("Unable to update versions.json! Check previous lines for errors and warnings.");
+            }
+        }else{
+            if(getProtocolVersionResolver().setupConfigurate()){
+                getProxyLogger().info("Loaded versions.json!");
+                return true;
+            }else{
+                getProxyLogger().warn("Unable to load versions.json! Check previous lines for errors and warnings.");
+            }
+        }
+        
+        return false;
     }
 }
