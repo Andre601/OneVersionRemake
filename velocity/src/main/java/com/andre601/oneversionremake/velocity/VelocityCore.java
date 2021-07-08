@@ -88,7 +88,6 @@ public class VelocityCore implements PluginCore{
     
     @Override
     public void loadMetrics(){
-        getProxyLogger().info("Metrics currently not available. Skipping setup...");
         Metrics metrics = factory.make(this, 10341);
         
         metrics.addCustomChart(new DrilldownPie("allowed_protocols", () -> core.getPieMap()));
