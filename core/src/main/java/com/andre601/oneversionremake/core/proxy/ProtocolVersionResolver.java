@@ -20,39 +20,37 @@ package com.andre601.oneversionremake.core.proxy;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ProtocolVersionResolver{
-    private final OneVersionRemake core;
-    private final HttpClient client = HttpClient.newHttpClient();
+    private final OkHttpClient CLIENT = new OkHttpClient();
     
     private final ProxyLogger logger;
     
-    private final Path file;
+    public final Path file;
     private final File path;
     
     private ConfigurationNode node = null;
     
     public ProtocolVersionResolver(OneVersionRemake core, Path path){
-        this.core = core;
-        
         this.logger = core.getProxyLogger();
         
         this.file = path.resolve("versions.json");
@@ -63,24 +61,17 @@ public class ProtocolVersionResolver{
         return file.toFile().exists();
     }
     
-    public boolean loadFile(){
+    public Path getFile(){
+        return file;
+    }
+    
+    public CompletableFuture<InputStream> loadFile(){
         if(!path.isDirectory() && !path.mkdirs()){
             logger.warn("Could not create folder for plugin!");
-            return false;
+            return CompletableFuture.supplyAsync(() -> null);
         }
         
-        try(InputStream is = updateCache()){
-            if(is == null){
-                return false;
-            }
-            
-            Files.copy(is, file, StandardCopyOption.REPLACE_EXISTING);
-        }catch(IOException ex){
-            logger.warn("Unable to create versions.json! Encountered IOException.", ex);
-            return false;
-        }
-        
-        return setupConfigurate();
+        return updateCache();
     }
     
     public boolean setupConfigurate(){
@@ -98,58 +89,58 @@ public class ProtocolVersionResolver{
         return true;
     }
     
-    public InputStream updateCache(){
-        try{
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .header("User-Agent", "OneVersionRemake")
-                    .uri(new URI("https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json"))
+    public CompletableFuture<InputStream> updateCache(){
+        return CompletableFuture.supplyAsync(() -> {
+            String url = "https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json";
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("User-Agent", "OneVersionRemake")
                     .build();
+    
+            try(Response response = CLIENT.newCall(request).execute()){
+                if(!response.isSuccessful()){
+                    logger.warn(String.format(
+                            "Unable to establish connection! Status-Code %d (%s) received!",
+                            response.code(),
+                            response.message()
+                    ));
             
-            HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
-            
-            if(response.statusCode() != 200){
-                String CONNECTION_ERR = "Unable to establish connection! Status-Code %d (%s)";
+                    switch(response.code()){
+                        case 404:
+                            logger.warn(String.format(
+                                    "The requested site (%s) does not exist. Please report this to the developer on Discord!",
+                                    url
+                            ));
+                            break;
                 
-                switch(response.statusCode()){
-                    case 404:
-                        logger.warn(String.format(CONNECTION_ERR, response.statusCode(), "Site not available"));
-                        logger.warn("Please report this to the Developer!");
-                        return null;
-                    
-                    case 429:
-                        logger.warn(String.format(CONNECTION_ERR, response.statusCode(), "Rate Limited"));
-                        logger.warn("You connect too many times in a short period. Please delay any further restarts.");
-                        return null;
-                    
-                    case 500:
-                        logger.warn(String.format(CONNECTION_ERR, response.statusCode(), "Internal Server Error"));
-                        logger.warn("The Server (GitHub) had an unexpected error when handling the request. Try again later.");
-                        return null;
-                    
-                    default:
-                        logger.warn("Encountered unknown Response code " + response.statusCode());
-                        logger.warn("Inform the developer about this on their Discord. This is NOT a bug however!");
-                        return null;
+                        case 429:
+                            logger.warn("Encountered a Rate Limit. Please delay any future Proxy Restarts to avoid this.");
+                            break;
+                
+                        case 500:
+                            logger.warn("The Site (GitHub.com) encountered an error when handling the request. Try again later...");
+                            break;
+                
+                        default:
+                            logger.warn("This is an unknown error by the plugin! Please report this to the developer on Discord!");
+                            break;
+                    }
+            
+                    return null;
                 }
+        
+                ResponseBody body = response.body();
+                if(body == null){
+                    logger.warn("GitHub.com returned an invalid/empty body!");
+                    return null;
+                }
+        
+                return body.byteStream();
+            }catch(IOException ex){
+                logger.warn("Encountered IOException while performing a request!", ex);
+                return null;
             }
-            
-            return response.body();
-        }catch(Exception ex){
-            if(ex instanceof URISyntaxException){
-                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! URI was invalid!");
-            }else
-            if(ex instanceof IOException){
-                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Request was non-successful!");
-            }else
-            if(ex instanceof InterruptedException){
-                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Request was interrupted!");
-            }else{
-                core.getProxyLogger().warn("Unable to establish connection to retrieve Protocol Versions! Received unknown Exception!", ex);
-            }
-            
-            return null;
-        }
+        });
     }
     
     public String getFriendlyNames(List<Integer> protocols, boolean majorOnly){

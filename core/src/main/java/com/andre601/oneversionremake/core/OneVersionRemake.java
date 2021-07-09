@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 public class OneVersionRemake{
@@ -47,7 +49,7 @@ public class OneVersionRemake{
         this.protocolVersionResolver = new ProtocolVersionResolver(this, pluginCore.getPath());
         this.parser = new Parser(this);
         
-        start();
+        load();
     }
     
     public ProxyLogger getProxyLogger(){
@@ -128,7 +130,7 @@ public class OneVersionRemake{
         }
     }
     
-    private void start(){
+    private void load(){
         loadVersion();
         printBanner();
         
@@ -139,19 +141,44 @@ public class OneVersionRemake{
             return;
         }
         
-        if(!loadFile())
-            return;
+        if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
+            getProtocolVersionResolver().loadFile().whenComplete((inputStream, ex) -> {
+                if(ex != null){
+                    getProxyLogger().warn("Unable to update versions.json! Encountered an exception.", ex);
+                    return;
+                }
+                
+                try{
+                    Files.copy(inputStream, getProtocolVersionResolver().getFile(), StandardCopyOption.REPLACE_EXISTING);
+                    getProxyLogger().info("Updated versions.json!");
+                    
+                    enable();
+                }catch(IOException ex1){
+                    getProxyLogger().warn("Unable to update versions.json! Encountered IOException.", ex1);
+                }
+            });
+        }else{
+            if(getProtocolVersionResolver().setupConfigurate()){
+                getProxyLogger().info("Loaded versions.json!");
+                
+                enable();
+            }else{
+                getProxyLogger().warn("Unable to load versions.json! Check previous lines for errors and warnings.");
+            }
+        }
+    }
     
+    private void enable(){
         List<Integer> protocols = configHandler.getIntList("Protocol", "Versions");
         boolean versionsSet;
         if(protocols.isEmpty()){
             printWarning();
-            
+        
             versionsSet = false;
         }else{
             getProxyLogger().info("Loaded the following Protocol Version(s):");
             getProxyLogger().info(getProtocolVersionResolver().getFriendlyNames(protocols, false));
-            
+        
             versionsSet = true;
         }
     
@@ -211,26 +238,5 @@ public class OneVersionRemake{
         }catch(IOException ex){
             version = "UNKNOWN";
         }
-    }
-    
-    private boolean loadFile(){
-        if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
-            getProxyLogger().info("Fetching latest versions.json from GitHub.com...");
-            if(getProtocolVersionResolver().loadFile()){
-                getProxyLogger().info("Updated versions.json!");
-                return true;
-            }else{
-                getProxyLogger().warn("Unable to update versions.json! Check previous lines for errors and warnings.");
-            }
-        }else{
-            if(getProtocolVersionResolver().setupConfigurate()){
-                getProxyLogger().info("Loaded versions.json!");
-                return true;
-            }else{
-                getProxyLogger().warn("Unable to load versions.json! Check previous lines for errors and warnings.");
-            }
-        }
-        
-        return false;
     }
 }
