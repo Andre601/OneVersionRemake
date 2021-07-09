@@ -68,6 +68,11 @@
             <version>4.8.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.0</version>
+        </dependency>
     </dependencies>
     
     <build>
@@ -111,6 +116,10 @@
                         <relocation>
                             <pattern>net.kyori</pattern>
                             <shadedPattern>com.andre601.oneversionremake.core.dependencies.adventure</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>okhttp3</pattern>
+                            <shadedPattern>com.andre601.oneversionremake.core.dependencies.okhttp</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
