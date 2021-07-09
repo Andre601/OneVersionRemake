@@ -27,16 +27,12 @@ import okhttp3.ResponseBody;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,8 +41,8 @@ public class ProtocolVersionResolver{
     
     private final ProxyLogger logger;
     
-    public final Path file;
-    private final File path;
+    private final Path file;
+    private final Path path;
     
     private ConfigurationNode node = null;
     
@@ -54,21 +50,17 @@ public class ProtocolVersionResolver{
         this.logger = core.getProxyLogger();
         
         this.file = path.resolve("versions.json");
-        this.path = path.toFile();
+        this.path = path;
     }
     
     public boolean hasFile(){
         return file.toFile().exists();
     }
     
-    public Path getFile(){
-        return file;
-    }
-    
-    public CompletableFuture<InputStream> loadFile(){
-        if(!path.isDirectory() && !path.mkdirs()){
+    public boolean loadFile(){
+        if(!path.toFile().isDirectory() && !path.toFile().mkdirs()){
             logger.warn("Could not create folder for plugin!");
-            return CompletableFuture.supplyAsync(() -> null);
+            return false;
         }
         
         return updateCache();
@@ -89,58 +81,56 @@ public class ProtocolVersionResolver{
         return true;
     }
     
-    public CompletableFuture<InputStream> updateCache(){
-        return CompletableFuture.supplyAsync(() -> {
-            String url = "https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json";
-            Request request = new Request.Builder()
-                    .url(url)
-                    .addHeader("User-Agent", "OneVersionRemake")
-                    .build();
-    
-            try(Response response = CLIENT.newCall(request).execute()){
-                if(!response.isSuccessful()){
-                    logger.warn(String.format(
-                            "Unable to establish connection! Status-Code %d (%s) received!",
-                            response.code(),
-                            response.message()
-                    ));
-            
-                    switch(response.code()){
-                        case 404:
-                            logger.warn(String.format(
-                                    "The requested site (%s) does not exist. Please report this to the developer on Discord!",
-                                    url
-                            ));
-                            break;
-                
+    public boolean updateCache(){
+        String url = "https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json";
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("User-Agent", "OneVersionRemake")
+                .build();
+        
+        try(Response response = CLIENT.newCall(request).execute()){
+            if(!response.isSuccessful()){
+                logger.warn(String.format(
+                        "Unable to establish connection! Status-Code %d (%s) received!",
+                        response.code(),
+                        response.message()
+                ));
+                switch(response.code()){
+                    case 404:
+                        logger.warn(String.format(
+                                "The requested site (%s) does not exist. Please report this to the developer on Discord!",
+                                url
+                        ));
+                        break;
+                        
                         case 429:
                             logger.warn("Encountered a Rate Limit. Please delay any future Proxy Restarts to avoid this.");
                             break;
-                
+                        
                         case 500:
                             logger.warn("The Site (GitHub.com) encountered an error when handling the request. Try again later...");
                             break;
-                
+                        
                         default:
                             logger.warn("This is an unknown error by the plugin! Please report this to the developer on Discord!");
                             break;
-                    }
-            
-                    return null;
                 }
-        
-                ResponseBody body = response.body();
-                if(body == null){
-                    logger.warn("GitHub.com returned an invalid/empty body!");
-                    return null;
-                }
-        
-                return body.byteStream();
-            }catch(IOException ex){
-                logger.warn("Encountered IOException while performing a request!", ex);
-                return null;
+                return false;
             }
-        });
+            
+            ResponseBody body = response.body();
+            if(body == null){
+                logger.warn("GitHub.com returned an invalid/empty body!");
+                return false;
+            }
+            
+            Files.copy(body.byteStream(), file, StandardCopyOption.REPLACE_EXISTING);
+            
+            return setupConfigurate();
+        }catch(IOException ex){
+            logger.warn("Encountered IOException while performing a request!", ex);
+            return false;
+        }
     }
     
     public String getFriendlyNames(List<Integer> protocols, boolean majorOnly){

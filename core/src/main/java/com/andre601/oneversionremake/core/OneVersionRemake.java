@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 public class OneVersionRemake{
@@ -142,25 +140,15 @@ public class OneVersionRemake{
         }
         
         if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
-            getProtocolVersionResolver().loadFile().whenComplete((inputStream, ex) -> {
-                if(ex != null){
-                    getProxyLogger().warn("Unable to update versions.json! Encountered an exception.", ex);
-                    return;
-                }
-                
-                try{
-                    Files.copy(inputStream, getProtocolVersionResolver().getFile(), StandardCopyOption.REPLACE_EXISTING);
-                    getProxyLogger().info("Updated versions.json!");
-                    
-                    enable();
-                }catch(IOException ex1){
-                    getProxyLogger().warn("Unable to update versions.json! Encountered IOException.", ex1);
-                }
-            });
+            if(getProtocolVersionResolver().loadFile()){
+                getProxyLogger().info("Updated versions.json!");
+                enable();
+            }else{
+                getProxyLogger().warn("Unable to update versions.json! Check previous lines for warnings and errors.");
+            }
         }else{
             if(getProtocolVersionResolver().setupConfigurate()){
                 getProxyLogger().info("Loaded versions.json!");
-                
                 enable();
             }else{
                 getProxyLogger().warn("Unable to load versions.json! Check previous lines for errors and warnings.");
