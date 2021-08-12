@@ -1,7 +1,7 @@
-OneVersionRemake supports pretty much any valid protocol that is used in Minecraft to determine the used version.
+Almost all protocol versions of Minecraft are supported by OneVersionRemake.  
+The below list is the officially supported versions that come with OneVersionRemake's default [`versions.json`](https://github.com/Andre601/OneVersionRemake/blob/master/versions.json) file.
 
-There is however a small exception. And that is with the `{version}` and `{userVersion}` placeholder, which only supports a selected list of protocol versions.  
-The following list contains all supported protocols and what version String is returned.
+Feel free to add your own versions to the file if you want more versions to be displayed.
 
 | Protocol: | Displayed version: |
 |:---------:|:------------------:|
