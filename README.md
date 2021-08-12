@@ -47,10 +47,6 @@ No guarantee is given for the last two forks.
 This module contains the code required to build a Jar supporting Velocity 3.0.0  
 This version of Velocity is still under heavy development, and you're not recommended using it for production.
 
-#### `velocity-legacy`
-This module contains the code originally made for Velocity 1.x  
-It is recommended to use Jars for this version of Velocity for Production enviroments.
-
 ## Links
 - [Spigot]
 - [Wiki]
