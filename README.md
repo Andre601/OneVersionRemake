@@ -44,8 +44,7 @@ The jar build in this module *should* support BungeeCord, Waterfall, Travertine 
 No guarantee is given for the last two forks.
 
 #### `velocity`
-This module contains the code required to build a Jar supporting Velocity 3.0.0  
-This version of Velocity is still under heavy development, and you're not recommended using it for production.
+This module contains the code required to build a Jar supporting Velocity 3.0.0
 
 ## Links
 - [Spigot]
