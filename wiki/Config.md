@@ -19,6 +19,7 @@ This page tries to explain each option as detailed as possible!
 ## Contents
 - [Settings](#settings)
   - [UpdateVersions](#updateversions)
+  - [VersionsUrl](#versionsurl)
 - [Protocol](#protocol)
   - [Versions](#versions)
   - [LogDenial](#logdenial)
@@ -44,6 +45,17 @@ Main Settings of the plugin that do not fit any of the other sections.
 > ```
 
 This options sets whether OneVersionRemake should download the latest versions.json or not when enabling.
+
+### VersionsUrl
+> **Type**: `String`  
+> **Default**:  
+> ```yaml
+> VersionsUrl: 'https://www.andre601.ch/oneversionremake/versions.json'
+> ```
+
+With this option can you change the URL from which OneVersionRemake will retrieve the current protocol versions.
+
+When changing the URL, make sure that it points to an actual JSON file (Returns `Content-Type: application/json`) and not an HTML page or similar.
 
 ## Protocol
 This section of the config contains the main settings used for things like determining what versions are allowed on the Network.

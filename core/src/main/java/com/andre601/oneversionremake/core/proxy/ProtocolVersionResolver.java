@@ -57,13 +57,13 @@ public class ProtocolVersionResolver{
         return file.toFile().exists();
     }
     
-    public boolean loadFile(){
+    public boolean loadFile(String url){
         if(!path.toFile().isDirectory() && !path.toFile().mkdirs()){
             logger.warn("Could not create folder for plugin!");
             return false;
         }
         
-        return updateCache();
+        return updateCache(url);
     }
     
     public boolean setupConfigurate(){
@@ -81,8 +81,7 @@ public class ProtocolVersionResolver{
         return true;
     }
     
-    public boolean updateCache(){
-        String url = "https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json";
+    public boolean updateCache(String url){
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("User-Agent", "OneVersionRemake")
@@ -97,10 +96,10 @@ public class ProtocolVersionResolver{
                 ));
                 switch(response.code()){
                     case 404:
-                        logger.warn(String.format(
-                                "The requested site (%s) does not exist. Please report this to the developer on Discord!",
+                        logger.warnFormat(
+                                "The requested url (%s) does not exist. Please check that the URL is valid!",
                                 url
-                        ));
+                        );
                         break;
                         
                         case 429:
@@ -108,11 +107,17 @@ public class ProtocolVersionResolver{
                             break;
                         
                         case 500:
-                            logger.warn("The Site (GitHub.com) encountered an error when handling the request. Try again later...");
+                            logger.warnFormat(
+                                    "The Website (%s) encountered an error when handling the request. Try again later...",
+                                    url
+                            );
                             break;
                         
                         default:
-                            logger.warn("This is an unknown error by the plugin! Please report this to the developer on Discord!");
+                            logger.warnFormat(
+                                    "The plugin received a not known HTTPS status code %d. Please report this to the Developer!",
+                                    response.code()
+                            );
                             break;
                 }
                 return false;
@@ -120,7 +125,7 @@ public class ProtocolVersionResolver{
             
             ResponseBody body = response.body();
             if(body == null){
-                logger.warn("GitHub.com returned an invalid/empty body!");
+                logger.warnFormat("Received empty/null body from '%s'", url);
                 return false;
             }
             

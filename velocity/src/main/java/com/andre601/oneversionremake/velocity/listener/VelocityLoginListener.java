@@ -55,12 +55,12 @@ public class VelocityLoginListener{
             event.setResult(result);
             
             if(plugin.getConfigHandler().getBoolean(true, "Protocol", "LogDenial")){
-                plugin.getProxyLogger().info(String.format(
-                        "Denied login for Player %s with MC version %s (Protocol Version %d)",
+                plugin.getProxyLogger().infoFormat(
+                        "Denied login for Player %s with MC version %s (Protocol version: %d)",
                         event.getUsername(),
                         plugin.getProtocolVersionResolver().getFriendlyName(userProtocol),
                         userProtocol
-                ));
+                );
             }
         }
     }

@@ -27,8 +27,7 @@ public enum ProxyPlatform{
     WATERFALL      ("Waterfall"),
     
     // Velocity
-    VELOCITY       ("Velocity 3"),
-    VELOCITY_LEGACY("Velocity");
+    VELOCITY       ("Velocity");
     
     private final String name;
     
