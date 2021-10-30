@@ -1,0 +1,15 @@
+changelog:
+  exclude:
+    labels:
+    - 'Target: Documentation'
+    - 'Target: GitHub Action'
+  categories:
+  - title: '🚀 Features'
+    labels:
+    - 'Type: Enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+    - 'Type: Bug'
+  - title: '🧰 Maintenance'
+    labels:
+    - 'Type: Update (Dependency)'
