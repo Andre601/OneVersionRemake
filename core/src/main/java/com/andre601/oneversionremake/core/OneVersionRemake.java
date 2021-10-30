@@ -32,6 +32,8 @@ import java.util.*;
 
 public class OneVersionRemake{
     
+    private static final String DEF_VERSIONS_URL = "https://www.andre601.ch/oneversionremake/versions.json";
+    
     private final PluginCore pluginCore;
     private final ConfigHandler configHandler;
     private final CommandHandler commandHandler;
@@ -140,7 +142,9 @@ public class OneVersionRemake{
         }
         
         if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
-            if(getProtocolVersionResolver().loadFile()){
+            String url = getConfigHandler().getString(DEF_VERSIONS_URL, "Settings", "VersionsUrl");
+            
+            if(getProtocolVersionResolver().loadFile(url)){
                 getProxyLogger().info("Updated versions.json!");
                 enable();
             }else{
@@ -197,8 +201,8 @@ public class OneVersionRemake{
         getProxyLogger().info("/ /_/ /| |/ / _, _/");
         getProxyLogger().info("\\____/ |___/_/ |_|");
         getProxyLogger().info("");
-        getProxyLogger().info("OneVersionRemake v" + getVersion());
-        getProxyLogger().info("Platform: " + pluginCore.getProxyPlatform().getName() + " v" + pluginCore.getProxyVersion());
+        getProxyLogger().infoFormat("OneVersionRemake v%s", getVersion());
+        getProxyLogger().infoFormat("Platform: %s v%s", pluginCore.getProxyPlatform().getName(), pluginCore.getProxyVersion());
         getProxyLogger().info("");
     }
     

@@ -35,8 +35,18 @@ public class VelocityLogger implements ProxyLogger{
     }
     
     @Override
+    public void infoFormat(String msg, Object... args){
+        info(String.format(msg, args));
+    }
+    
+    @Override
     public void warn(String msg){
         logger.warn(msg);
+    }
+    
+    @Override
+    public void warnFormat(String msg, Object... args){
+        warn(String.format(msg, args));
     }
     
     @Override

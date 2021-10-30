@@ -57,12 +57,12 @@ public class BungeeLoginListener implements Listener{
             event.setCancelled(true);
             
             if(plugin.getConfigHandler().getBoolean(true, "Protocol", "LogDenial")){
-                plugin.getProxyLogger().info(String.format(
-                        "Denied login for Player %s with MC version %s (Protocol Version %d)",
+                plugin.getProxyLogger().infoFormat(
+                        "Denied login for Player %s with MC version %s (Protocol version: %d)",
                         event.getConnection().getName(),
                         plugin.getProtocolVersionResolver().getFriendlyName(userProtocol),
                         userProtocol
-                ));
+                );
             }
         }
     }

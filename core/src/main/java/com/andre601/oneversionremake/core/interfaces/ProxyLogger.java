@@ -22,7 +22,11 @@ public interface ProxyLogger{
     
     void info(String msg);
     
+    void infoFormat(String msg, Object... args);
+    
     void warn(String msg);
+    
+    void warnFormat(String msg, Object... args);
     
     void warn(String msg, Throwable throwable);
 }
