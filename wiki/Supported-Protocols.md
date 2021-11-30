@@ -1,7 +1,12 @@
-Almost all protocol versions of Minecraft are supported by OneVersionRemake.  
-The below list is the officially supported versions that come with OneVersionRemake's default [`versions.json`](https://github.com/Andre601/OneVersionRemake/blob/master/versions.json) file.
+OneVersionRemake is able to support all nummerical version protocols, but only selected ones are supported in the `{version}` and `{userVersion}` placeholders themself.
 
-Feel free to add your own versions to the file if you want more versions to be displayed.
+OneVersionRemake downloads and uses a `versions.json` file which contains a collection of protocols and their corresponding Minecraft version.  
+The default `versions.json` used by OneVersionRemake v3.9.0 and newer can be found [here](https://www.andre601.ch/oneversionremake/versions.json). The versions file for older is found [here](https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json) and kept for backwards compatability.
+
+Below is a complete list of all protocol versions supported by the default `versions.json` file mentioned above.  
+You can alter your `versions.json` if you want to add or remove versions from it.
+
+When a protocol is used that isn't listed in OneVersionRemake's `versions.json` will `?` be returned as fallback.
 
 | Protocol: | Displayed version: |
 |:---------:|:------------------:|
@@ -35,5 +40,3 @@ Feel free to add your own versions to the file if you want more versions to be d
 | 108       | 1.9.1              |
 | 107       | 1.9                |
 | 47        | 1.8.9              |
-
-`?` will be displayed in cases where unsupported versions will be used.
