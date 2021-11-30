@@ -5,6 +5,7 @@ Feel free to add your own versions to the file if you want more versions to be d
 
 | Protocol: | Displayed version: |
 |:---------:|:------------------:|
+| 757       | 1.18               |
 | 756       | 1.17.1             |
 | 755       | 1.17               |
 | 754       | 1.16.5             |
