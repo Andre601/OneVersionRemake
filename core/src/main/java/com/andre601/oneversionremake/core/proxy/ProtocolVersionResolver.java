@@ -101,24 +101,24 @@ public class ProtocolVersionResolver{
                                 url
                         );
                         break;
-                        
-                        case 429:
-                            logger.warn("Encountered a Rate Limit. Please delay any future Proxy Restarts to avoid this.");
-                            break;
-                        
-                        case 500:
-                            logger.warnFormat(
-                                    "The Website (%s) encountered an error when handling the request. Try again later...",
-                                    url
-                            );
-                            break;
-                        
-                        default:
-                            logger.warnFormat(
-                                    "The plugin received a not known HTTPS status code %d. Please report this to the Developer!",
-                                    response.code()
-                            );
-                            break;
+                    
+                    case 429:
+                        logger.warn("Encountered a Rate Limit. Please delay any future Proxy Restarts to avoid this.");
+                        break;
+                    
+                    case 500:
+                        logger.warnFormat(
+                                "The Website (%s) encountered an error when handling the request. Try again later...",
+                                url
+                        );
+                        break;
+                    
+                    default:
+                        logger.warnFormat(
+                                "The plugin received a not known HTTPS status code %d. Please report this to the Developer!",
+                                response.code()
+                        );
+                        break;
                 }
                 return false;
             }
@@ -141,6 +141,7 @@ public class ProtocolVersionResolver{
     public String getFriendlyNames(List<Integer> protocols, boolean majorOnly){
         Stream<Integer> stream = protocols.stream()
                 .sorted(Comparator.reverseOrder());
+        
         if(majorOnly){
             return stream.map(this::getMajor)
                     .distinct()
