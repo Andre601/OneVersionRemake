@@ -25,7 +25,7 @@ git clone https://github.com/Andre601/OneVersionRemake
 ```
 
 After that head over to the new folder using `cd OneVersionRemake` and then execute `mvn clean Install`  
-You should find the plugin jars in `bungeecord/target`, `velocity-legacy/target` and `velocity/target` respectively (Make sure to NOT use the ones having "original" in their name).
+You should find the plugin jars in `bungeecord/target` and `velocity/target` respectively (Make sure to NOT use the ones having "original" in their name).
 
 ## Contribute
 Any contribution is welcome when it helps improving the plugin's performance.  
