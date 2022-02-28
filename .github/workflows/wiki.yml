@@ -6,7 +6,7 @@ on:
     paths:
       - 'wiki/**'
     branches:
-      - '**'
+      - 'master'
 
 jobs:
   update:
