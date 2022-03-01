@@ -19,18 +19,22 @@
 package com.andre601.oneversionremake.bungeecord.commands;
 
 import com.andre601.oneversionremake.core.CommandPermissions;
+import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.interfaces.CmdSender;
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.md_5.bungee.api.CommandSender;
 
 public class BungeeSender implements CmdSender{
     
+    private final OneVersionRemake core;
     private final CommandSender sender;
+    private final BungeeAudiences bungeeAudiences;
     
-    public BungeeSender(CommandSender sender){
+    public BungeeSender(OneVersionRemake core, CommandSender sender, BungeeAudiences bungeeAudiences){
+        this.core = core;
         this.sender = sender;
+        this.bungeeAudiences = bungeeAudiences;
     }
     
     @Override
@@ -50,8 +54,8 @@ public class BungeeSender implements CmdSender{
     
     @Override
     public void sendMsg(NamedTextColor color, String msg, Object... args){
-        sender.sendMessage(BungeeComponentSerializer.get().serialize(
-                Component.text(String.format(msg, args)).color(color)
-        ));
+        bungeeAudiences.sender(sender).sendMessage(
+                core.getComponentParser().toComponent(String.format(msg, args)).color(color)
+        );
     }
 }

@@ -76,7 +76,7 @@ public class BungeePingListener implements Listener{
                     motd = motd.subList(0, 1);
                 
                 TextComponent component = new TextComponent(BungeeComponentSerializer.get().serialize(
-                        plugin.getComponentParser().toTextComponent(motd, serverProtocols, userProtocol, majorOnly)
+                        plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly)
                 ));
                 
                 ping.setDescriptionComponent(component);

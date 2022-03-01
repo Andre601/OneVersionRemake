@@ -50,7 +50,7 @@ public class VelocityLoginListener{
                 kickMessage = Collections.singletonList("&cThis Server is running MC {version}! Please change your client version.");
     
             PreLoginEvent.PreLoginComponentResult result = PreLoginEvent.PreLoginComponentResult
-                    .denied(plugin.getComponentParser().toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly));
+                    .denied(plugin.getComponentParser().toComponent(kickMessage, serverProtocols, userProtocol, majorOnly));
             
             event.setResult(result);
             

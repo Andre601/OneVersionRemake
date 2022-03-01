@@ -20,21 +20,24 @@ package com.andre601.oneversionremake.bungeecord.commands;
 
 import com.andre601.oneversionremake.bungeecord.BungeeCore;
 import com.andre601.oneversionremake.core.CommandPermissions;
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class CmdOneVersionRemake extends Command{
     
     private final BungeeCore plugin;
+    private final BungeeAudiences bungeeAudiences;
     
     public CmdOneVersionRemake(BungeeCore plugin){
         super("oneversionremake", CommandPermissions.ADMIN, "ovr");
         this.plugin = plugin;
+        this.bungeeAudiences = BungeeAudiences.create(plugin);
     }
     
     @Override
     public void execute(CommandSender commandSender, String[] args){
-        BungeeSender sender = new BungeeSender(commandSender);
+        BungeeSender sender = new BungeeSender(plugin.getCore(), commandSender, bungeeAudiences);
         
         plugin.getCommandHandler().handle(sender, args);
     }
