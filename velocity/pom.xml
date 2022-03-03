@@ -36,11 +36,11 @@
     <repositories>
         <repository>
             <id>velocity</id>
-            <url>https://nexus.velocitypowered.com/repository/maven-public</url>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <repository>
             <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
@@ -54,14 +54,8 @@
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.2-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.10.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
