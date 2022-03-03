@@ -4,6 +4,9 @@ changelog:
     - 'Target: Documentation'
     - 'Target: GitHub Action'
   categories:
+  - title: '💥 Breaking'
+    labels:
+    - 'Type: Breaking'
   - title: '🚀 Features'
     labels:
     - 'Type: Enhancement'
