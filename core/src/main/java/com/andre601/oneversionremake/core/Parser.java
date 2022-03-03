@@ -32,12 +32,17 @@ public class Parser{
         this.core = core;
     }
     
-    public Component toTextComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return MiniMessage.get().parse(parse(String.join("\n", lines), serverProtocols, userProtocol, majorOnly));
+    public Component toComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+        return toComponent(parse(String.join("\n", lines), serverProtocols, userProtocol, majorOnly));
+    }
+    
+    public Component toComponent(String text){
+        return MiniMessage.miniMessage().deserialize(text);
     }
     
     public String toString(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        Component component = MiniMessage.get().parse(parse(text, serverProtocols, userProtocol, majorOnly));
+        Component component = MiniMessage.miniMessage()
+                .deserialize(parse(text, serverProtocols, userProtocol, majorOnly));
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
     

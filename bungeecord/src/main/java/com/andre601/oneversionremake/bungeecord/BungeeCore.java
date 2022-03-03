@@ -30,7 +30,6 @@ import com.andre601.oneversionremake.core.proxy.ProxyPlatform;
 import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
-import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bstats.bungeecord.Metrics;
@@ -48,7 +47,6 @@ public class BungeeCore extends Plugin implements PluginCore{
     
     @Override
     public void onEnable(){
-        BungeeAudiences.create(this);
         this.core = new OneVersionRemake(this);
     }
     
@@ -141,5 +139,9 @@ public class BungeeCore extends Plugin implements PluginCore{
     public ServerPing.PlayerInfo[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
         return core.getPlayers(ServerPing.PlayerInfo.class, lines, serverProtocols, userProtocol, majorOnly)
                    .toArray(new ServerPing.PlayerInfo[0]);
+    }
+    
+    public OneVersionRemake getCore(){
+        return core;
     }
 }

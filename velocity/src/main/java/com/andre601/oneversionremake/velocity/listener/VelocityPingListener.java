@@ -77,7 +77,7 @@ public class VelocityPingListener{
                 if(motd.size() > 2)
                     motd = motd.subList(0, 1);
                 
-                builder.description(plugin.getComponentParser().toTextComponent(motd, serverProtocols, userProtocol, majorOnly));
+                builder.description(plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly));
             }
             
             event.setPing(builder.build());

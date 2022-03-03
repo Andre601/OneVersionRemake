@@ -52,7 +52,7 @@ public class BungeeLoginListener implements Listener{
                 kickMessage = Collections.singletonList("<red>This Server is running MC {version}! Please change your client version.");
             
             event.setCancelReason(BungeeComponentSerializer.get().serialize(
-                    plugin.getComponentParser().toTextComponent(kickMessage, serverProtocols, userProtocol, majorOnly)
+                    plugin.getComponentParser().toComponent(kickMessage, serverProtocols, userProtocol, majorOnly)
             ));
             event.setCancelled(true);
             
