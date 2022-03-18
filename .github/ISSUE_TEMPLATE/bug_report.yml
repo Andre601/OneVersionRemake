@@ -7,7 +7,7 @@ body:
   attributes:
     value: |-
       Thank you for taking your time and opening a Bug Report.
-      In order for us to process this Bug Report as fast and efficient as possible do we ask you to read the form carefully and provide any requested information.
+      In order for me to process this Bug Report as fast and efficently as possible do I ask you to read the form carefully and provide any requested information.
       Required fields are marked with an asterisk symbol (`*`)
       
       Also, always make sure to use the latest Release from [Spigot](https://www.spigotmc.org/resources/71727/) or the latest [development build](https://ci.codemc.io/job/Andre601/job/OneVersionRemake/) to make sure that your issue isn't already fixed.
@@ -32,7 +32,6 @@ body:
       - "Waterfall"
       - "Flamecord"
       - "Travertine"
-      - "Velocity v1.x"
       - "Velocity v3.x"
       - "Other"
   validations:
@@ -65,6 +64,15 @@ body:
       3. Profit!
   validations:
     required: true
+- type: textarea
+  attributes:
+    label: "Config.yml"
+    description: |-
+      Please provide the content of the config.yml you currently use.
+      The text field automatically formats the content as code.
+    render: yaml
+  validations:
+    required: true
 - type: input
   id: "console"
   attributes:
@@ -73,6 +81,8 @@ body:
       Get the latest content of your `latest.log` file an upload it to https://paste.helpch.at
       Take the generated URL and paste it into this field.
     placeholder: "https://paste.helpch.at/latest.log"
+  validations:
+    required: true
 - type: input
   id: "error"
   attributes:
