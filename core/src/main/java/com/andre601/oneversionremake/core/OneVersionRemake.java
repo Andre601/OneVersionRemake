@@ -141,21 +141,33 @@ public class OneVersionRemake{
             return;
         }
         
-        if(!getProtocolVersionResolver().hasFile() || getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
-            String url = getConfigHandler().getString(DEF_VERSIONS_URL, "Settings", "VersionsUrl");
-            
-            if(getProtocolVersionResolver().loadFile(url)){
-                getProxyLogger().info("Updated versions.json!");
+        String url = getConfigHandler().getString(DEF_VERSIONS_URL, "Settings", "VersionsUrl");
+        
+        if(getProtocolVersionResolver().isFileMissing()){
+            getProxyLogger().info("Creating versions.json...");
+            getProtocolVersionResolver().createFile(url).whenComplete((bool, thr) -> {
+                if(handleErrors(bool, thr))
+                    return;
+                
+                getProxyLogger().info("Successfully updated versions.json!");
                 enable();
-            }else{
-                getProxyLogger().warn("Unable to update versions.json! Check previous lines for warnings and errors.");
-            }
+            });
+        }else
+        if(getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
+            getProxyLogger().info("Checking for updated versions.json...");
+            getProtocolVersionResolver().updateFile(url).whenComplete((bool, thr) -> {
+                if(handleErrors(bool, thr))
+                    return;
+                
+                getProxyLogger().info("Update Check complete!");
+                enable();
+            });
         }else{
-            if(getProtocolVersionResolver().setupConfigurate()){
+            if(getProtocolVersionResolver().loadConfigurate()){
                 getProxyLogger().info("Loaded versions.json!");
                 enable();
             }else{
-                getProxyLogger().warn("Unable to load versions.json! Check previous lines for errors and warnings.");
+                getProxyLogger().warn("Unable to load versions.json file. Please check previous entries for errors.");
             }
         }
     }
@@ -230,5 +242,20 @@ public class OneVersionRemake{
         }catch(IOException ex){
             version = "UNKNOWN";
         }
+    }
+    
+    private boolean handleErrors(Boolean bool, Throwable thr){
+        if(thr != null || bool == null || !bool){
+            if(thr != null){
+                getProxyLogger().warn("Encountered an Exception while creating the versions.json!");
+                getProxyLogger().warnFormat("Error Message: %s", thr.getMessage());
+            }else{
+                getProxyLogger().warn("Creation of versions.json was non-successful!");
+                getProxyLogger().warn("Please check previous entries for any errors.");
+            }
+            return true;
+        }
+        
+        return false;
     }
 }
