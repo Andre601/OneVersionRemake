@@ -30,4 +30,6 @@ public class CommandPermissions{
     public static final String COMMAND_HELP = COMMAND_BASE + "help";
     // oneversionremake.command.reload
     public static final String COMMAND_RELOAD = COMMAND_BASE + "reload";
+    // oneversionremake.command.refresh
+    public static final String COMMAND_REFRESH = COMMAND_BASE + "refresh";
 }

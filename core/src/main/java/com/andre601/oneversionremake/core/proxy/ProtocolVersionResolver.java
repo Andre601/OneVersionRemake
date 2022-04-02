@@ -20,68 +20,130 @@ package com.andre601.oneversionremake.core.proxy;
 
 import com.andre601.oneversionremake.core.OneVersionRemake;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.concurrent.CompletableFuture;
 
 public class ProtocolVersionResolver{
     private final OkHttpClient CLIENT = new OkHttpClient();
+    private final Gson gson = new Gson();
     
     private final ProxyLogger logger;
     
     private final Path file;
-    private final Path path;
     
-    private ConfigurationNode node = null;
+    private VersionsFile versions = null;
     
     public ProtocolVersionResolver(OneVersionRemake core, Path path){
         this.logger = core.getProxyLogger();
         
         this.file = path.resolve("versions.json");
-        this.path = path;
     }
     
-    public boolean hasFile(){
-        return file.toFile().exists();
+    public VersionsFile getVersions(){
+        return versions;
     }
     
-    public boolean loadFile(String url){
-        if(!path.toFile().isDirectory() && !path.toFile().mkdirs()){
-            logger.warn("Could not create folder for plugin!");
-            return false;
-        }
+    public boolean isFileMissing(){
+        return !file.toFile().exists();
+    }
+    
+    public CompletableFuture<VersionsFile> createFile(String url){
+        return CompletableFuture.supplyAsync(() -> (copyAndUpdate(getSiteJson(url))));
+    }
+    
+    public CompletableFuture<VersionsFile> updateFile(String url){
+        return CompletableFuture.supplyAsync(() -> {
+            String json = getSiteJson(url);
+            if(json == null)
+                return null;
+            
+            try{
+                VersionsFile currentVersions = getVersionsFile(Files.readAllLines(file));
+                VersionsFile newVersions = getVersionsFile(json);
+                
+                if(currentVersions == null || newVersions == null){
+                    logger.warn("Error while getting current and new versions info.");
+                    logger.warnFormat("Current null? %b; New null? %b", currentVersions == null, newVersions == null);
+                    return null;
+                }
+                
+                // User is using old versions.json URL
+                if(newVersions.getFileVersion() == -1){
+                    logger.warn("Remote JSON file does not have a 'file_version' property set!");
+                    logger.warn("Make sure the URL points to an updated version.");
+                    logger.warnFormat("New URL: %s", OneVersionRemake.DEF_VERSIONS_URL);
+                    
+                    return null;
+                }
+                
+                if(currentVersions.getFileVersion() < newVersions.getFileVersion()){
+                    logger.info("Current versions.json is outdated. Updating...");
+                    return copyAndUpdate(json);
+                }else{
+                    logger.info("Current versions.json is up-to-date!");
+                    return (versions = currentVersions);
+                }
+            }catch(IOException ex){
+                logger.warn("Encountered IOException while reading versions.json file.", ex);
+                return null;
+            }
+        });
+    }
+    
+    public CompletableFuture<VersionsFile> loadFile(){
+        return CompletableFuture.supplyAsync(() -> {
+            try{
+                return (versions = getVersionsFile(Files.readAllLines(file)));
+            }catch(IOException ex){
+                logger.warn("Encountered IOException while trying to load versions.json");
+                return null;
+            }
+        });
+    }
+    
+    private VersionsFile copyAndUpdate(String json){
+        if(json == null)
+            return null;
         
-        return updateCache(url);
-    }
-    
-    public boolean setupConfigurate(){
-        GsonConfigurationLoader loader = GsonConfigurationLoader.builder()
-                .file(file.toFile())
-                .build();
-    
+        InputStream stream = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
+        
         try{
-            node = loader.load();
+            Files.copy(stream, file, StandardCopyOption.REPLACE_EXISTING);
+            return (versions = getVersionsFile(json));
         }catch(IOException ex){
-            logger.warn("Could not load versions.json! Encountered IOException.", ex);
-            return false;
+            logger.warn("Encountered IOException while saving the versions.json file.", ex);
+            return null;
         }
-        
-        return true;
     }
     
-    public boolean updateCache(String url){
+    private VersionsFile getVersionsFile(List<String> lines){
+        return getVersionsFile(String.join("", lines));
+    }
+    
+    private VersionsFile getVersionsFile(String json){
+        try{
+            return gson.fromJson(json, VersionsFile.class);
+        }catch(JsonSyntaxException ex){
+            logger.warn("Encountered JsonSyntaxException while parsing JSON.", ex);
+            return null;
+        }
+    }
+    
+    private String getSiteJson(String url){
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("User-Agent", "OneVersionRemake")
@@ -89,78 +151,45 @@ public class ProtocolVersionResolver{
         
         try(Response response = CLIENT.newCall(request).execute()){
             if(!response.isSuccessful()){
-                logger.warn(String.format(
-                        "Unable to establish connection! Status-Code %d (%s) received!",
-                        response.code(),
-                        response.message()
-                ));
+                logger.warnFormat("Received non-successful response code from %s. Further details below.", url);
+                
                 switch(response.code()){
                     case 404:
-                        logger.warnFormat(
-                                "The requested url (%s) does not exist. Please check that the URL is valid!",
-                                url
-                        );
+                        logger.warn("404: Unknown Site. Make sure the URL is valid.");
                         break;
                     
                     case 429:
-                        logger.warn("Encountered a Rate Limit. Please delay any future Proxy Restarts to avoid this.");
+                        logger.warn("429: Encountered rate limit. Please delay any future requests.");
                         break;
                     
                     case 500:
-                        logger.warnFormat(
-                                "The Website (%s) encountered an error when handling the request. Try again later...",
-                                url
-                        );
+                        logger.warn("500: Site couldn't process request and encountered an 'Internal Server Error'. Try again later?");
                         break;
                     
                     default:
-                        logger.warnFormat(
-                                "The plugin received a not known HTTPS status code %d. Please report this to the Developer!",
-                                response.code()
-                        );
+                        logger.warnFormat("%d: %s", response.code(), response.message());
                         break;
                 }
-                return false;
+                
+                return null;
             }
             
             ResponseBody body = response.body();
             if(body == null){
-                logger.warnFormat("Received empty/null body from '%s'", url);
-                return false;
+                logger.warn("Received null response body.");
+                return null;
             }
             
-            Files.copy(body.byteStream(), file, StandardCopyOption.REPLACE_EXISTING);
+            String json = body.string();
+            if(json.isEmpty()){
+                logger.warn("Received empty response body.");
+                return null;
+            }
             
-            return setupConfigurate();
+            return json;
         }catch(IOException ex){
-            logger.warn("Encountered IOException while performing a request!", ex);
-            return false;
+            logger.warn("Encountered IOException!", ex);
+            return null;
         }
-    }
-    
-    public String getFriendlyNames(List<Integer> protocols, boolean majorOnly){
-        Stream<Integer> stream = protocols.stream()
-                .sorted(Comparator.reverseOrder());
-        
-        if(majorOnly){
-            return stream.map(this::getMajor)
-                    .distinct()
-                    .collect(Collectors.joining(", "));
-        }
-        
-        return stream.map(this::getFriendlyName)
-                .collect(Collectors.joining(", "));
-    }
-    
-    public String getFriendlyName(int protocolId){
-        return fromPath(String.valueOf(protocolId), "name").getString("?");
-    }
-    
-    public String getMajor(int protocolId){
-        return fromPath(String.valueOf(protocolId), "major").getString("?");
-    }
-    
-    private ConfigurationNode fromPath(Object... path){
-        return node.node(path);
     }
 }

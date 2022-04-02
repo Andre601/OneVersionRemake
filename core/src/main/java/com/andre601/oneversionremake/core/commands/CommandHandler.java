@@ -47,12 +47,17 @@ public class CommandHandler{
             sender.sendMsg();
             sender.sendMsg(NamedTextColor.AQUA, "/ovr reload");
             sender.sendMsg(NamedTextColor.GRAY, "Reloads the configuration file.");
+            sender.sendMsg();
+            sender.sendMsg(NamedTextColor.AQUA, "/ovr refresh");
+            sender.sendMsg(NamedTextColor.GRAY, "Updates the versions.json file.");
         }else
         if(args[0].equalsIgnoreCase("reload")){
             if(!sender.hasPermission(CommandPermissions.COMMAND_RELOAD)){
                 sender.sendMsg(NamedTextColor.RED, "Insufficient permissions!");
                 return;
             }
+            
+            sender.sendMsg(NamedTextColor.GRAY, "Reloading config.yml...");
             
             if(core.reloadConfig()){
                 List<Integer> protocols = core.getConfigHandler().getIntList("Protocol", "Versions");
@@ -61,7 +66,7 @@ public class CommandHandler{
                 if(protocols.isEmpty()){
                     sender.sendMsg(NamedTextColor.RED, "None");
                 }else{
-                    sender.sendMsg(NamedTextColor.GRAY, core.getProtocolVersionResolver().getFriendlyNames(protocols, false));
+                    sender.sendMsg(NamedTextColor.GRAY, core.getProtocolVersionResolver().getVersions().getFriendlyNames(protocols, false));
                 }
                 
                 sender.sendMsg();
@@ -70,6 +75,30 @@ public class CommandHandler{
                 sender.sendMsg(NamedTextColor.RED, "There was an issue while reloading the configuration file!");
                 sender.sendMsg(NamedTextColor.RED, "Please check the Console of the Proxy for any errors and warnings.");
             }
+        }else
+        if(args[0].equalsIgnoreCase("refresh")){
+            if(!sender.hasPermission(CommandPermissions.COMMAND_REFRESH)){
+                sender.sendMsg(NamedTextColor.RED, "Insufficient permissions!");
+                return;
+            }
+            
+            sender.sendMsg(NamedTextColor.GRAY, "Updating versions.json...");
+            
+            core.getProtocolVersionResolver()
+                    .updateFile(core.getConfigHandler().getString(OneVersionRemake.DEF_VERSIONS_URL, "Settings", "VersionsUrl"))
+                    .whenComplete((versions, throwable) -> {
+                        if(versions == null || throwable != null){
+                            if(throwable != null){
+                                sender.sendMsg(NamedTextColor.RED, "Encountered an Exception while performing the update.");
+                            }else{
+                                sender.sendMsg(NamedTextColor.RED, "Update was not successful! Check console for any errors!");
+                            }
+                            
+                            return;
+                        }
+                        
+                        sender.sendMsg(NamedTextColor.GREEN, "Successfully updated versions.json!");
+                    });
         }else{
             sender.sendMsg(NamedTextColor.RED, "Unknown argument \"%s\".", args[0]);
             sender.sendMsg(NamedTextColor.RED, "Run \"/ovr help\" for all commands.");

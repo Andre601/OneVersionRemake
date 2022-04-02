@@ -60,7 +60,7 @@ public class BungeeLoginListener implements Listener{
                 plugin.getProxyLogger().infoFormat(
                         "Denied login for Player %s with MC version %s (Protocol version: %d)",
                         event.getConnection().getName(),
-                        plugin.getProtocolVersionResolver().getFriendlyName(userProtocol),
+                        plugin.getProtocolVersionResolver().getVersions().getFriendlyName(userProtocol),
                         userProtocol
                 );
             }
