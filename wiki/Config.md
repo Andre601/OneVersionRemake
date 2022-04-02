@@ -128,7 +128,7 @@ When this option is set to true, will the `{version}` placeholder only display t
   
   With `MajorOnly` set to `false`:
   ```
-  1.14, 1.14.2, 1.14.3, 1.14.4, .1.15, 1.15.1, 1.15.2, 1.16, 1.16.1, 1.16.2, 1.16.3, 1.16.5
+  1.14, 1.14.2, 1.14.3, 1.14.4, 1.15, 1.15.1, 1.15.2, 1.16, 1.16.1, 1.16.2, 1.16.3, 1.16.5
   ```
   
   With `MajorOnly` set to `true`:
