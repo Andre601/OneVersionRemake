@@ -62,12 +62,12 @@ public class ProtocolVersionResolver{
     }
     
     public CompletableFuture<VersionsFile> createFile(String url){
-        return CompletableFuture.supplyAsync(() -> (copyAndUpdate(getSiteVersions(url))));
+        return CompletableFuture.supplyAsync(() -> (copyAndUpdate(getSiteJson(url))));
     }
     
     public CompletableFuture<VersionsFile> updateFile(String url){
         return CompletableFuture.supplyAsync(() -> {
-            String json = getSiteVersions(url);
+            String json = getSiteJson(url);
             if(json == null)
                 return null;
             
@@ -81,12 +81,21 @@ public class ProtocolVersionResolver{
                     return null;
                 }
                 
+                // User is using old versions.json URL
+                if(newVersions.getFileVersion() == -1){
+                    logger.warn("Remote JSON file does not have a 'file_version' property set!");
+                    logger.warn("Make sure the URL points to an updated version.");
+                    logger.warnFormat("New URL: %s", OneVersionRemake.DEF_VERSIONS_URL);
+                    
+                    return null;
+                }
+                
                 if(currentVersions.getFileVersion() < newVersions.getFileVersion()){
                     logger.info("Current versions.json is outdated. Updating...");
                     return copyAndUpdate(json);
                 }else{
                     logger.info("Current versions.json is up-to-date!");
-                    return currentVersions;
+                    return (versions = currentVersions);
                 }
             }catch(IOException ex){
                 logger.warn("Encountered IOException while reading versions.json file.", ex);
@@ -134,7 +143,7 @@ public class ProtocolVersionResolver{
         }
     }
     
-    private String getSiteVersions(String url){
+    private String getSiteJson(String url){
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("User-Agent", "OneVersionRemake")
@@ -171,7 +180,7 @@ public class ProtocolVersionResolver{
                 return null;
             }
             
-            String json = response.toString();
+            String json = body.string();
             if(json.isEmpty()){
                 logger.warn("Received empty response body.");
                 return null;

@@ -1,3 +1,5 @@
+[v3.11.0]: https://github.com/Andre601/OneVersionRemake/releases/tag/v3.11.0
+
 [minimessage]: https://docs.adventure.kyori.net/minimessage.html
 [adventure]: https://github.com/KyoriPowered/adventure
 
@@ -50,12 +52,16 @@ This options sets whether OneVersionRemake should download the latest versions.j
 > **Type**: `String`  
 > **Default**:  
 > ```yaml
-> VersionsUrl: 'https://www.andre601.ch/oneversionremake/versions.json'
+> VersionsUrl: 'https://www.andre601.ch/oneversionremake/protocol_versions.json'
 > ```
 
 With this option can you change the URL from which OneVersionRemake will retrieve the current protocol versions.
 
-When changing the URL, make sure that it points to an actual JSON file (Returns `Content-Type: application/json`) and not an HTML page or similar.
+When changing the URL, make sure the following things are valid:
+
+- The URL returns `Content-Type: application/json`
+- The returned content is valid JSON
+- [[Since v3.11.0][v3.11.0]]: The returned content contains a `file_version` key with an integer value.
 
 ## Protocol
 This section of the config contains the main settings used for things like determining what versions are allowed on the Network.

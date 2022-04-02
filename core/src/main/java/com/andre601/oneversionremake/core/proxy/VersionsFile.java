@@ -20,8 +20,6 @@ package com.andre601.oneversionremake.core.proxy;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +28,9 @@ import java.util.stream.Stream;
 public class VersionsFile{
     
     @SerializedName("file_version")
-    private final int fileVersion = 0;
-    private final Collection<ProtocolInfo> protocolInfos = Collections.emptyList();
+    private int fileVersion = -1;
+    @SerializedName("protocols")
+    private ProtocolInfo[] protocolInfos = new ProtocolInfo[0];
     
     public int getFileVersion(){
         return fileVersion;
@@ -76,10 +75,11 @@ public class VersionsFile{
         return null;
     }
     
+    @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal"})
     private static class ProtocolInfo{
-        private final int protocol = 0;
-        private final String major = "UNKNOWN";
-        private final String name = "UNKNOWN";
+        private int protocol = 0;
+        private String major = "UNKNOWN";
+        private String name = "UNKNOWN";
     
         public int getProtocol(){
             return protocol;

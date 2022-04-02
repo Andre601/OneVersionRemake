@@ -33,7 +33,7 @@ import java.util.*;
 
 public class OneVersionRemake{
     
-    public static final String DEF_VERSIONS_URL = "https://www.andre601.ch/oneversionremake/versions.json";
+    public static final String DEF_VERSIONS_URL = "https://www.andre601.ch/oneversionremake/protocol_versions.json";
     
     private final PluginCore pluginCore;
     private final ConfigHandler configHandler;
