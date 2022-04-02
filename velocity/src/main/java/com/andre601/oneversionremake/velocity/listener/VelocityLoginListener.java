@@ -58,7 +58,7 @@ public class VelocityLoginListener{
                 plugin.getProxyLogger().infoFormat(
                         "Denied login for Player %s with MC version %s (Protocol version: %d)",
                         event.getUsername(),
-                        plugin.getProtocolVersionResolver().getFriendlyName(userProtocol),
+                        plugin.getProtocolVersionResolver().getVersions().getFriendlyName(userProtocol),
                         userProtocol
                 );
             }

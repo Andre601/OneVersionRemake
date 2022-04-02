@@ -47,8 +47,8 @@ public class Parser{
     }
     
     private String parse(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return text.replace("{version}", core.getProtocolVersionResolver().getFriendlyNames(serverProtocols, majorOnly))
-                .replace("{userVersion}", core.getProtocolVersionResolver().getFriendlyName(userProtocol));
+        return text.replace("{version}", core.getProtocolVersionResolver().getVersions().getFriendlyNames(serverProtocols, majorOnly))
+                .replace("{userVersion}", core.getProtocolVersionResolver().getVersions().getFriendlyName(userProtocol));
     }
     
 }

@@ -23,6 +23,7 @@ import com.andre601.oneversionremake.core.files.ConfigHandler;
 import com.andre601.oneversionremake.core.interfaces.PluginCore;
 import com.andre601.oneversionremake.core.interfaces.ProxyLogger;
 import com.andre601.oneversionremake.core.proxy.ProtocolVersionResolver;
+import com.andre601.oneversionremake.core.proxy.VersionsFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,7 @@ import java.util.*;
 
 public class OneVersionRemake{
     
-    private static final String DEF_VERSIONS_URL = "https://www.andre601.ch/oneversionremake/versions.json";
+    public static final String DEF_VERSIONS_URL = "https://www.andre601.ch/oneversionremake/versions.json";
     
     private final PluginCore pluginCore;
     private final ConfigHandler configHandler;
@@ -85,7 +86,7 @@ public class OneVersionRemake{
         
         List<Integer> versions = getConfigHandler().getIntList("Protocol", "Versions");
         if(versions.isEmpty()){
-            String unknown = getProtocolVersionResolver().getFriendlyName(0);
+            String unknown = getProtocolVersionResolver().getVersions().getFriendlyName(0);
             
             Map<String, Integer> entry = new HashMap<>();
             
@@ -96,8 +97,8 @@ public class OneVersionRemake{
         }
         
         for(int version : versions){
-            String major = getProtocolVersionResolver().getMajor(version);
-            String name = getProtocolVersionResolver().getFriendlyName(version);
+            String major = getProtocolVersionResolver().getVersions().getMajor(version);
+            String name = getProtocolVersionResolver().getVersions().getFriendlyName(version);
             
             Map<String, Integer> entry = new HashMap<>();
             entry.put(name, 1);
@@ -145,30 +146,32 @@ public class OneVersionRemake{
         
         if(getProtocolVersionResolver().isFileMissing()){
             getProxyLogger().info("Creating versions.json...");
-            getProtocolVersionResolver().createFile(url).whenComplete((bool, thr) -> {
-                if(handleErrors(bool, thr))
+            getProtocolVersionResolver().createFile(url).whenComplete((versions, throwable) -> {
+                if(handleErrors(versions, throwable))
                     return;
                 
-                getProxyLogger().info("Successfully updated versions.json!");
+                getProxyLogger().info("Successfully created versions.json!");
                 enable();
             });
         }else
         if(getConfigHandler().getBoolean(true, "Settings", "UpdateVersions")){
             getProxyLogger().info("Checking for updated versions.json...");
-            getProtocolVersionResolver().updateFile(url).whenComplete((bool, thr) -> {
-                if(handleErrors(bool, thr))
+            getProtocolVersionResolver().updateFile(url).whenComplete((versions, throwable) -> {
+                if(handleErrors(versions, throwable))
                     return;
                 
-                getProxyLogger().info("Update Check complete!");
+                getProxyLogger().info("Update-check complete!");
                 enable();
             });
         }else{
-            if(getProtocolVersionResolver().loadConfigurate()){
+            getProxyLogger().info("Loading versions.json...");
+            getProtocolVersionResolver().loadFile().whenComplete(((versions, throwable) -> {
+                if(handleErrors(versions, throwable))
+                    return;
+                
                 getProxyLogger().info("Loaded versions.json!");
                 enable();
-            }else{
-                getProxyLogger().warn("Unable to load versions.json file. Please check previous entries for errors.");
-            }
+            }));
         }
     }
     
@@ -181,7 +184,7 @@ public class OneVersionRemake{
             versionsSet = false;
         }else{
             getProxyLogger().info("Loaded the following Protocol Version(s):");
-            getProxyLogger().info(getProtocolVersionResolver().getFriendlyNames(protocols, false));
+            getProxyLogger().info(getProtocolVersionResolver().getVersions().getFriendlyNames(protocols, false));
         
             versionsSet = true;
         }
@@ -202,7 +205,7 @@ public class OneVersionRemake{
             getProxyLogger().info("No Protocol Versions set. Skipping Metrics initialization...");
         }
     
-        getProxyLogger().info("OneVersionRemake is ready!");
+        getProxyLogger().info("OneVersionRemake ready!");
     }
     
     private void printBanner(){
@@ -244,13 +247,13 @@ public class OneVersionRemake{
         }
     }
     
-    private boolean handleErrors(Boolean bool, Throwable thr){
-        if(thr != null || bool == null || !bool){
-            if(thr != null){
-                getProxyLogger().warn("Encountered an Exception while creating the versions.json!");
-                getProxyLogger().warnFormat("Error Message: %s", thr.getMessage());
+    private boolean handleErrors(VersionsFile versionsFile, Throwable throwable){
+        if(throwable != null || versionsFile == null){
+            if(throwable != null){
+                getProxyLogger().warn("Encountered an Exception while handling versions.json");
+                getProxyLogger().warnFormat("Error Message: %s", throwable.getMessage());
             }else{
-                getProxyLogger().warn("Creation of versions.json was non-successful!");
+                getProxyLogger().warn("Handling of versions.json was non-successful!");
                 getProxyLogger().warn("Please check previous entries for any errors.");
             }
             return true;
