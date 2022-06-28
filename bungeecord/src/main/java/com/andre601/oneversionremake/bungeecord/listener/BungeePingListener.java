@@ -49,7 +49,7 @@ public class BungeePingListener implements Listener{
         int userProtocol = protocol.getProtocol();
     
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
-        List<String> hoverMessage = plugin.getConfigHandler().getStringList("Messages", "Hover");
+        List<String> hoverMessage = plugin.getConfigHandler().getStringList(false, "Messages", "Hover");
         
         if(serverProtocols.isEmpty())
             return;
@@ -59,7 +59,7 @@ public class BungeePingListener implements Listener{
         boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
-        List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
+        List<String> motd = plugin.getConfigHandler().getStringList(true, "Messages", "Motd");
         
         if(!serverProtocols.contains(userProtocol)){
             if(!hoverMessage.isEmpty()){
@@ -72,9 +72,6 @@ public class BungeePingListener implements Listener{
                 protocol.setName(plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly));
             
             if(!motd.isEmpty()){
-                if(motd.size() > 2)
-                    motd = motd.subList(0, 1);
-                
                 TextComponent component = new TextComponent(BungeeComponentSerializer.get().serialize(
                         plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly)
                 ));

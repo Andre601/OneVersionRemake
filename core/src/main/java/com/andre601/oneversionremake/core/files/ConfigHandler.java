@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ConfigHandler{
@@ -114,12 +115,18 @@ public class ConfigHandler{
         }
     }
     
-    public List<String> getStringList(Object... path){
+    public List<String> getStringList(boolean trim, Object... path){
+        List<String> list;
         try{
-            return fromPath(path).getList(String.class);
+            list = fromPath(path).getList(String.class);
         }catch(SerializationException ex){
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
+        
+        if(list == null)
+            return Collections.emptyList();
+        
+        return (trim && list.size() > 2) ? list.subList(0, 2) : list;
     }
     
     private ConfigurationNode fromPath(Object... path){

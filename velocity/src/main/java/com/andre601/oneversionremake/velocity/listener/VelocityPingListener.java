@@ -55,8 +55,8 @@ public class VelocityPingListener{
         boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
-        List<String> motd = plugin.getConfigHandler().getStringList("Messages", "Motd");
-        List<String> hoverMessage = plugin.getConfigHandler().getStringList("Messages", "Hover");
+        List<String> motd = plugin.getConfigHandler().getStringList(true, "Messages", "Motd");
+        List<String> hoverMessage = plugin.getConfigHandler().getStringList(false, "Messages", "Hover");
         
         if(!serverProtocols.contains(userProtocol)){
             ServerPing.Builder builder = ping.asBuilder();
@@ -74,9 +74,6 @@ public class VelocityPingListener{
             }
             
             if(!motd.isEmpty()){
-                if(motd.size() > 2)
-                    motd = motd.subList(0, 1);
-                
                 builder.description(plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly));
             }
             
