@@ -38,7 +38,7 @@ public class VelocityLoginListener{
     @Subscribe(order = PostOrder.FIRST)
     public void onPreLogin(PreLoginEvent event){
         List<Integer> serverProtocols = plugin.getConfigHandler().getIntList("Protocol", "Versions");
-        List<String> kickMessage = plugin.getConfigHandler().getStringList("Messages", "Kick");
+        List<String> kickMessage = plugin.getConfigHandler().getStringList(false, "Messages", "Kick");
         
         boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
         int userProtocol = event.getConnection().getProtocolVersion().getProtocol();
