@@ -10,6 +10,7 @@ When a protocol is used that isn't listed in OneVersionRemake's `versions.json` 
 
 | Protocol: | Displayed version: |
 |:---------:|:------------------:|
+| 760       | 1.19.2             |
 | 759       | 1.19               |
 | 758       | 1.18.2             |
 | 757       | 1.18.1             |
