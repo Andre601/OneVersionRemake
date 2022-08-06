@@ -27,13 +27,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -84,7 +80,7 @@ public class ProtocolVersionResolver{
                 // User is using old versions.json URL
                 if(newVersions.getFileVersion() == -1){
                     logger.warn("Remote JSON file does not have a 'file_version' property set!");
-                    logger.warn("Make sure the URL points to an updated version.");
+                    logger.warn("Make sure the URL points to an updated versions file.");
                     logger.warnFormat("New URL: %s", OneVersionRemake.DEF_VERSIONS_URL);
                     
                     return null;
@@ -119,10 +115,13 @@ public class ProtocolVersionResolver{
         if(json == null)
             return null;
         
-        InputStream stream = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
-        
         try{
-            Files.copy(stream, file, StandardCopyOption.REPLACE_EXISTING);
+            FileWriter fileWriter = new FileWriter(file.toFile(), false);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+            
+            writer.write(json);
+            writer.close();
+            
             return (versions = getVersionsFile(json));
         }catch(IOException ex){
             logger.warn("Encountered IOException while saving the versions.json file.", ex);

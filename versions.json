@@ -1,4 +1,11 @@
 {
+  "note": [
+    "This file is no longer updated and used by the latest OneVersionRemake version.",
+    "The latest version can be found at https://github.com/Andre601/andre601.github.io under",
+    "/site/oneversionremake/protocol_versions.json",
+    "",
+    "This file will no longer receive updates."
+  ],
   "759": {
     "name": "1.19",
     "major": "1.19.x"
