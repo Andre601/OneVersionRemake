@@ -1,12 +1,21 @@
-OneVersionRemake is able to support all nummerical version protocols, but only selected ones are supported in the `{version}` and `{userVersion}` placeholders themself.
+[protocol_versions.json source]: https://github.com/Andre601/andre601.github.io/blob/development/site/oneversionremake/protocol_versions.json
+[versions.json source]: https://github.com/Andre601/andre601.github.io/blob/development/site/oneversionremake/versions.json
+[old versions.json source]: https://github.com/Andre601/OneVersionRemake/blob/master/versions.json
 
-OneVersionRemake downloads and uses a `versions.json` file which contains a collection of protocols and their corresponding Minecraft version.  
-The default `versions.json` used by OneVersionRemake v3.9.0 and newer can be found [here](https://www.andre601.ch/oneversionremake/versions.json). The versions file for older is found [here](https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json) and kept for backwards compatability.
+Due to BungeeCord not providing a way to obtain the MC version from a protocol does OneVersionRemake utilize a separate JSON file containing the MC versions and their major versions for the `{version}` and `{userVersion}` placeholders.
 
-Below is a complete list of all protocol versions supported by the default `versions.json` file mentioned above.  
-You can alter your `versions.json` if you want to add or remove versions from it.
+It pulls the JSON from the following sources:
 
-When a protocol is used that isn't listed in OneVersionRemake's `versions.json` will `?` be returned as fallback.
+- v3.11.0 and newer: https://andre601.ch/oneversionremake/protocol_versions.json ([Source][protocol_versions.json source])
+- v3.9.0 to v3.10.0: https://andre601.ch/oneversionremake/versions.json ([Source][versions.json source])
+- v3.10.0 and older: https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json ([Source][old versions.json source])
+
+You can always add your own protocol versions not present within the JSON file if they exist and if you follow the structure of the JSON file.  
+Unknown/Unsupported versions will be displayed as `?`.
+
+## Versions
+
+Here is a complete list of all currently supported protocol versions based on the latest [`protocol_versions.json` file][protocol_versions.json source].
 
 | Protocol: | Displayed version: |
 |:---------:|:------------------:|
