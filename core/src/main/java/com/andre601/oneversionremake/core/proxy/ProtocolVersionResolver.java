@@ -28,6 +28,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -116,7 +117,7 @@ public class ProtocolVersionResolver{
             return null;
         
         try{
-            FileWriter fileWriter = new FileWriter(file.toFile(), false);
+            FileWriter fileWriter = new FileWriter(file.toFile(), StandardCharsets.UTF_8, false);
             BufferedWriter writer = new BufferedWriter(fileWriter);
             
             writer.write(json);
