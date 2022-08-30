@@ -1,6 +1,7 @@
-[OneVersion]: https://github.com/johnnywoof/OneVersion
-[Spigot]: https://spigotmc.org/resources/71727/
-[Wiki]: https://github.com/Andre601/OneVersionRemake/wiki
+[oneversion]: https://github.com/johnnywoof/OneVersion
+[modrinth]: https://modrinth.com/plugin/oneversionremake
+[spigot]: https://spigotmc.org/resources/71727/
+[wiki]: https://github.com/Andre601/OneVersionRemake/wiki
 [codemc]: https://ci.codemc.io/view/Author/job/Andre601/job/OneVersionRemake/
 [releases]: https://github.com/Andre601/OneVersionRemake/releases
 
@@ -89,6 +90,7 @@ The currently used major API version of Velocity is v3 and the old v1 API is not
 
 ## Links
 
+- [Modrinth Page][modrinth]
 - [Spigot Page][spigot]
 - [Wiki]
 - [Latest releases][releases]
