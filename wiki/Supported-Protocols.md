@@ -8,7 +8,7 @@ It pulls the JSON from the following sources:
 
 - v3.11.0 and newer: https://andre601.ch/oneversionremake/protocol_versions.json ([Source][protocol_versions.json source])
 - v3.9.0 to v3.10.0: https://andre601.ch/oneversionremake/versions.json ([Source][versions.json source])
-- v3.10.0 and older: https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json ([Source][old versions.json source])
+- v3.8.2 and older: https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/versions.json ([Source][old versions.json source])
 
 You can always add your own protocol versions not present within the JSON file if they exist and if you follow the structure of the JSON file.  
 Unknown/Unsupported versions will be displayed as `?`.
