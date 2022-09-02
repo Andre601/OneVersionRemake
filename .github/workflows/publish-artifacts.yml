@@ -1,0 +1,60 @@
+name: Build Jar
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - platforms: |
+              bungeecord
+              waterfall
+            directory: bungeecord
+            name: BungeeCord, Waterfall
+          - platforms: velocity
+            directory: velocity
+            name: Velocity
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 1.11
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+    - name: Build jar
+      run: mvn clean install
+    - name: Obtain version from Release
+      id: release-version
+      run: |
+        version=$(echo ${{ github.event.release.tag_name }} | cut -d'v' -f2)
+        echo "::set-output name=version::$version"
+    - name: Upload ${{ matrix.name }} file to Modrinth and GitHub
+      uses: Kir-Antipov/mc-publish@v3.2
+      with:
+        name: v${{ steps.release-version.outputs.version }} - ${{ matrix.name }}
+        version: v${{ steps.release-version.outputs.version }}
+        version-type: release
+        files: ${{ matrix.directory }}/target/OneVersionRemake-*.jar
+        files-secondary: ""
+        loaders: ${{ matrix.platforms }}
+        version-resolver: releases
+        game-versions: |
+          1.8.8
+          1.9
+          1.10
+          1.11
+          1.12
+          1.13
+          1.14
+          1.15
+          1.16
+          1.17
+          1.18
+          1.19
+        modrinth-id: EONKUmG1
+        modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
