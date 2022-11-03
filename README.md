@@ -1,11 +1,11 @@
 [oneversion]: https://github.com/johnnywoof/OneVersion
-[modrinth]: https://modrinth.com/plugin/oneversionremake
-[spigot]: https://spigotmc.org/resources/71727/
 [wiki]: https://github.com/Andre601/OneVersionRemake/wiki
 [codemc]: https://ci.codemc.io/view/Author/job/Andre601/job/OneVersionRemake/
 [releases]: https://github.com/Andre601/OneVersionRemake/releases
 
-<img src="https://raw.githubusercontent.com/Andre601/OneVersionRemake/master/wiki/images/ovr.png" width="200" align="right" alt="OneVersionRemake">
+<a href="https://modrinth.com/plugin/oneversionremake" target="_blank">
+<img src="https://rawcdn.githack.com/Andre601/OneVersionRemake/997bd22eaa8f57b26e44ca17f86251b43c425ac6/wiki/images/ovr.png" width="200" align="right" alt="OneVersionRemake">
+</a>
 
 # OneVersionRemake
 
@@ -89,9 +89,17 @@ This module contains code used for making the Velocity version of OneVersionRema
 The currently used major API version of Velocity is v3 and the old v1 API is not supported anymore, so please avoid adding v1 support here.
 
 ## Links
-
-- [Modrinth Page][modrinth]
-- [Spigot Page][spigot]
-- [Wiki]
-- [Latest releases][releases]
-- [CodeMC (Development Builds)][codemc]
+<a href="https://modrinth.com/plugin/oneversionremake" target="_blank">
+<img alt="modrinth" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/available/modrinth_64h.png">
+</a>
+<a href="https://spigotmc.org/resources/71727/" target="_blank">
+<img alt="spigot" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/supported/spigot_vector.svg">
+</a>
+<a href="https://github.com/Andre601/OneVersionRemake/wiki">
+<img alt="ghpages" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/documentation/ghpages_vector.svg">
+</a>
+<!--
+<a href="https://ci.codemc.io/view/Author/job/Andre601/job/OneVersionRemake/" target="_blank">
+<img alt="codemc" height="64" src="TODO">
+</a>
+-->
