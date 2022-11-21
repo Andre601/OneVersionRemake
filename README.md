@@ -1,6 +1,5 @@
 [oneversion]: https://github.com/johnnywoof/OneVersion
 [wiki]: https://github.com/Andre601/OneVersionRemake/wiki
-[codemc]: https://ci.codemc.io/view/Author/job/Andre601/job/OneVersionRemake/
 [releases]: https://github.com/Andre601/OneVersionRemake/releases
 
 <a href="https://modrinth.com/plugin/oneversionremake" target="_blank">
@@ -28,6 +27,17 @@ OneVersionRemake has a few specifici differences that make it better than the or
 - **Allow the versions you want**  
   The configuration is very simple to understand. Just add the version protocols you want to allow on your network, reload OneVersionRemake and enjoy.  
   The [Wiki] has a page listing all supported version protocols.
+
+## Downloads
+<a href="https://modrinth.com/plugin/oneversionremake" target="_blank">
+<img alt="modrinth" title="Download from Modrinth" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/available/modrinth_64h.png">
+</a>
+<a href="https://spigotmc.org/resources/71727/" target="_blank">
+<img alt="spigot" title="Download from Spigot" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/supported/spigot_vector.svg">
+</a>
+<a href="https://ci.codemc.io/view/Author/job/Andre601/job/OneVersionRemake/" target="_blank">
+<img alt="codemc" title="Dev builds on CodeMC" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/available/codemc_vector.svg">
+</a>
 
 ## Build it yourself
 
@@ -59,10 +69,6 @@ Afterwards can you obtain the final jar from either `bungeecord/target/` or `vel
 
 Note: Make sure to use the jar file either labeled `OneVersionRemake-BungeeCord-<version>.jar` or `OneVersionRemake-Velocity-<version>.jar`. Do not use jars containing `original` in their name!
 
-## Downloads
-
-You can download either the latest official release from the [Release page][releases] or get the latest development build from the [CodeMC page][codemc]. Please be aware that development builds may have breaking changes not yet announced.
-
 ## Contribute
 
 Contributions towards OneVersionRemake are always welcome when it helps improving the plugin in one way or another.
@@ -89,17 +95,15 @@ This module contains code used for making the Velocity version of OneVersionRema
 The currently used major API version of Velocity is v3 and the old v1 API is not supported anymore, so please avoid adding v1 support here.
 
 ## Links
-<a href="https://modrinth.com/plugin/oneversionremake" target="_blank">
-<img alt="modrinth" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/available/modrinth_64h.png">
-</a>
-<a href="https://spigotmc.org/resources/71727/" target="_blank">
-<img alt="spigot" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/supported/spigot_vector.svg">
-</a>
 <a href="https://github.com/Andre601/OneVersionRemake/wiki">
-<img alt="ghpages" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/documentation/ghpages_vector.svg">
+<img alt="ghpages" title="Read the wiki" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/documentation/ghpages_vector.svg">
 </a>
-<!--
-<a href="https://ci.codemc.io/view/Author/job/Andre601/job/OneVersionRemake/" target="_blank">
-<img alt="codemc" height="64" src="TODO">
+<a href="https://discord.gg/6dazXp6" target="_blank">
+<img alt="discord" title="Join my Discord Server" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/social/discord-singular_vector.svg">
 </a>
--->
+<a href="https://app.revolt.chat/invite/74TpERXA" target="_blank">
+<img alt="revolt" title="Join my Revolt Server" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/social/revolt-singular_vector.svg">
+</a>
+<a href="https://blobfox.coffee/@andre_601" target="_blank">
+<img alt="mastodon" title="Chat with me on Mastodon" height="64" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/minimal/social/mastodon-singular_vector.svg">
+</a>
