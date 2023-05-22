@@ -33,7 +33,7 @@ jobs:
         version=$(echo ${{ github.event.release.tag_name }} | cut -d'v' -f2)
         echo "::set-output name=version::$version"
     - name: Upload ${{ matrix.name }} file to Modrinth and GitHub
-      uses: Kir-Antipov/mc-publish@v3.2
+      uses: Kir-Antipov/mc-publish@v3.3
       with:
         name: v${{ steps.release-version.outputs.version }} - ${{ matrix.name }}
         version: v${{ steps.release-version.outputs.version }}
@@ -41,20 +41,8 @@ jobs:
         files: ${{ matrix.directory }}/target/OneVersionRemake-*.jar
         files-secondary: ""
         loaders: ${{ matrix.platforms }}
-        version-resolver: releases
-        game-versions: |
-          1.8.8
-          1.9
-          1.10
-          1.11
-          1.12
-          1.13
-          1.14
-          1.15
-          1.16
-          1.17
-          1.18
-          1.19
+        game-version-filter: releases
+        game-versions: '>=1.8.8'
         modrinth-id: EONKUmG1
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
