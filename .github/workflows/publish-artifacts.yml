@@ -41,20 +41,8 @@ jobs:
         files: ${{ matrix.directory }}/target/OneVersionRemake-*.jar
         files-secondary: ""
         loaders: ${{ matrix.platforms }}
-        version-resolver: releases
-        game-versions: |
-          1.8.8
-          1.9
-          1.10
-          1.11
-          1.12
-          1.13
-          1.14
-          1.15
-          1.16
-          1.17
-          1.18
-          1.19
+        game-version-filter: releases
+        game-versions: '>=1.8.8'
         modrinth-id: EONKUmG1
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
