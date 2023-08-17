@@ -36,7 +36,7 @@ Settings:
   # |                                                                          |
   # | https://github.com/Andre601/OneVersionRemake/wiki/Config#versionsurl     |
   # +--------------------------------------------------------------------------+
-  VersionsUrl: 'https://www.andre601.ch/oneversionremake/protocol_versions.json'
+  VersionsUrl: 'https://andre601.ch/oneversionremake/protocol_versions.json'
 
 # +----------------------------------------------------------------------------+
 # |                             Protocol Settings                              |
