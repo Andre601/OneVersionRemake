@@ -66,6 +66,13 @@ Protocol:
   # | https://github.com/Andre601/OneVersionRemake/wiki/Config#majoronly       |
   # +--------------------------------------------------------------------------+
   MajorOnly: false
+  # +--------------------------------------------------------------------------+
+  # | Should the list of protocols be treated as a Blacklist?                  |
+  # | If set to true, only protocol versions NOT in the list will be allowed.  |
+  # |                                                                          |
+  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#blacklist       |
+  # +--------------------------------------------------------------------------+
+  Blacklist: false
 
 # +----------------------------------------------------------------------------+
 # |                                  Messages                                  |

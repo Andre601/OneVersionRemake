@@ -66,7 +66,7 @@ public class CommandHandler{
                 if(protocols.isEmpty()){
                     sender.sendMsg(NamedTextColor.RED, "None");
                 }else{
-                    sender.sendMsg(NamedTextColor.GRAY, core.getProtocolVersionResolver().getVersions().getFriendlyNames(protocols, false));
+                    sender.sendMsg(NamedTextColor.GRAY, core.getProtocolVersionResolver().getVersions().getFriendlyNames(protocols, false, false));
                 }
                 
                 sender.sendMsg();

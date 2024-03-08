@@ -26,6 +26,7 @@ This page tries to explain each option as detailed as possible!
   - [Versions](#versions)
   - [LogDenial](#logdenial)
   - [MajorOnly](#majoronly)
+  - [Blacklist](#blacklist)
 - [Messages](#messages)
   - [Formatting](#formatting)
     - [Basic Formatting](#basic-formatting)
@@ -136,6 +137,15 @@ When this option is set to true, will the `{version}` placeholder only display t
   1.14.x, 1.15.x, 1.16.x
   ```
 
+### Blacklist
+> **Type**: `Boolean`
+> **Default**:
+> ```yaml
+> Blacklist: false
+> ```
+
+When this option is set to true, will OneVersionRemake treat the [Protocol List](#versions) as a blacklist, meaning only players **not** having any of the listed versions may join.
+
 ## Messages
 The `Messages` section allows you to define the different messages displayed when a player either joins or views a server with an unsupported version.
 
@@ -148,7 +158,7 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
   ##### Colors
 
   | Option 1                                        | Option 2                                                    |
-  | ----------------------------------------------- | ----------------------------------------------------------- |
+  |-------------------------------------------------|-------------------------------------------------------------|
   | [`<aqua>`][colors]                              | [`<color:aqua>`][colors]                                    |
   | [`<black>`][colors]                             | [`<color:black>`][colors]                                   |
   | [`<blue>`][colors]                              | [`<color:blue>`][colors]                                    |
@@ -169,7 +179,7 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
   ##### Formatting
 
   | Name                            | Alias                 |
-  | ------------------------------- | --------------------- |
+  |---------------------------------|-----------------------|
   | [`<bold>`][formatting]          | [`<b>`][formatting]   |
   | [`<italic>`][formatting]        | [`<em>`][formatting]  |
   |                                 | [`<i>`][formatting]   |
@@ -182,7 +192,7 @@ Depending on the config option are either only [basic](#basic-formatting) or [ad
   Includes [Basic Formatting](#basic-formatting) but also some more advanced options:
 
   | Option         | Format                                         |
-  | -------------- | ---------------------------------------------- |
+  |----------------|------------------------------------------------|
   | RGB Colors     | [`<#rrggbb>`][colors]                          |
   |                | [`<color:#rrggbb>`][colorsVerbose]             |
   | Gradients*     | [`<gradient:#rrggbb:#rrggbb>`][gradient]       |

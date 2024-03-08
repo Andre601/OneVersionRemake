@@ -113,7 +113,7 @@ public class OneVersionRemake{
         return map;
     }
     
-    public <T> List<T> getPlayers(Class<T> clazz, List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+    public <T> List<T> getPlayers(Class<T> clazz, List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly, boolean blacklist){
         try{
             final List<T> players = new ArrayList<>(lines.size());
             final Constructor<T> constructor = clazz.getDeclaredConstructor(String.class, UUID.class);
@@ -121,7 +121,7 @@ public class OneVersionRemake{
     
             for(String line : lines){
                 players.add(constructor.newInstance(
-                        getComponentParser().toString(line, serverProtocols, userProtocol, majorOnly), UUID.randomUUID()
+                        getComponentParser().toString(line, serverProtocols, userProtocol, majorOnly, blacklist), UUID.randomUUID()
                 ));
             }
             
@@ -184,7 +184,7 @@ public class OneVersionRemake{
             versionsSet = false;
         }else{
             getProxyLogger().info("Loaded the following Protocol Version(s):");
-            getProxyLogger().info(getProtocolVersionResolver().getVersions().getFriendlyNames(protocols, false));
+            getProxyLogger().info(getProtocolVersionResolver().getVersions().getFriendlyNames(protocols, false, false));
         
             versionsSet = true;
         }

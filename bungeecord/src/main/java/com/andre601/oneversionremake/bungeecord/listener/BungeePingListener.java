@@ -57,23 +57,24 @@ public class BungeePingListener implements Listener{
         serverProtocols.sort(Comparator.reverseOrder());
     
         boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
+        boolean blacklist = plugin.getConfigHandler().getBoolean(false, "Protocol", "Blacklist");
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
         List<String> motd = plugin.getConfigHandler().getStringList(true, "Messages", "Motd");
         
-        if(!serverProtocols.contains(userProtocol)){
+        if((blacklist && serverProtocols.contains(userProtocol)) || (!blacklist && !serverProtocols.contains(userProtocol))){
             if(!hoverMessage.isEmpty()){
-                ServerPing.PlayerInfo[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly);
+                ServerPing.PlayerInfo[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly, blacklist);
                 if(players != null)
                     ping.getPlayers().setSample(players);
             }
             
             if(!playerCount.isEmpty())
-                protocol.setName(plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly));
+                protocol.setName(plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly, blacklist));
             
             if(!motd.isEmpty()){
                 TextComponent component = new TextComponent(BungeeComponentSerializer.get().serialize(
-                        plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly)
+                        plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly, blacklist)
                 ));
                 
                 ping.setDescriptionComponent(component);
@@ -81,7 +82,7 @@ public class BungeePingListener implements Listener{
             
             ping.setFavicon(ping.getFaviconObject());
             
-            protocol.setProtocol(serverProtocols.get(0));
+            protocol.setProtocol(-1);
             
             ping.setVersion(protocol);
             event.setResponse(ping);

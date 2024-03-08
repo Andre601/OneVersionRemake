@@ -53,28 +53,29 @@ public class VelocityPingListener{
         serverProtocols.sort(Comparator.reverseOrder());
         
         boolean majorOnly = plugin.getConfigHandler().getBoolean(false, "Protocol", "MajorOnly");
+        boolean blacklist = plugin.getConfigHandler().getBoolean(false, "Protocol", "Blacklist");
         
         String playerCount = plugin.getConfigHandler().getString("", "Messages", "PlayerCount");
         List<String> motd = plugin.getConfigHandler().getStringList(true, "Messages", "Motd");
         List<String> hoverMessage = plugin.getConfigHandler().getStringList(false, "Messages", "Hover");
         
-        if(!serverProtocols.contains(userProtocol)){
+        if((blacklist && serverProtocols.contains(userProtocol)) || (!blacklist && !serverProtocols.contains(userProtocol))){
             ServerPing.Builder builder = ping.asBuilder();
             
             if(!hoverMessage.isEmpty()){
-                ServerPing.SamplePlayer[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly);
+                ServerPing.SamplePlayer[] players = plugin.getPlayers(hoverMessage, serverProtocols, userProtocol, majorOnly, blacklist);
                 if(players != null)
                     builder.samplePlayers(players);
             }
             
             if(!playerCount.isEmpty()){
-                playerCount = plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly);
+                playerCount = plugin.getComponentParser().toString(playerCount, serverProtocols, userProtocol, majorOnly, blacklist);
                 
-                builder.version(new ServerPing.Version(serverProtocols.get(0), playerCount));
+                builder.version(new ServerPing.Version(-1, playerCount));
             }
             
             if(!motd.isEmpty()){
-                builder.description(plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly));
+                builder.description(plugin.getComponentParser().toComponent(motd, serverProtocols, userProtocol, majorOnly, blacklist));
             }
             
             event.setPing(builder.build());

@@ -9,10 +9,10 @@ Using any older version will get your support request ignored.
 
 ### Platforms
 
-As of writing this (29th of April, 2022) are only the following platforms officially supported:
+As of writing this (29th of April 2022) are only the following platforms officially supported:
 
 | Platform      | Supported Version                    |
-| ------------- | ------------------------------------ |
+|---------------|--------------------------------------|
 | BungeeCord    | Any 1.18.x builds                    |
 | Waterfall[^1] | Any 1.18.x builds                    |
 | FlameCord[^2] | Any 1.18.x builds                    |

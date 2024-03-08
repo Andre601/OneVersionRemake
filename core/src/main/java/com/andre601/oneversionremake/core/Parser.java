@@ -32,22 +32,22 @@ public class Parser{
         this.core = core;
     }
     
-    public Component toComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return toComponent(parse(String.join("\n", lines), serverProtocols, userProtocol, majorOnly));
+    public Component toComponent(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly, boolean blacklist){
+        return toComponent(parse(String.join("\n", lines), serverProtocols, userProtocol, majorOnly, blacklist));
     }
     
     public Component toComponent(String text){
         return MiniMessage.miniMessage().deserialize(text);
     }
     
-    public String toString(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
+    public String toString(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly, boolean blacklist){
         Component component = MiniMessage.miniMessage()
-                .deserialize(parse(text, serverProtocols, userProtocol, majorOnly));
+                .deserialize(parse(text, serverProtocols, userProtocol, majorOnly, blacklist));
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
     
-    private String parse(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return text.replace("{version}", core.getProtocolVersionResolver().getVersions().getFriendlyNames(serverProtocols, majorOnly))
+    private String parse(String text, List<Integer> serverProtocols, int userProtocol, boolean majorOnly, boolean blacklist){
+        return text.replace("{version}", core.getProtocolVersionResolver().getVersions().getFriendlyNames(serverProtocols, majorOnly, blacklist))
                 .replace("{userVersion}", core.getProtocolVersionResolver().getVersions().getFriendlyName(userProtocol));
     }
     

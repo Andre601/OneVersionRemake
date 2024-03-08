@@ -20,6 +20,7 @@ package com.andre601.oneversionremake.core.proxy;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,9 +37,18 @@ public class VersionsFile{
         return fileVersion;
     }
     
-    public String getFriendlyNames(List<Integer> protocols, boolean majorOnly){
-        Stream<Integer> stream = protocols.stream()
-                .sorted(Comparator.reverseOrder());
+    public String getFriendlyNames(List<Integer> protocols, boolean majorOnly, boolean blacklist){
+        Stream<Integer> stream;
+        
+        if(blacklist){
+            stream = Arrays.stream(protocolInfos)
+                    .map(ProtocolInfo::getProtocol)
+                    .filter(protocol -> !protocols.contains(protocol))
+                    .sorted(Comparator.reverseOrder());
+        }else{
+            stream = protocols.stream()
+                    .sorted(Comparator.reverseOrder());
+        }
         
         if(majorOnly){
             return stream.map(this::getMajor)

@@ -143,8 +143,8 @@ public class VelocityCore implements PluginCore{
         return proxy;
     }
     
-    public ServerPing.SamplePlayer[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly){
-        return core.getPlayers(ServerPing.SamplePlayer.class, lines, serverProtocols, userProtocol, majorOnly)
+    public ServerPing.SamplePlayer[] getPlayers(List<String> lines, List<Integer> serverProtocols, int userProtocol, boolean majorOnly, boolean blacklist){
+        return core.getPlayers(ServerPing.SamplePlayer.class, lines, serverProtocols, userProtocol, majorOnly, blacklist)
                 .toArray(new ServerPing.SamplePlayer[0]);
     }
 }
