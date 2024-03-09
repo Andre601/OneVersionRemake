@@ -13,12 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Updating Wiki
-      uses: docker://decathlon/wiki-page-creator-action:latest
+    - uses: SwiftDocOrg/github-wiki-publish-action@v1
+      with:
+        path: 'wiki'
       env:
-        ACTION_MAIL: ${{ secrets.EMAIL }}
-        ACTION_NAME: Andre601
-        GH_PAT: ${{ secrets.PAT }}
-        MD_FOLDER: wiki
-        OWNER: Andre601
-        REPO_NAME: OneVersionRemake
+        GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.PAT }}
