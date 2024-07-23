@@ -6,6 +6,14 @@
   "labels": ["Type: Update (Dependency)"],
   "packageRules": [
     {
+      "description": "Apply label for GitHub Actions",
+      "matchFileNames": [
+        ".github/workflows/publish-artifacts.yml",
+        ".github/workflows/wiki.yml"
+      ],
+      "addLabels": ["Target: GitHub Actions"]
+    },
+    {
       "description": "Apply label for BungeeCord",
       "matchFileNames": ["bungeecord/pom.xml"],
       "addLabels": ["Target: BungeeCord"]
