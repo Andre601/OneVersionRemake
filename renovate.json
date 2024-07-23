@@ -2,5 +2,23 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "labels": ["Type: Update (Dependency)"],
+  "packageRules": [
+    {
+      "description": "Apply label for BungeeCord",
+      "matchFileNames": ["bungeecord/pom.xml"],
+      "addLabels": ["Target: BungeeCord"]
+    },
+    {
+      "description": "Apply label for Core",
+      "matchFileNames": ["core/pom.xml"],
+      "addLabels": ["Target: Core"]
+    },
+    {
+      "description": "Apply label for Velocity",
+      "matchFileNames": ["velocity/pom.xml"],
+      "addLabels": ["Target: Velocity"]
+    }
   ]
 }
