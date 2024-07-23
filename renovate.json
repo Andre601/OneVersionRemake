@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "labels": ["Type: Update (Dependency)"],
+  "packageRules": [
+    {
+      "description": "Apply label for GitHub Actions",
+      "matchFileNames": [
+        ".github/workflows/publish-artifacts.yml",
+        ".github/workflows/wiki.yml"
+      ],
+      "addLabels": ["Target: GitHub Actions"]
+    },
+    {
+      "description": "Apply label for BungeeCord",
+      "matchFileNames": ["bungeecord/pom.xml"],
+      "addLabels": ["Target: BungeeCord"]
+    },
+    {
+      "description": "Apply label for Core",
+      "matchFileNames": ["core/pom.xml"],
+      "addLabels": ["Target: Core"]
+    },
+    {
+      "description": "Apply label for Velocity",
+      "matchFileNames": ["velocity/pom.xml"],
+      "addLabels": ["Target: Velocity"]
+    }
+  ]
+}
