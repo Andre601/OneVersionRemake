@@ -1,0 +1,81 @@
+site_name: 'OneVersionRemake'
+site_description: 'Wiki of the Plugin OneVersionRemake'
+site_author: 'Andre_601'
+site_url: 'https://ovr.andre601.ch'
+
+copyright: |
+  Plugin and Wiki licensed under <a href="https://github.com/Andre601/OneVersionRemake/blob/master/LICENSE" target="_blank" rel="nofollow">MIT License</a>.
+
+docs_dir: 'docs/'
+
+repo_name: 'OneVersionRemake'
+repo_url: 'https://github.com/Andre601/OneVersionRemake'
+
+theme:
+  name: 'material'
+  favicon: 'assets/img/favicon.png'
+  logo: 'assets/img/favicon.png'
+  icon:
+    admonition:
+      note: octicons/pencil-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/comment-16
+  palette:
+    scheme: 'slate'
+    primary: 'red'
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+
+extra:
+  social:
+    - icon: 'simple/github'
+      link: 'https://github.com/Andre601/OneVersionRemake'
+    - icon: 'simple/modrinth'
+      link: 'https://modrinth.com/plugin/oneversionremake'
+
+extra_css:
+  - 'assets/css/custom.css'
+
+extra_javascript:
+  - 'assets/js/version-table-gen.js'
+
+nav:
+  - Home: index.md
+  - Config.yml: config.md
+  - Supported Protocols: protocols.md
+
+markdown_extensions:
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.magiclink
+  - pymdownx.blocks.admonition:
+      types:
+        - note
+        - abstract
+        - info
+        - tip
+        - success
+        - question
+        - warning
+        - failure
+        - danger
+        - bug
+        - example
+        - quote
+  - pymdownx.blocks.details:
+  - pymdownx.blocks.tab:
+      alternate_style: true
