@@ -3,6 +3,8 @@ name: Publish wiki
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - '.github/workflows/wiki.yml'
       - 'docs/**'
