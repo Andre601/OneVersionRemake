@@ -8,7 +8,7 @@
 # |                                                                           | #
 # |    GitHub: https://github.com/Andre601/OneVersionRemake                   | #
 # |    Spigot: https://spigotmc.org/resources/71727/                          | #
-# |    Wiki:   https://github.com/Andre601/OneVersionRemake/wiki              | #
+# |    Wiki:   https://ovr.andre601.ch                                        | #
 # |                                                                           | #
 # +---------------------------------------------------------------------------+ #
 #################################################################################
@@ -20,21 +20,21 @@
 # |                                                                            |
 # | Main Settings for the plugin.                                              |
 # |                                                                            |
-# | https://github.com/Andre601/OneVersionRemake/wiki/Config#settings          |
+# | https://ovr.andre601.ch/config#settings                                    |
 # +----------------------------------------------------------------------------+
 Settings:
   # +--------------------------------------------------------------------------+
   # | Whether OneVersionRemake should download the latest versions.json on     |
   # | Proxy (re)start.                                                         |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#updateversions  |
+  # | https://ovr.andre601.ch/config#updateversions                            |
   # +--------------------------------------------------------------------------+
   UpdateVersions: true
   # +--------------------------------------------------------------------------+
   # | URL pointing to the file that contains the different Protocols OVR       |
   # | should use.                                                              |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#versionsurl     |
+  # | https://ovr.andre601.ch/config#versionsurl                               |
   # +--------------------------------------------------------------------------+
   VersionsUrl: 'https://andre601.ch/oneversionremake/protocol_versions.json'
 
@@ -43,34 +43,34 @@ Settings:
 # |                                                                            |
 # | Protocol Settings for the plugin.                                          |
 # |                                                                            |
-# | https://github.com/Andre601/OneVersionRemake/wiki/Config#protocol          |
+# | https://ovr.andre601.ch/config#protocol                                    |
 # +----------------------------------------------------------------------------+
 Protocol:
   # +--------------------------------------------------------------------------+
   # | The Protocol Versions that should be allowed to join the network.        |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#versions        |
+  # | https://ovr.andre601.ch/config#versions                                  |
   # +--------------------------------------------------------------------------+
   Versions: []
   
   # +--------------------------------------------------------------------------+
   # | Should OneVersionRemake log denied Logins in the console?                |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#logdenial       |
+  # | https://ovr.andre601.ch/config#logdenial                                 |
   # +--------------------------------------------------------------------------+
   LogDenial: true
   
   # +--------------------------------------------------------------------------+
   # | Should the {version} placeholder only show major MC versions?            |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#majoronly       |
+  # | https://ovr.andre601.ch/config#majoronly                                 |
   # +--------------------------------------------------------------------------+
   MajorOnly: false
   # +--------------------------------------------------------------------------+
   # | Should the list of protocols be treated as a Blacklist?                  |
   # | If set to true, only protocol versions NOT in the list will be allowed.  |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#blacklist       |
+  # | https://ovr.andre601.ch/config#blacklist                                 |
   # +--------------------------------------------------------------------------+
   Blacklist: false
 
@@ -79,14 +79,14 @@ Protocol:
 # |                                                                            |
 # | This section contains all the messages that you can configure.             |
 # |                                                                            |
-# | https://github.com/Andre601/OneVersionRemake/wiki/Config#messages          |
+# | https://ovr.andre601.ch/config#messages                                    |
 # +----------------------------------------------------------------------------+
 Messages:
   # +--------------------------------------------------------------------------+
   # | Message to display instead of the Player count (<online>/<max>) next to  |
   # | the ping icon.                                                           |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#playercount     |
+  # | https://ovr.andre601.ch/config#playercount                               |
   # +--------------------------------------------------------------------------+
   PlayerCount: '<red>Minecraft {version}'
   
@@ -94,7 +94,7 @@ Messages:
   # | Reason to display, when the player gets kicked for using a unsupported   |
   # | Minecraft Version.                                                       |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#kick            |
+  # | https://ovr.andre601.ch/config#kick                                      |
   # +--------------------------------------------------------------------------+
   Kick:
   - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
@@ -107,7 +107,7 @@ Messages:
   # | Message to show when the player hovers over the player count with his    |
   # | cursor.                                                                  |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#hover           |
+  # | https://ovr.andre601.ch/config#hover                                     |
   # +--------------------------------------------------------------------------+
   Hover:
   - '<red>You are using an unsupported version of Minecraft ({userVersion})!'
@@ -116,7 +116,7 @@ Messages:
   # +--------------------------------------------------------------------------+
   # | Message to display in the MOTD of the server.                            |
   # |                                                                          |
-  # | https://github.com/Andre601/OneVersionRemake/wiki/Config#motd            |
+  # | https://ovr.andre601.ch/config#motd                                      |
   # +--------------------------------------------------------------------------+
   Motd:
   - '<red>Unsupported Minecraft Version {userVersion}'
