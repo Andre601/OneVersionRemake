@@ -66,7 +66,7 @@ Protocol-related options can be found here. This also includes the option to set
 **Type:** `List[Integer]`  
 **Default:**  
 ```yaml
-Protocols:
+Protocol:
   Versions: []
 ```
 ///
@@ -89,7 +89,7 @@ Should [Blacklist](#blacklist) be enabled will the list be treated as Client ver
 **Type:** `Boolean`  
 **Default:**  
 ```yaml
-Protocols:
+Protocol:
   LogDenial: true
 ```
 ///
@@ -107,7 +107,7 @@ When enabled will the plugin post the following message for every denied Player:
 **Type:** `Boolean`  
 **Default:**  
 ```yaml
-Protocols:
+Protocol:
   MajorOnly: false
 ```
 ///
@@ -120,7 +120,7 @@ Wether OneVersionRemake should only display the major version for a set of proto
 //// tab | MajorOnly enabled
 **Setup:**  
 ```yaml
-Protocols:
+Protocol:
   Versions:
     - 477
     - 480
@@ -147,7 +147,7 @@ Protocols:
 //// tab | MajorOnly disabled
 **Setup:**  
 ```yaml
-Protocols:
+Protocol:
   Versions:
     - 477
     - 480
@@ -178,7 +178,7 @@ Protocols:
 **Type:** `Boolean`  
 **Default:**  
 ```yaml
-Protocols:
+Protocol:
   Blacklist: false
 ```
 ///
