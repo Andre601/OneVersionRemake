@@ -21,7 +21,7 @@ Below is a table of supported Protocol Versions which will be translated into th
 
 /// note
 The table is automatically created using the latest [`protocol_versions.json` file](https://andre601.ch/oneversionremake/protocol_versions.json) as source.  
-Should you not see any table, make sure that you allow Javascript to be executed. Otherwise check above link for the current JSON file.
+If you're unable to see the Table, make sure you allow Javascript or otherwise check the above link for the JSON file.
 ///
 
 <div data-md-component="versions-table">
