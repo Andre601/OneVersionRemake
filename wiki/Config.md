@@ -80,7 +80,7 @@ Note that instead of the actual MC version (i.e. 1.15) do you instead set the Pr
 Protocol Versions are, in most simplistic terms, unique numbers to determine what MC version is joining the network.
 
 You can find a full list of Protocol Versions on the official Minecraft Wiki:
-https://minecraft.gamepedia.com/Protocol_version#Java_Edition_2
+https://minecraft.wiki/Protocol_version#Java_Edition_2
 
 Note that only a selected list of versions is supported by the `{version}` and `{userVersion}` placeholders and will be turned into readable MC versions.  
 A list of supported Versions can be found in the [[Supported Protocols]] page of this wiki.
