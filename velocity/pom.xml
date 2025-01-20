@@ -36,7 +36,7 @@
     <repositories>
         <repository>
             <id>velocity</id>
-            <url>https://papermc.io/repo/repository/maven-public/</url>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
             <id>sonatype</id>
