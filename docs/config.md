@@ -73,7 +73,7 @@ Protocol:
 
 /// note
 You need to use protocol versions and not the MC version.  
-As an example, to support all 1.21 versions (State: 22nd of November 2024) will you need to use the values `767` and `768`.
+As an example, to support all 1.21 versions (State: 15th of february 2025) will you need to use the values `767`, `768` and `769`.
 
 A full list of all available Protocol Versions can be found at https://minecraft.wiki/w/Protocol_version#Java_Edition
 
