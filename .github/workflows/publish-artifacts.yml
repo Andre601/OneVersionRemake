@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-java@v6
       with:
         distribution: 'temurin'
-        java-version: '11'
+        java-version: '11.0.32+101'
     - name: Build jar
       run: mvn clean install
     - name: Obtain version from Release
